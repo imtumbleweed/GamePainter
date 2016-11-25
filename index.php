@@ -430,6 +430,7 @@
             window.released = false;	// release touch
             window.clicked = false;		// reset click
             Press.ed = false;			// reset main Press object
+            Mouse.down = false;         // reset single frame mouse click
 
             gfx.globalAlpha = 1;
 

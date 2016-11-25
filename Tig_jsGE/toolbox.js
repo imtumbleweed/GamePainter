@@ -14,16 +14,17 @@ class Toolbox {
         }
         this.draw = () => { // Draw current tool icon at mouse position
             //this.toolSpritesheet.draw();
-            this.line.x = 0;
-            this.line.y = 0;
+            this.line.x = this.old_x;
+            this.line.y = this.old_y;
             this.line.vecx = Mouse.x-this.old_x;
             this.line.vecy = Mouse.y-this.old_y;
             this.line.draw(1, "red");
         }
         this.process = () => {
             // Remember x&y of click, but only once
-            if (Press.ed) {
+            if (window.clicked) {
                 if (this.pressed == false) {
+                    console.log(Mouse);
                     this.old_x = Mouse.x;
                     this.old_y = Mouse.y;
                     this.pressed = true;

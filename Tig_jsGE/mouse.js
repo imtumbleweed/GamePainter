@@ -5,6 +5,7 @@ var MouseControls = function()
 	this.y = 0;
 	this.velocityx = 0;	// Velocity at which mouse cursor is moving
 	this.velocityy = 0;
+	this.down = false;
 	var that = this;
 	this.Initialize = function(element)
 	{
@@ -23,6 +24,9 @@ var MouseControls = function()
 			that.x = e.clientX - $(element).offset().left;
 			that.y = e.clientY - $(element).offset().top;			
 			window.clicked = true;
+		});
+		$(element).on("mousedown", function(e) {
+			this.down = true;
 		});
 	}
 }
