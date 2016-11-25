@@ -414,7 +414,7 @@
                         debug_nextLvl.draw(100,450);
 
                         if (Press.ed && debug_nextLvl.pressed()) {
-                            game.start(game.level+1);
+                            game.start(game.level + 1);
                         }
 
 

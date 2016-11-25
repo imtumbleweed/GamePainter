@@ -20,13 +20,15 @@ var MouseControls = function()
 		});
 		$(element).on("click", function(e) {		
             if (!e) var e = event;
-            e.preventDefault();
+			e.preventDefault();
 			that.x = e.clientX - $(element).offset().left;
 			that.y = e.clientY - $(element).offset().top;			
 			window.clicked = true;
 		});
 		$(element).on("mousedown", function(e) {
-			this.down = true;
+			if (!e) var e = event;
+			e.preventDefault();
+			that.down = true;
 		});
 	}
 }
