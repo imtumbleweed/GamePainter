@@ -13,7 +13,6 @@ class Toolbox {
         this.line = new Segment(0, 0, 0, 0);
         this.pressed = false; // Mouse button is held down
         this.selectionBox = new Rectangle(0, 0, 100, 100);
-        //this.leftMouseButtonDown = false;
         this.select = (tool_id) => {
             this.currentToolID = tool_id;
         }
@@ -66,8 +65,8 @@ class Toolbox {
                 if (Mouse.down) { // Mouse-down -  Track single-frame "down" click - Remember x & y of click, but only once
                     this.old_x = Mouse.x;
                     this.old_y = Mouse.y;
-                    this.drag_x = grid.x; // memorize current grid position in the world
-                    this.drag_y = grid.y;
+                    this.drag_x = window.grid.x; // memorize current grid position in the world
+                    this.drag_y = window.grid.y;
                     this.pressed = true; // Set "mouse is down" state
                 }
                 if (window.clicked) { // Mouse up - This happens when mouse button is released
@@ -75,6 +74,10 @@ class Toolbox {
                     this.line.vecx = 0;
                     this.line.vecy = 0;
                     this.pressed = false; // Reset tool "mouse is down" state
+                    if(localStorage) {
+                        localStorage.worldx = window.grid.x;
+                        localStorage.worldy = window.grid.y;
+                    }
                 }
             }
 

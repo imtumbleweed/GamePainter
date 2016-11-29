@@ -6,6 +6,8 @@ class Grid {
         const LineSubColor = "#0a0a0a";
         this.x = 0;
         this.y = 0;
+        // Load previous workspace coordinates
+        if (localStorage.getItem("worldx") != undefined && localStorage.getItem("worldy") != undefined) { this.x = parseInt(localStorage.getItem("worldx")); this.y = parseInt(localStorage.getItem("worldy")); }
         this.current_x = 0; // this should be this.drag_x/y from toolbox.js
         this.current_y = 0;
         this.width = width;
