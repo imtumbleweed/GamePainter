@@ -141,6 +141,11 @@
             Sound.Initialize();
             //InitializeLongevityMap();
 
+            // make toolbox draggable
+            $("#Tools").draggable({
+
+            });
+
             window.tigrisgames = new Sprite("http://localhost/autumn/resources/test.png");
 
             game.engineReady = true;
@@ -424,6 +429,8 @@
                 }
             }
 
+
+
             // Always last step...
 
             window.touched = false;		// reset touch
@@ -454,5 +461,6 @@
 </style>
 <div id = "game_container" class = "noselect" style = "position: relative; margin: 0 auto; padding-top: 0px; padding-bottom: 0px;">
     <canvas id = "game"></canvas>
+    <?php include("toolbar.php"); ?>
 </body>
 </html>
