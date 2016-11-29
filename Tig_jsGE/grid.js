@@ -56,8 +56,11 @@ class Grid {
                 this.horizontalSegments[i].draw(1, LineColor);
             }
 
+            // todo: check if resources finished loading
+
             // Draw objects
-            window.hovercraft.draw(this.x + 500, this.y + 200);
+            if (window.hovercraft != undefined)
+                window.hovercraft.draw(this.x + 500, this.y + 200);
         }
     }
 }
