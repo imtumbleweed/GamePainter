@@ -1,7 +1,8 @@
 const MAX_BOX_NUMBER = 256000;
-
+var GlobalObjectIdentifier = 0;
 class Box {
     constructor(x,y,w,h) {
+        this.identifier = GlobalObjectIdentifier++;
         this.x = x;
         this.y = y;
         this.width = w;
@@ -9,8 +10,8 @@ class Box {
         this.bg = new Rectangle(x,y,w,h);
         this.line = new Segment(0,0,10,10);
         this.otherline = new Segment(0,0,10,10);
-        this.materialColor = "#555";
-        this.color = "#555";
+        this.materialColor = "#222";
+        this.color = this.materialColor;
         this.selected = false;
         this.draw = function() {
 
@@ -71,14 +72,14 @@ class BoxManagerClass {
         };
 
         // Delete (remove) this box
-        this.remove = () => {
+        this.remove = (id) => {
             if (id > -1)
                 this.objects.splice(id,1);
         };
 
         // Draw the box
         this.draw = () => {
-            console.log(this.objects.length);
+            //console.log(this.objects.length);
             for (var i=0;i<this.objects.length;i++)
                 this.objects[i].draw();
         };
