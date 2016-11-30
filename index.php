@@ -63,6 +63,7 @@
     <script src = 'Tig_jsGE/register.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/grid.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/toolbox.js' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/box.js' type = 'text/javascript'></script>
     <script type = "text/javascript">
 
         /** ----- Custom objects ----- **/
@@ -187,6 +188,7 @@
 							console.log(i + " loaded... ("+appropriateName+")");
                         }
                     }
+                    BoxManager.load(); // Load box objects
                 }});
 
                 // Load sound resources
@@ -278,6 +280,8 @@
         var toolbox = new Toolbox();
         //var cursorhand1 = new Sprite("cursorhand1.png");
 
+
+
         setInterval(function() {
 
             Press.capture(Mouse, Touch); // Press stores either mouse or touch (whichever was done)
@@ -317,7 +321,10 @@
                     toolbox.draw();
                     toolbox.process();
 
-
+                    // Draw objects
+                    if (BoxManager.objectsLoaded) {
+                        BoxManager.draw();
+                    }
 
                     break;
                 // case 1: wam_story();
