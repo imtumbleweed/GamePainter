@@ -18,6 +18,30 @@ class Toolbox {
         this.pressed = false; // Mouse button is held down
         this.selectionBox = new Rectangle(0, 0, 0, 0);
         this.infoBox = new Rectangle(0, 0, 0, 0);
+
+        // Keyboard shortcuts
+        $(document).on('keydown', function(e) {
+            if (e.which == 46) {
+                var index = 0;
+                var s = "s";
+                for (var i = 0; i < MAX_BOX_NUMBER; i++)
+                    if (BoxManager.objects[i] != undefined)
+                        if (BoxManager.objects[i].selected)
+                            index++;
+                if (index == 1) s = "";
+                console.log("Deleting " + index + " object" + s + ".");
+                for (var i = 0; i < MAX_BOX_NUMBER; i++) {
+                    if (BoxManager.objects[i] != undefined) {
+                        if (BoxManager.objects[i].selected) {
+                            BoxManager.remove(i);
+                            i--; // prevent splicer re-indexing
+                        } else index++;
+                    }
+                }
+            BoxManager.save();
+            return false;
+        }});
+
         this.select = (tool_id) => {
             this.currentToolID = tool_id;
         }
@@ -139,8 +163,10 @@ class Toolbox {
                         if (BoxManager.objects[i] != undefined)
                             if (BoxManager.objects[i].bg.rectInside(this.selectionBox)) {
                                 BoxManager.objects[i].color = "#22a28e";
+                                BoxManager.objects[i].selected = true;
                             } else {
                                 BoxManager.objects[i].color = BoxManager.objects[i].materialColor;
+                                BoxManager.objects[i].selected = false;
                             }
                     }
                 }
