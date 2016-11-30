@@ -9,6 +9,7 @@ class Box {
         this.bg = new Rectangle(x,y,w,h);
         this.line = new Segment(0,0,10,10);
         this.otherline = new Segment(0,0,10,10);
+        this.color = "#555";
         this.draw = function() {
 
             this.line.x             = grid.x + this.x;
@@ -24,7 +25,7 @@ class Box {
             this.bg.width           = this.width;
             this.bg.height          = this.height;
 
-            this.bg.draw("#555", true, false);
+            this.bg.draw(this.color, true, false);
             this.line.draw(1, "#333");
             this.otherline.draw(1, "#333");
         };

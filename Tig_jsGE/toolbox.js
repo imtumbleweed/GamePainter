@@ -5,6 +5,7 @@ class Toolbox {
         this.MOVE_WORLD = 1;
         this.BOX_TOOL = 2;
         this.CIRCLE_TOOL = 3;
+        this.ERASER_TOOL = 4;
         this.currentToolID = this.BOX_TOOL;
         this.gridFriction = 0.01;
         this.toolSpritesheet = new Spritesheet("tools.png");
@@ -45,7 +46,33 @@ class Toolbox {
                  if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
                  // Mouse was clicked up
                  if (window.clicked) { this.pressed = false; }
-             }*/
+             } */
+
+            if (this.currentToolID == this.ERASER_TOOL) { // Select objects in the world
+                // Mouse is being currently pressed down
+                if (this.pressed) {
+
+                    // Browse through all objects and see if we're hovering over any of them, if so, delete object...
+                    for (var i=0;i<BoxManager.objects.length;i++) {
+                        if (BoxManager.objects[i] != undefined)
+                            if (BoxManager.objects[i].bg.pointInside(Mouse.x, Mouse.y)) {
+                                BoxManager.objects[i].color = "red";
+                                // remove this object
+                                //BoxManager.remove(i);
+                            }
+                    }
+
+                }
+                // Mouse was clicked down
+                if (Mouse.down) {
+
+
+
+                    this.pressed = true;
+                }
+                // Mouse was clicked up
+                if (window.clicked) { this.pressed = false; }
+            }
 
             // Make a box
             if (this.currentToolID == this.BOX_TOOL) {

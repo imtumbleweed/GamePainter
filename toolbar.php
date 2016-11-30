@@ -22,6 +22,8 @@
         $("#Tool2").on("click", function(){ toolbox.currentToolID = toolbox.MOVE_WORLD; console.log("Selected Move World.");});
         $("#Tool3").on("click", function(){ toolbox.currentToolID = toolbox.BOX_TOOL; console.log("Selected Box Tool.");});
         $("#Tool4").on("click", function(){ toolbox.currentToolID = toolbox.CIRCLE_TOOL; console.log("Selected Circle Tool.");});
+        $("#Tool5").on("click", function(){ toolbox.currentToolID = toolbox.ERASER_TOOL; console.log("Selected Eraser Tool.");});
+
         // Make clickable tool icons
         $('.ToolIcon').on("click", function() {
             $(".ToolIcon").removeClass("Selected");
@@ -32,4 +34,5 @@
     <div style = "height: 6px;"></div>
     <div id = "Tool1" class = "ToolIcon Toolpad"><img src = "ic1a.png" alt = "Select Objects"/></div><div id = "Tool2" class = "ToolIcon"><img src = "ic2a.png" alt = "Move World"/></div>
     <div id = "Tool3" class = "ToolIcon Toolpad ToolIC-Empty Selected"><img src = "boxtool.png" alt = "Box Tool"/></div><div id = "Tool4" class = "ToolIcon ToolIC-Empty"><img src = "circletool.png" alt = "Circle Tool"/></div>
+    <div id = "Tool5" class = "ToolIcon Toolpad ToolIC-Empty"><img src = "erasertool.png" alt = "Box Tool"/></div><div id = "Tool4" class = "ToolIcon ToolIC-Empty"></div>
 </div>
