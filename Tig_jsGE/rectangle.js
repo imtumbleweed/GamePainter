@@ -43,6 +43,17 @@ var Rectangle = function(x, y, width, height)
 
 	this.rectInside = function( rect )
 	{
+
+		if (rect.width < 0) {
+			rect.x = rect.x + rect.width;
+			rect.width = -rect.width;
+		}
+
+		if (rect.height < 0) {
+			rect.y = rect.y + rect.height;
+			rect.height = -rect.height;
+		}
+
 		if (this.x < rect.x + rect.width && this.x + this.width > rect.x &&
 			this.y < rect.y + rect.height && this.y + this.height > rect.y) {
 			return true;

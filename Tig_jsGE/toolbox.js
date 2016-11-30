@@ -137,14 +137,12 @@ class Toolbox {
                     // Browse through all objects and see if we're hovering over any of them, if so, delete object...
                     for (var i=0;i<BoxManager.objects.length;i++) {
                         if (BoxManager.objects[i] != undefined)
-                            if (BoxManager.objects[i].bg.pointInside(Mouse.x, Mouse.y)) {
+                            if (BoxManager.objects[i].bg.rectInside(this.selectionBox)) {
                                 BoxManager.objects[i].color = "#22a28e";
-                                // remove this object
-                                //BoxManager.remove(i);
+                            } else {
+                                BoxManager.objects[i].color = BoxManager.objects[i].materialColor;
                             }
                     }
-
-
                 }
 
                 // Mouse was clicked down

@@ -9,7 +9,9 @@ class Box {
         this.bg = new Rectangle(x,y,w,h);
         this.line = new Segment(0,0,10,10);
         this.otherline = new Segment(0,0,10,10);
+        this.materialColor = "#555";
         this.color = "#555";
+        this.selected = false;
         this.draw = function() {
 
             this.line.x             = grid.x + this.x;
