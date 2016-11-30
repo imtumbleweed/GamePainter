@@ -3,7 +3,8 @@ class Toolbox {
     constructor() {
         this.SELECTION_TOOL = 0;
         this.MOVE_WORLD = 1;
-        this.currentToolID = this.MOVE_WORLD;
+        this.BOX_TOOL = 2;
+        this.currentToolID = this.BOX_TOOL;
         this.gridFriction = 0.01;
         this.toolSpritesheet = new Spritesheet("tools.png");
         this.old_x = 0;
@@ -11,8 +12,10 @@ class Toolbox {
         this.drag_x = 0; // current position of the grid in the world (todo: move to grid.js)
         this.drag_y = 0;
         this.line = new Segment(0, 0, 0, 0);
+        this.otherline = new Segment(0, 0, 0, 0);
         this.pressed = false; // Mouse button is held down
-        this.selectionBox = new Rectangle(0, 0, 100, 100);
+        this.selectionBox = new Rectangle(0, 0, 0, 0);
+        this.infoBox = new Rectangle(0, 0, 0, 0);
         this.select = (tool_id) => {
             this.currentToolID = tool_id;
         }
@@ -23,10 +26,15 @@ class Toolbox {
         }
         this.process = function () {
 
+            // Universal diagonal line!
             this.line.x = this.old_x;
             this.line.y = this.old_y;
             this.line.vecx = Mouse.x - this.old_x;
             this.line.vecy = Mouse.y - this.old_y;
+            this.otherline.x = this.old_x + this.line.vecx;
+            this.otherline.y = this.old_y;
+            this.otherline.vecx = -this.line.vecx;
+            this.otherline.vecy = this.line.vecy;
 
             /* --- Standard tool events ---
             if (this.currentToolID == this.SELECTION_TOOL) { // Select objects in the world
@@ -38,7 +46,45 @@ class Toolbox {
                  if (window.clicked) { this.pressed = false; }
              }*/
 
-            if (this.currentToolID == this.SELECTION_TOOL) { // Select objects in the world
+            // Make a box
+            if (this.currentToolID == this.BOX_TOOL) {
+                window.gfx.setLineDash([]);
+                // Mouse is being currently pressed down
+                if (this.pressed) {
+                    this.selectionBox.x = this.old_x;
+                    this.selectionBox.y = this.old_y;
+                    this.selectionBox.width = Mouse.x-this.old_x;
+                    this.selectionBox.height = Mouse.y-this.old_y;
+
+                    this.selectionBox.draw("#555", true, false);
+
+                    this.line.draw(1, "#333");
+                    this.otherline.draw(1, "#333");
+                    // Draw box size inside info box
+                    this.infoBox.x = Mouse.x + 48;
+                    this.infoBox.y = Mouse.y + 16;
+                    this.infoBox.width = 80;
+                    this.infoBox.height = 64;
+                    window.gfx.globalAlpha = 0.75;
+                    this.infoBox.draw("#000", true, false);
+                    window.gfx.globalAlpha = 1;
+                    // Print box size
+                    text( this.selectionBox.x + ", " +  this.selectionBox.y,  this.selectionBox.x - 8,  this.selectionBox.y - 8, "white", "left", 11, "verdana");
+                    // Print box dimensions
+                    text("W: " + this.selectionBox.width,  Mouse.x + 54, Mouse.y + 32,  "white", "left", 11, "verdana");
+                    text("H: " + this.selectionBox.height,  Mouse.x + 54, Mouse.y + 48,  "white", "left", 11, "verdana");
+                }
+                // Draw box
+
+                //window.gfx.setLineDash([]);
+                // Mouse was clicked down
+                if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
+                // Mouse was clicked up
+                if (window.clicked) { this.pressed = false; }
+            }
+
+            // Select objects in the world
+            if (this.currentToolID == this.SELECTION_TOOL) {
                 // Mouse is being currently pressed down
                 if (this.pressed) {
                     this.selectionBox.x = this.old_x;
@@ -46,9 +92,10 @@ class Toolbox {
                     this.selectionBox.width = Mouse.x-this.old_x;
                     this.selectionBox.height = Mouse.y-this.old_y;
                 }
+                // Draw selection box
                 window.gfx.setLineDash([2]);
                 window.gfx.lineWidth = 1;
-                this.selectionBox.draw("#777");
+                this.selectionBox.draw(1, "#777");
                 window.gfx.setLineDash([]);
                 // Mouse was clicked down
                 if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
