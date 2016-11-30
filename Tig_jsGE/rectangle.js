@@ -40,6 +40,15 @@ var Rectangle = function(x, y, width, height)
 				return true;
 		return false;
 	}
+
+	this.rectInside = function( rect )
+	{
+		if (this.x < rect.x + rect.width && this.x + this.width > rect.x &&
+			this.y < rect.y + rect.height && this.y + this.height > rect.y) {
+			return true;
+		}
+		return false;
+	}
 	
 	this.pointInside = function(px, py)
 	{

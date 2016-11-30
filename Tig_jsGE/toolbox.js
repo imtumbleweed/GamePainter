@@ -126,13 +126,25 @@ class Toolbox {
                     this.selectionBox.width = Mouse.x-this.old_x;
                     this.selectionBox.height = Mouse.y-this.old_y;
 
-// Draw selection box
+                    // Draw selection box
                     window.gfx.setLineDash([4]);
                     window.gfx.lineWidth = 1;
                     //window.gfx.globalCompositeOperation="destination-out";
                     this.selectionBox.draw("#777", false, true);
                     //window.gfx.globalCompositeOperation="normal";
                     window.gfx.setLineDash([]);
+
+                    // Browse through all objects and see if we're hovering over any of them, if so, delete object...
+                    for (var i=0;i<BoxManager.objects.length;i++) {
+                        if (BoxManager.objects[i] != undefined)
+                            if (BoxManager.objects[i].bg.pointInside(Mouse.x, Mouse.y)) {
+                                BoxManager.objects[i].color = "#22a28e";
+                                // remove this object
+                                //BoxManager.remove(i);
+                            }
+                    }
+
+
                 }
 
                 // Mouse was clicked down
