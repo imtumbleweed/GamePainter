@@ -4,6 +4,7 @@ class Toolbox {
         this.SELECTION_TOOL = 0;
         this.MOVE_WORLD = 1;
         this.BOX_TOOL = 2;
+        this.CIRCLE_TOOL = 3;
         this.currentToolID = this.BOX_TOOL;
         this.gridFriction = 0.01;
         this.toolSpritesheet = new Spritesheet("tools.png");
@@ -60,7 +61,7 @@ class Toolbox {
 
                     this.line.draw(1, "#333");
                     this.otherline.draw(1, "#333");
-                    // Draw box size inside info box 
+                    // Draw box size inside info box
                     this.infoBox.x = Mouse.x + 48;
                     this.infoBox.y = Mouse.y + 16;
                     this.infoBox.width = 80;
@@ -80,7 +81,13 @@ class Toolbox {
                 // Mouse was clicked down
                 if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
                 // Mouse was clicked up
-                if (window.clicked) { this.pressed = false; }
+                if (window.clicked) {
+                    // Add this box to box manager
+                    this.pressed = false;
+
+                    
+                    BoxManager.add(this.old_x, this.old_y, this.selectionBox.width, this.selectionBox.height);
+                }
             }
 
             // Select objects in the world
@@ -104,7 +111,7 @@ class Toolbox {
                 // Mouse was clicked down
                 if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
                 // Mouse was clicked up
-                if (window.clicked) { this.pressed = false; }
+                if (window.clicked) {this.pressed = false; }
             }
 
             if (this.currentToolID == this.MOVE_WORLD) { // If hand-grab tool is chosen
@@ -136,7 +143,10 @@ class Toolbox {
             text("Game World at x=" + window.grid.x + "px, y=" + window.grid.y + "px", 16, 16, "yellow", "left", 11, "verdana");
 
             // Draw Game Painter version
-            text("Game Painter v0.01", game.width/2, 48, "yellow", "center", 14, "arial");
+            text("Game Painter v0.002", game.width/2, 48, "yellow", "center", 14, "arial");
+
+            // Copyright
+            text("Game making tool created by Tigris Games", game.width/2, 64, "#777", "center", 14, "arial");
         }
     }
 }
