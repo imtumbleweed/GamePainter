@@ -5,7 +5,8 @@ class Toolbox {
         this.MOVE_WORLD = 1;
         this.BOX_TOOL = 2;
         this.CIRCLE_TOOL = 3;
-        this.ERASER_TOOL = 4;
+        this.WHOKNOWS_TOOL = 4;
+        this.PLAYER_TOOL = 5;
         this.currentToolID = this.BOX_TOOL;
         this.gridFriction = 0.01;
         this.toolSpritesheet = new Spritesheet("tools.png");
