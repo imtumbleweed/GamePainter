@@ -8,8 +8,8 @@ class Toolbox {
         this.WHOKNOWS_TOOL = 4;
         this.PLAYER_TOOL = 5;
         this.currentToolID = this.BOX_TOOL;
-        this.gridFriction = 0.01;
-        this.toolSpritesheet = new Spritesheet("tools.png");
+        //this.gridFriction = 0.01;
+        //this.toolSpritesheet = new Spritesheet("tools.png");
         this.old_x = 0;
         this.old_y = 0;
         this.drag_x = 0; // current position of the grid in the world (todo: move to grid.js)
@@ -20,28 +20,17 @@ class Toolbox {
         this.selectionBox = new Rectangle(0, 0, 0, 0);
         this.infoBox = new Rectangle(0, 0, 0, 0);
 
-        // Keyboard shortcuts
-        $(document).on('keydown', function(e) {
-            if (e.which == 46) {
-                var index = 0;
-                var s = "s";
-                for (var i = 0; i < MAX_BOX_NUMBER; i++)
-                    if (BoxManager.objects[i] != undefined)
-                        if (BoxManager.objects[i].selected)
-                            index++;
-                if (index == 1) s = "";
-                console.log("Deleting " + index + " object" + s + ".");
-                for (var i = 0; i < MAX_BOX_NUMBER; i++) {
-                    if (BoxManager.objects[i] != undefined) {
-                        if (BoxManager.objects[i].selected) {
-                            BoxManager.remove(i);
-                            i--; // prevent splicer re-indexing
-                        } else index++;
-                    }
-                }
-            BoxManager.save();
-            return false;
-        }});
+        // Turn all tools off and reset their functionality
+        this.off = () => {
+            this.currentToolID = -1;
+            this.line.vecx = 0;
+            this.line.vecy = 0;
+            this.pressed = false; // Reset tool "mouse is down" state
+            if(localStorage) {
+                localStorage.worldx = window.grid.x;
+                localStorage.worldy = window.grid.y;
+            }
+        }
 
         this.select = (tool_id) => {
             this.currentToolID = tool_id;
@@ -76,7 +65,6 @@ class Toolbox {
             if (this.currentToolID == this.ERASER_TOOL) { // Select objects in the world
                 // Mouse is being currently pressed down
                 if (this.pressed) {
-
                     // Browse through all objects and see if we're hovering over any of them, if so, delete object...
                     for (var i=0;i<BoxManager.objects.length;i++) {
                         if (BoxManager.objects[i] != undefined)
@@ -90,9 +78,6 @@ class Toolbox {
                 }
                 // Mouse was clicked down
                 if (Mouse.down) {
-
-
-
                     this.pressed = true;
                 }
                 // Mouse was clicked up
@@ -159,6 +144,11 @@ class Toolbox {
                     //window.gfx.globalCompositeOperation="normal";
                     window.gfx.setLineDash([]);
 
+                    // See if player was selected
+                    if (Player.body.rectInside(this.selectionBox)) {
+                        Player.color = "#9a1a8c";
+                    } else Player.color = Player.materialColor;
+
                     // Browse through all objects and see if we're hovering over any of them, if so, delete object...
                     for (var i=0;i<BoxManager.objects.length;i++) {
                         if (BoxManager.objects[i] != undefined)
@@ -212,5 +202,28 @@ class Toolbox {
             // Copyright
             text("Game making tool created by Tigris Games", game.width/2, 64, "#777", "center", 14, "arial");
         }
+
+        // Process toolbox keyboard shortcuts
+        $(document).on('keydown', function(e) {
+            if (e.which == 46) {
+                var index = 0;
+                var s = "s";
+                for (var i = 0; i < MAX_BOX_NUMBER; i++)
+                    if (BoxManager.objects[i] != undefined)
+                        if (BoxManager.objects[i].selected)
+                            index++;
+                if (index == 1) s = "";
+                console.log("Deleting " + index + " object" + s + ".");
+                for (var i = 0; i < MAX_BOX_NUMBER; i++) {
+                    if (BoxManager.objects[i] != undefined) {
+                        if (BoxManager.objects[i].selected) {
+                            BoxManager.remove(i);
+                            i--; // prevent splicer re-indexing
+                        } else index++;
+                    }
+                }
+                BoxManager.save();
+                return false;
+        }});
     }
 }
