@@ -69,7 +69,7 @@ class Toolbox {
                     this.infoBox.draw("#000", true, false);
                     window.gfx.globalAlpha = 1;
                     // Print box size
-                    text( this.selectionBox.x + ", " +  this.selectionBox.y,  this.selectionBox.x - 8,  this.selectionBox.y - 8, "white", "left", 11, "verdana");
+                    text( "World = " + (-window.grid.x+this.selectionBox.x) + ", " + (this.selectionBox.y - window.grid.y),  this.selectionBox.x - 8,  this.selectionBox.y - 8, "white", "left", 11, "verdana");
                     // Print box dimensions
                     text("W: " + this.selectionBox.width,  Mouse.x + 54, Mouse.y + 32,  "white", "left", 11, "verdana");
                     text("H: " + this.selectionBox.height,  Mouse.x + 54, Mouse.y + 48,  "white", "left", 11, "verdana");
