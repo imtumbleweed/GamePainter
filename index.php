@@ -143,7 +143,10 @@
 
             // make toolbox draggable
             $("#Tools").draggable({
-
+                stop : function(){
+                    localStorage.setItem("toolbarx", $("#Tools").offset().left);
+                    localStorage.setItem("toolbary", $("#Tools").offset().top);
+                }
             });
 
             window.tigrisgames = new Sprite("http://localhost/autumn/resources/test.png");
@@ -457,6 +460,7 @@
         user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
     }
+    #game { cursor: grab !important; }
     /*#game { cursor: none; }*/
 </style>
 <div id = "game_container" class = "noselect" style = "position: relative; margin: 0 auto; padding-top: 0px; padding-bottom: 0px;">
