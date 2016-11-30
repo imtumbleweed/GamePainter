@@ -10,6 +10,7 @@
     .CameraIcon { background: transparent url('camera.png') repeat-y; width: 24px; height: 24px; position: absolute; top: 70px; left: calc(50% - 350px); }
     #SecondaryToolbar { box-shadow: 0 0 40px #222;  background: #535353 url('SecondaryToolbar.png'); width: 100px; height: 50px; position: absolute; top: 32px; left: calc(50% + 140px); }
     .STPlaceholder { position: relative; margin; 2px; display: inline-block; width: 33px; height; 26px; background: url("SecondaryToolbarSelected.png") no-repeat; }
+    .STPlaceholder img { pointer-events: none; }
     .STAdjuster { position: absolute; top: 16px; left: 18px; }
 </style>
 <script>$(document).ready(function() {
@@ -46,8 +47,8 @@
 </div>
 <div id = "SecondaryToolbar">
     <div class = "STAdjuster">
-        <div class = "STPlaceholder">
-            <img src = "playericon.png" alt = ""/>
+        <div class = "STPlaceholder" onclick = "Player.spawn(Mouse.x, Mouse.y)">
+            <img src = "playericon.png" alt = "" />
         </div>
         <div class = "STPlaceholder">
             <img src = "controllericon.png" alt = ""/>
