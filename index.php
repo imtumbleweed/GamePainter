@@ -64,12 +64,14 @@
     <script src = 'Tig_jsGE/grid.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/toolbox.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/box.js' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/player.js?v=1' type = 'text/javascript'></script>
     <script type = "text/javascript">
 
         /** ----- Custom objects ----- **/
 
         var FrameView = new Rectangle(0,0,720,405);
 
+        var Player = new PlayerClass();
 
         var H2 = 0;
         var A1 = 169;
@@ -313,13 +315,17 @@
                         cursorhand1.draw(Mouse.x, Mouse.y);
 
                     // Process grid
-                    toolbox.draw();
                     toolbox.process();
+                    toolbox.draw();
 
                     // Draw objects
                     if (BoxManager.objectsLoaded) {
                         BoxManager.draw();
                     }
+
+                    // Draw player
+                    Player.process();
+                    Player.draw();
 
 
                     gfx.globalAlpha = 0.35;
