@@ -91,12 +91,16 @@ class Toolbox {
                     this.selectionBox.y = this.old_y;
                     this.selectionBox.width = Mouse.x-this.old_x;
                     this.selectionBox.height = Mouse.y-this.old_y;
+
+// Draw selection box
+                    window.gfx.setLineDash([4]);
+                    window.gfx.lineWidth = 1;
+                    //window.gfx.globalCompositeOperation="destination-out";
+                    this.selectionBox.draw("#777", false, true);
+                    //window.gfx.globalCompositeOperation="normal";
+                    window.gfx.setLineDash([]);
                 }
-                // Draw selection box
-                window.gfx.setLineDash([2]);
-                window.gfx.lineWidth = 1;
-                this.selectionBox.draw(1, "#777");
-                window.gfx.setLineDash([]);
+
                 // Mouse was clicked down
                 if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
                 // Mouse was clicked up
@@ -130,6 +134,9 @@ class Toolbox {
 
             // Draw dashboard info
             text("Game World at x=" + window.grid.x + "px, y=" + window.grid.y + "px", 16, 16, "yellow", "left", 11, "verdana");
+
+            // Draw Game Painter version
+            text("Game Painter v0.01", game.width/2, 48, "yellow", "center", 14, "arial");
         }
     }
 }
