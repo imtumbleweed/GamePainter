@@ -84,9 +84,9 @@ class Toolbox {
                 if (window.clicked) {
                     // Add this box to box manager
                     this.pressed = false;
-
-                    
-                    BoxManager.add(this.old_x, this.old_y, this.selectionBox.width, this.selectionBox.height);
+                    // Ignore objects with 0 width or height
+                    if (this.selectionBox.width != 0 || this.selectionBox.height != 0)
+                        BoxManager.add(this.old_x, this.old_y, this.selectionBox.width, this.selectionBox.height);
                 }
             }
 
