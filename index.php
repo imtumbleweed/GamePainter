@@ -308,11 +308,6 @@
 
                     grid.draw();
 
-                    //gfx.globalAlpha = 0.35;
-                    FrameView.center(game.width/2, FrameView.height/2 + 100);
-                    FrameView.draw("#fff", false, true);
-                    //gfx.globalAlpha = 1;
-
                     // Drag cursor
                     if (game.ResourcesLoaded)
                         cursorhand1.draw(Mouse.x, Mouse.y);
@@ -325,6 +320,12 @@
                     if (BoxManager.objectsLoaded) {
                         BoxManager.draw();
                     }
+
+
+                    gfx.globalAlpha = 0.35;
+                    FrameView.center(game.width/2, FrameView.height/2 + 100);
+                    FrameView.draw("#fff", false, true);
+                    gfx.globalAlpha = 1;
 
                     break;
                 // case 1: wam_story();
@@ -452,6 +453,9 @@
             gfx.globalAlpha = 1;
 
         }, 0);
+
+
+
     </script>
 </head>
 <body>
