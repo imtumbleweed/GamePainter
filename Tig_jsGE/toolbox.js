@@ -60,7 +60,7 @@ class Toolbox {
 
                     this.line.draw(1, "#333");
                     this.otherline.draw(1, "#333");
-                    // Draw box size inside info box
+                    // Draw box size inside info box 
                     this.infoBox.x = Mouse.x + 48;
                     this.infoBox.y = Mouse.y + 16;
                     this.infoBox.width = 80;
