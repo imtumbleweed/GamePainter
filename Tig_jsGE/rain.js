@@ -43,20 +43,16 @@ class RainManager {
         }
 
         this.process = () => {
-
+            
             this.bg.x = grid.x + this.cloud.x;
             this.bg.y = grid.y + this.cloud.y;
             this.bg.height = this.height - this.y;
-
             for (var i = 0; i < this.volume; i++) {
-
                 this.raindrop[i].segment.x += this.raindrop[i].velx;
                 this.raindrop[i].segment.y += this.raindrop[i].vely;
                 if (this.raindrop[i].segment.y > this.height) {
-
-                    this.raindrop[i].segment.x = this.raindrop[i].originalx;
-                    this.raindrop[i].segment.y = this.raindrop[i].originaly;
-
+                    this.raindrop[i].segment.x =  this.ghostcloud.x + Math.random() * this.width;
+                    this.raindrop[i].segment.y =  this.ghostcloud.y;// this.raindrop[i].originaly;
                 }
             }
         }
@@ -75,6 +71,8 @@ class RainManager {
             // draw cloud stretch
             this.cloud.drawAt(grid.x, grid.y, 1, "#fff");
 
+            //var seg = new Segment(this.ghostcloud.x, this.ghostcloud.y, this.width, 0);
+            //seg.draw(3,"pink");
 
             // draw raindrops
             for (var i = 0; i < this.volume; i++) {
@@ -100,5 +98,14 @@ function MakeRainsSelectable(boolean_state) {
 }
 
 function RainIsBeingMoved() { // Are any of the rains being moved by the designer right now in real-time?
-    for (var i = 0; i < RainArea.length; i++) if (RainArea[i].draggableNow) return true; return false;
+    for (var i = 0; i < RainArea.length; i++)
+        if (RainArea[i].attachedToMouse) return true; return false;
+}
+
+function StopMovingAllRain() {
+    for (var i = 0; i < RainArea.length; i++) {
+        RainArea[i].attachedToMouse = false;
+        RainArea[i].draggableNow = false;
+        RainArea[i].highlighted = false
+    }
 }
