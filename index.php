@@ -326,6 +326,10 @@
 
                     grid.draw();
 
+                    // Draw celestial
+                    Celestial.process();
+                    Celestial.draw();
+
                     // Drag cursor
                     if (game.ResourcesLoaded)
                         cursorhand1.draw(Mouse.x, Mouse.y);
@@ -353,9 +357,6 @@
                     FrameView.center(game.width/2, FrameView.height/2 + 100);
                     FrameView.draw("#fff", false, true);
                     gfx.globalAlpha = 1;
-
-                    Celestial.process();
-                    Celestial.draw();
 
   //                  if (toolbox.currentToolID == toolbox.MOVE_WORLD) {
 //                        //smallhand1.draw(Mouse.x, Mouse.y);
