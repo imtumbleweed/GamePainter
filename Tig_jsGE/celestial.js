@@ -11,7 +11,7 @@ class CelestialManager {
         this.place = (px, py) => {
             this.x = px;
             this.y = py;
-            this.sun_x = -500;
+            this.sun_x = -900;
             this.active = true;
         };
         this.process = () => {
