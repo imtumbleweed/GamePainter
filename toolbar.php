@@ -30,7 +30,8 @@
         $("#Tool3").on("click", function(){ toolbox.currentToolID = toolbox.BOX_TOOL; console.log("Selected Box Tool.");});
         $("#Tool4").on("click", function(){ toolbox.currentToolID = toolbox.CIRCLE_TOOL; console.log("Selected Circle Tool.");});
         $("#Tool5").on("click", function(){ toolbox.currentToolID = toolbox.ERASER_TOOL; console.log("Selected Eraser Tool.");});
-        $("#Tool6").on("click", function(){ toolbox.currentToolID = toolbox.PLAYER_TOOL; console.log("Player Tool.");});
+        $("#Tool6").on("click", function(){ toolbox.currentToolID = toolbox.SOME_TOOL; console.log("Selected Some Tool.");});
+        $("#Tool7").on("click", function(){ toolbox.currentToolID = toolbox.RAINMAKER; console.log("Selected Rain Maker Tool.");});
 
         // Make clickable tool icons
         $('.ToolIcon').on("click", function() {
@@ -43,7 +44,7 @@
     <div id = "Tool1" class = "ToolIcon Toolpad"><img src = "ic1a.png" alt = "Select Objects"/></div><div id = "Tool2" class = "ToolIcon"><img src = "ic2a.png" alt = "Move World"/></div>
     <div id = "Tool3" class = "ToolIcon Toolpad ToolIC-Empty Selected"><img src = "boxtool.png" alt = "Box Tool"/></div><div id = "Tool4" class = "ToolIcon ToolIC-Empty"><img src = "circletool.png" alt = "Circle Tool"/></div>
     <div id = "Tool5" class = "ToolIcon Toolpad ToolIC-Empty"><img src = "erasertool.png" alt = "Box Tool"/></div><div id = "Tool6" class = "ToolIcon ToolIC-Empty"></div>
-    <div id = "Tool7" class = "ToolIcon Toolpad ToolIC-Empty"><img src = "playericon.png" alt = "Box Tool"/></div><div id = "Tool8" class = "ToolIcon ToolIC-Empty"></div>
+    <div id = "Tool7" class = "ToolIcon Toolpad ToolIC-Empty"><img src = "rainmaker.png" alt = "Box Tool"/></div><div id = "Tool8" class = "ToolIcon ToolIC-Empty"></div>
 </div>
 <div id = "SecondaryToolbar">
     <div class = "STAdjuster">

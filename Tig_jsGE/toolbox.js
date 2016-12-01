@@ -6,8 +6,11 @@ class Toolbox {
         this.BOX_TOOL = 2;
         this.CIRCLE_TOOL = 3;
         this.WHOKNOWS_TOOL = 4;
-        this.PLAYER_TOOL = 5;
+        this.ERASER_TOOL = 5;
+        this.SOME_TOOL = 6;
+        this.RAINMAKER = 7;
         this.currentToolID = this.BOX_TOOL;
+
         //this.gridFriction = 0.01;
         //this.toolSpritesheet = new Spritesheet("tools.png");
         this.old_x = 0;
@@ -53,14 +56,40 @@ class Toolbox {
             this.otherline.vecy = this.line.vecy;
 
             /* --- Standard tool events ---
-            if (this.currentToolID == this.SELECTION_TOOL) { // Select objects in the world
-                // Mouse is being currently pressed down
-                 if (this.pressed) { }
-                 // Mouse was clicked down
-                 if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
-                 // Mouse was clicked up
-                 if (window.clicked) { this.pressed = false; }
-             } */
+            if (this.currentToolID == this.RAINMAKER) { // Select objects in the world
+                 if (this.pressed) { // Mouse is being currently pressed down
+
+                 }
+                 if (Mouse.down) { // Mouse was clicked down
+                     this.pressed = true;
+                 }
+                 if (window.clicked) { // Mouse was clicked up
+                      this.pressed = false;
+                 }
+             }
+            */
+
+            if (this.currentToolID == this.RAINMAKER) { // Select objects in the world
+                window.gfx.setLineDash([]);
+                if (this.pressed) { // Mouse is being currently pressed down
+                    // Mouse is being currently pressed down
+                    this.selectionBox.x = this.old_x;
+                    this.selectionBox.y = this.old_y;
+                    this.selectionBox.width = Mouse.x - this.old_x;
+                    this.selectionBox.height = Mouse.y - this.old_y;
+                    gfx.globalAlpha = 0.4;
+                    this.selectionBox.draw("#111", true, false);
+                    this.selectionBox.draw("#555", false, true);
+                    gfx.globalAlpha = 1;
+                }
+                if (Mouse.down) { // Mouse was clicked down
+                    this.old_x = Mouse.x; this.old_y = Mouse.y;
+                    this.pressed = true;
+                }
+                if (window.clicked) { // Mouse was clicked up
+                    this.pressed = false;
+                }
+            }
 
             if (this.currentToolID == this.ERASER_TOOL) { // Select objects in the world
                 // Mouse is being currently pressed down
