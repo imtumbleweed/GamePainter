@@ -49,7 +49,7 @@
     <script src = "Tig_jsGE/world.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/point.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/vector.js" type = "text/javascript"></script>
-    <script src = "Tig_jsGE/segment.js?v=2" type = "text/javascript"></script>
+    <script src = "Tig_jsGE/segment.js?v=3" type = "text/javascript"></script>
     <script src = "Tig_jsGE/circle.js?v=3" type = "text/javascript"></script>
     <script src = "Tig_jsGE/rectangle.js?v=1" type = "text/javascript"></script>
     <script src = "Tig_jsGE/orientation.js?v=2" type = "text/javascript"></script>
@@ -61,10 +61,10 @@
     <script src = "Tig_jsGE/starfield.js?v=1" type = "text/javascript"></script>
     <script src = "Tig_jsGE/text.js?v=1" type = "text/javascript"></script>
     <script src = 'Tig_jsGE/register.js' type = 'text/javascript'></script>
-    <script src = 'Tig_jsGE/grid.js' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/grid.js?v=2' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/toolbox.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/box.js' type = 'text/javascript'></script>
-    <script src = 'Tig_jsGE/player.js?v=1' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/player.js?v=2' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/rain.js?v=1' type = 'text/javascript'></script>
     <script type = "text/javascript">
 
@@ -159,8 +159,8 @@
 
 
 
-            RainArea.add(100,100,400,700,100);
-            RainArea.add(700,200,200,100,50);
+            RainArea.add(100,100,400,700,150);
+            RainArea.add(700,200,200,800,150);
 
 
 
@@ -327,6 +327,12 @@
                     toolbox.process();
                     toolbox.draw();
 
+                    // Draw rain (background layer)
+                    for (var i = 0; i < RainArea.length; i++) {
+                        RainArea[i].process();
+                        RainArea[i].draw();
+                    }
+
                     // Draw objects
                     if (BoxManager.objectsLoaded) {
                         BoxManager.draw();
@@ -336,16 +342,16 @@
                     Player.process();
                     Player.draw();
 
-                    // Draw rain areas
-                    for (var i = 0; i < RainArea.length; i++) {
-                        RainArea[i].process();
-                        RainArea[i].draw();
-                    }
-
                     gfx.globalAlpha = 0.35;
                     FrameView.center(game.width/2, FrameView.height/2 + 100);
                     FrameView.draw("#fff", false, true);
                     gfx.globalAlpha = 1;
+
+  //                  if (toolbox.currentToolID == toolbox.MOVE_WORLD) {
+//                        //smallhand1.draw(Mouse.x, Mouse.y);
+//                        if (!$("body").hasClass("hidecursor"))
+//                            $("body").addClass("hidecursor");
+                    //} else { $("body").removeClass("hidecursor"); }
 
                     break;
                 // case 1: wam_story();
@@ -395,8 +401,8 @@
                 default: break;
             }
 
-            if (game.state != 3 && game.ResourcesLoaded) // Displayed on all screens during debug/production
-                home.draw(0, game.height-64);
+            //if (game.state != 3 && game.ResourcesLoaded) // Displayed on all screens during debug/production
+                //home.draw(0, game.height-64);
 
             //if (Press.ed && home.pressed()) { game.state = -1; }
 
@@ -441,26 +447,16 @@
                             $("#select_player").text("Select Player");
                         }
 
-                        text("Gemini requires a Tigris game account.", game.width/2, 350, "silver", "center", "13px", "Verdana");
-
-                        text("-- Reserve original username.", game.width/2 - 110, 370, "silver", "left", "12px", "Verdana");
-                        text("-- Never lose your saved game history.", game.width/2 - 110, 385, "silver", "left", "12px", "Verdana");
-                        text("-- Invite friends to play together.", game.width/2 - 110, 400, "silver", "left", "12px", "Verdana");
-
-                        debug_nextLvl.draw(100,450);
-
-                        if (Press.ed && debug_nextLvl.pressed()) {
-                            game.start(game.level + 1);
-                        }
-
-
-                        text("© 2016 Tigris Games. A division of River Tigris LLC.", game.width/2, game.height-48,
-                            "gray", "center", "11px", "Verdana");
+//                        text("Gemini requires a Tigris game account.", game.width/2, 350, "silver", "center", "13px", "Verdana");
+                        //debug_nextLvl.draw(100,450);
+//                        if (Press.ed && debug_nextLvl.pressed()) {
+//                            game.start(game.level + 1);
+                        //}
+//                        text("© 2016 Tigris Games. A division of River Tigris LLC.", game.width/2, game.height-48,
+  //                          "gray", "center", "11px", "Verdana");
                     }
                 }
             }
-
-
 
             // Always last step...
 
@@ -492,7 +488,7 @@
                                   not supported by any browser */
     }
     #game { cursor: grab !important; }
-    /*#game { cursor: none; }*/
+    .hidecursor { cursor: none; }
 </style>
 <div id = "game_container" class = "noselect" style = "position: relative; margin: 0 auto; padding-top: 0px; padding-bottom: 0px;">
     <canvas id = "game"></canvas>
