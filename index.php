@@ -66,6 +66,7 @@
     <script src = 'Tig_jsGE/box.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/player.js?v=2' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/rain.js?v=1' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/celestial.js?v=1' type = 'text/javascript'></script>
     <script type = "text/javascript">
 
         /** ----- Custom objects ----- **/
@@ -73,6 +74,8 @@
         var FrameView = new Rectangle(0,0,720,405);
 
         var Player = new PlayerClass();
+
+        var Celestial = new CelestialManager(0,0);
 
         var H2 = 0;
         var A1 = 169;
@@ -293,6 +296,8 @@
         var toolbox = new Toolbox();
         //var cursorhand1 = new Sprite("cursorhand1.png");
 
+        RainArea.add(100,100,200,200,25)
+
 
 
         setInterval(function() {
@@ -348,6 +353,9 @@
                     FrameView.center(game.width/2, FrameView.height/2 + 100);
                     FrameView.draw("#fff", false, true);
                     gfx.globalAlpha = 1;
+
+                    Celestial.process();
+                    Celestial.draw();
 
   //                  if (toolbox.currentToolID == toolbox.MOVE_WORLD) {
 //                        //smallhand1.draw(Mouse.x, Mouse.y);
