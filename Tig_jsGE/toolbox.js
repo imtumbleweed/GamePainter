@@ -178,38 +178,31 @@ class Toolbox {
                             RainArea[i].drag_y = RainArea[i].bg.y;
                         }
                         if (this.pressed) {
+                            if (RainArea[i].attachedToMouse) {
+                                var seg = new Rectangle(RainArea[i].drag_x,RainArea[i].drag_y,10,10);
+                                seg.draw("red",true,true);
+                                var arb_w = RainArea[i].dragLine.x - Mouse.x;
+                                var arb_h = RainArea[i].dragLine.y - Mouse.y;
+                                RainArea[i].ghostcloud.x = RainArea[i].drag_x - arb_w;
+                                RainArea[i].ghostcloud.y = RainArea[i].drag_y - arb_h;
+                                RainArea[i].ghostcloud.draw(1, "red");
+                                RainArea[i].cloud.x = -grid.x + RainArea[i].ghostcloud.x;
+                                RainArea[i].cloud.y = -grid.y + RainArea[i].ghostcloud.y;
+                                RainArea[i].dragLine.draw(2, "teal");
 
-                            var seg = new Rectangle(RainArea[i].drag_x,RainArea[i].drag_y,10,10);
-                            seg.draw("red",true,true);
-
-                            var arb_w = RainArea[i].dragLine.x - Mouse.x;
-                            var arb_h = RainArea[i].dragLine.y - Mouse.y;
-
-                            RainArea[i].ghostcloud.x = RainArea[i].drag_x - arb_w;
-                            RainArea[i].ghostcloud.y = RainArea[i].drag_y - arb_h;
-                            RainArea[i].ghostcloud.draw(1, "red");
-
-                            RainArea[i].cloud.x = -grid.x + RainArea[i].ghostcloud.x;
-                            RainArea[i].cloud.y = -grid.y + RainArea[i].ghostcloud.y;
-
-                            RainArea[i].dragLine.draw(2, "teal");
-
-                            //RainArea[i].cloud.x = RainArea[i].drag_x - RainArea[i].bg.x + Mouse.x;
-                            //RainArea[i].y = RainArea[i].drag_y;
-
-                            //RainArea[i].x = RainArea[i].dragLine.x;
-
-                            //RainArea[i].dragLine.vecx = RainArea[i].bg.x - Mouse.x;
-                            //RainArea[i].dragLine.vecy = RainArea[i].bg.y - Mouse.y;
-                            //RainArea[i].x = Mouse.x;
-                            //RainArea[i].y = Mouse.y;
+                                //RainArea[i].cloud.x = RainArea[i].drag_x - RainArea[i].bg.x + Mouse.x;
+                                //RainArea[i].y = RainArea[i].drag_y;
+                                //RainArea[i].x = RainArea[i].dragLine.x;
+                                //RainArea[i].dragLine.vecx = RainArea[i].bg.x - Mouse.x;
+                                //RainArea[i].dragLine.vecy = RainArea[i].bg.y - Mouse.y;
+                                //RainArea[i].x = Mouse.x;
+                                //RainArea[i].y = Mouse.y;
+                            }
                         }
                     }
                     else
                         RainArea[i].highlighted = false;
                 }
-
-
 
                 // Mouse is being currently pressed down
                 if (this.pressed) {
@@ -254,7 +247,7 @@ class Toolbox {
                 // Mouse was clicked down
                 if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
                 // Mouse was clicked up
-                if (window.clicked) {this.pressed = false; }
+                if (window.clicked) {this.pressed = false; StopMovingAllRain(); }
             }
 
             if (this.currentToolID == this.MOVE_WORLD) { // If hand-grab tool is chosen
