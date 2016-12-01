@@ -61,8 +61,8 @@ class Grid {
             // todo: check if resources finished loading
 
             // Draw objects
-            if (window.hovercraft != undefined)
-                window.hovercraft.draw(this.x + 500, this.y + 200);
+            //if (window.hovercraft != undefined)
+               //window.hovercraft.draw(this.x + 500, this.y + 200);
         }
     }
 }
