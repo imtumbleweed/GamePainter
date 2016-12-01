@@ -4,7 +4,7 @@ class PlayerClass {
         this.y = 0;
         this.materialColor = "#9cff00";
         this.color = this.materialColor;
-        this.body = new Rectangle(this.x,this.y,64,64);
+        this.body = new Rectangle(this.x,this.y,32,64);
         this.active = false;
         this.pressed = false;
         this.attachedToMouse = false;
