@@ -296,7 +296,7 @@
         var toolbox = new Toolbox();
         //var cursorhand1 = new Sprite("cursorhand1.png");
 
-        RainArea.add(100,100,200,200,25)
+        //RainArea.add(100,100,200,200,25)
 
 
 
