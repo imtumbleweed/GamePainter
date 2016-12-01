@@ -6,9 +6,8 @@ class Raindrop {
         this.vely = vely;
         this.grab_x = 0; // Mouse grabbed this rain at...
         this.grab_y = 0;
-
         this.color = "#777";
-        this.segment = new Segment(x, y, velx*5, vely*5);
+        this.segment = new Segment(x, y, velx * 5, vely * 5);
         this.length = 5;//segment.length();
         console.log("Raindrop created.");
     }
