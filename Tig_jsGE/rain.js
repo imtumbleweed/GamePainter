@@ -33,7 +33,6 @@ class RainManager {
         this.mousedragy = 0;
         this.bg = new Rectangle(x,y,width,height);
 
-
         for (var i = 0; i < this.volume; i++) {
 
             this.raindrop[i] = new Raindrop(this.x + Math.random() * this.width,
@@ -43,18 +42,32 @@ class RainManager {
         }
 
         this.process = () => {
-            
+
             this.bg.x = grid.x + this.cloud.x;
             this.bg.y = grid.y + this.cloud.y;
             this.bg.height = this.height - this.y;
+
             for (var i = 0; i < this.volume; i++) {
+
+                // Raindrop hits game level
+                for (var j = 0; j < BoxManager.objects.length; j++) {
+                    //BoxManager.objects[j].bg.draw("red");
+                    if (BoxManager.objects[j].bg.pointInside(grid.x + this.raindrop[i].segment.x, grid.y + this.raindrop[i].segment.y)) {
+                        // Reset raindrop if it hits an object
+                        this.raindrop[i].segment.x = -grid.x + this.ghostcloud.x + Math.random() * this.width;
+                        this.raindrop[i].segment.y = -grid.y + this.ghostcloud.y;
+                    }
+                }
+
+                // Raindrop reached bottom of its area, reset
                 this.raindrop[i].segment.x += this.raindrop[i].velx;
                 this.raindrop[i].segment.y += this.raindrop[i].vely;
                 if (this.raindrop[i].segment.y > this.height) {
-                    this.raindrop[i].segment.x =  this.ghostcloud.x + Math.random() * this.width;
-                    this.raindrop[i].segment.y =  this.ghostcloud.y;// this.raindrop[i].originaly;
+                    this.raindrop[i].segment.x = -grid.x + this.ghostcloud.x + Math.random() * this.width;
+                    this.raindrop[i].segment.y = -grid.y + this.ghostcloud.y;
                 }
             }
+
         }
 
         // Init: run rain for a period of time before displaying it
