@@ -65,6 +65,7 @@
     <script src = 'Tig_jsGE/toolbox.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/box.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/player.js?v=1' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/rain.js?v=1' type = 'text/javascript'></script>
     <script type = "text/javascript">
 
         /** ----- Custom objects ----- **/
@@ -155,6 +156,14 @@
             window.tigrisgames = new Sprite("http://localhost/autumn/resources/test.png");
 
             game.engineReady = true;
+
+
+
+            RainArea.add(100,100,400,700,100);
+            RainArea.add(700,200,200,100,50);
+
+
+
 
 
             setTimeout(function() {
@@ -327,6 +336,11 @@
                     Player.process();
                     Player.draw();
 
+                    // Draw rain areas
+                    for (var i = 0; i < RainArea.length; i++) {
+                        RainArea[i].process();
+                        RainArea[i].draw();
+                    }
 
                     gfx.globalAlpha = 0.35;
                     FrameView.center(game.width/2, FrameView.height/2 + 100);
@@ -458,7 +472,7 @@
 
             gfx.globalAlpha = 1;
 
-        }, 0);
+        }, 1);
 
 
 

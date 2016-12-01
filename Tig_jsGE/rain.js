@@ -4,8 +4,11 @@ class Raindrop {
         this.y = this.originaly = y;
         this.velx = velx;
         this.vely = vely;
-        this.segment = new Segment(x, y, velx, vely);
-        this.length = raindrop.length();
+
+        this.color = "#444";
+        this.segment = new Segment(x, y, velx*5, vely*5);
+        this.length = 5;//segment.length();
+        console.log("Raindrop created.");
     }
 }
 
@@ -18,31 +21,47 @@ class RainManager {
         this.height = height;
         this.volume = rain_volume;
         this.raindrop = new Array();
+
         for (var i = 0; i < this.volume; i++) {
-            this.raindrop = new Raindrop(this.x + Math.random() * this.width,
-                                         this.y + 1,
-                                         -Math.random()*5,
-                                         1);
+
+            this.raindrop[i] = new Raindrop(this.x + Math.random() * this.width,
+                                            this.y - this.height/2 + Math.random() * this.height,
+                                            -0.23,
+                                            4 + Math.random() * 1.700);
         }
 
         this.process = () => {
             for (var i = 0; i < this.volume; i++) {
-                this.raindrop[i].x += this.raindrop[i].velx;
-                this.raindrop[i].y += this.raindrop[i].vely;
-                if (this.raindrop[i].y > this.height ||
-                    this.raindrop[i].x < 0 || this.raindrop[i].x > this.width) {
-                    this.raindrop[i].x = this.raindrop[i].originalx;
-                    this.raindrop[i].y = this.raindrop[i].originaly;
+
+                //this.x = -grid.x;
+                //this.y = -grid.y;
+                //var x = this.x + this.raindrop[i].segment.x;
+                //var y = this.y + this.raindrop[i].segment.y;
+                //this.raindrop[i].segment.x = x;
+                //this.raindrop[i].segment.y = y;
+                this.raindrop[i].segment.x += this.raindrop[i].velx;
+                this.raindrop[i].segment.y += this.raindrop[i].vely;
+                if (this.raindrop[i].segment.y > this.height ||
+                    this.raindrop[i].segment.x < 0 || this.raindrop[i].segment.x > this.width) {
+                    this.raindrop[i].segment.x = this.raindrop[i].originalx;
+                    this.raindrop[i].segment.y = this.raindrop[i].originaly;
                 }
             }
         }
 
         this.draw = () => {
             for (var i = 0; i < this.volume; i++) {
-                this.raindrop[i].segment.draw(1, "white");
+
+
+
+                this.raindrop[i].segment.draw(1,  this.raindrop[i].color);
             }
         }
     }
 }
 
 var RainArea = new Array();
+
+RainArea.add = function(x,y,width,height,vol) {
+    RainArea[RainArea.length] = new RainManager(x,y,width,height,vol);
+}
