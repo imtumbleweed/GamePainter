@@ -5,20 +5,41 @@ var Rectangle = function(x, y, width, height)
 	this.width = width;
 	this.height = height;
 	this.state = false;
-	
+
 	this.draw = function(color, filled, outline)
 	{
 		gfx.beginPath();
 		gfx.rect(this.x, this.y, this.width, this.height);
-		
+
 		if (outline == true || outline == undefined) {
 			gfx.strokeStyle = color;
 			gfx.stroke();
 		}
-		
+
 		if (filled) {
 			gfx.fillStyle = color;
-			gfx.fill();		
+			gfx.fill();
+		}
+	}
+
+	this.drawAt = function(offsetx, offsety, color, filled, outline)
+	{
+		gfx.beginPath();
+		/*
+		gfx.rect(offsetx + this.x,
+			     offsety + this.y,
+			     offsetx + this.width,
+			     offsety + this.height); */
+		gfx.rect(this.x, this.y, this.width, this.height);
+
+		if (outline == true || outline == undefined) {
+			gfx.strokeStyle = color;
+			gfx.stroke();
+		}
+
+		if (filled) {
+			gfx.fillStyle = color;
+			gfx.fill();
 		}
 	}
 
