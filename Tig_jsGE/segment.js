@@ -15,7 +15,7 @@ var Segment = function(x, y, vecx, vecy)
 	this.vecy = vecy;
 	
 //	var that = this;
-	
+
 	this.draw = function(width, color)
 	{
 		gfx.beginPath();
@@ -23,7 +23,18 @@ var Segment = function(x, y, vecx, vecy)
 		gfx.moveTo(this.x, this.y);
 		gfx.lineTo(this.x + this.vecx, this.y + this.vecy);
 		gfx.strokeStyle = color;
-		gfx.stroke();		
+		gfx.stroke();
+	}
+
+	// draw with an offset
+	this.drawAt = function(offset_x, offset_y, width, color)
+	{
+		gfx.beginPath();
+		gfx.lineWidth = width;
+		gfx.moveTo(offset_x + this.x, offset_y + this.y);
+		gfx.lineTo(offset_x + this.x + this.vecx, offset_y + this.y + this.vecy);
+		gfx.strokeStyle = color;
+		gfx.stroke();
 	}
 	
 	this.length = function() {
