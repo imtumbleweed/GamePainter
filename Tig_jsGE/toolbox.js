@@ -158,12 +158,65 @@ class Toolbox {
 
             // Select objects in the world
             if (this.currentToolID == this.SELECTION_TOOL) {
+
+                // Handle rain in select mode
+                for (var i = 0; i < RainArea.length; i++) {
+                    if (RainArea[i].bg.pointInside(Mouse.x, Mouse.y)) {
+                        RainArea[i].highlighted = true;
+                        if (Mouse.down) {
+                            RainArea[i].attachedToMouse = true;
+                            // RainArea[i].mousedragx = Mouse.x - RainArea[i].bg.x;
+                            // RainArea[i].mousedragy = Mouse.y - RainArea[i].bg.y;
+
+                            RainArea[i].dragLine.x = Mouse.x;
+                            RainArea[i].dragLine.y = Mouse.y;
+                            RainArea[i].dragLine.vecx = RainArea[i].bg.x - Mouse.x;
+                            RainArea[i].dragLine.vecy = RainArea[i].bg.y - Mouse.y;
+
+                            // memorize mouse click on rain
+                            RainArea[i].drag_x = RainArea[i].bg.x;
+                            RainArea[i].drag_y = RainArea[i].bg.y;
+                        }
+                        if (this.pressed) {
+
+                            var seg = new Rectangle(RainArea[i].drag_x,RainArea[i].drag_y,10,10);
+                            seg.draw("red",true,true);
+
+                            var arb_w = RainArea[i].dragLine.x - Mouse.x;
+                            var arb_h = RainArea[i].dragLine.y - Mouse.y;
+
+                            RainArea[i].ghostcloud.x = RainArea[i].drag_x - arb_w;
+                            RainArea[i].ghostcloud.y = RainArea[i].drag_y - arb_h;
+                            RainArea[i].ghostcloud.draw(1, "red");
+
+                            RainArea[i].cloud.x = -grid.x + RainArea[i].ghostcloud.x;
+                            RainArea[i].cloud.y = -grid.y + RainArea[i].ghostcloud.y;
+
+                            RainArea[i].dragLine.draw(2, "teal");
+
+                            //RainArea[i].cloud.x = RainArea[i].drag_x - RainArea[i].bg.x + Mouse.x;
+                            //RainArea[i].y = RainArea[i].drag_y;
+
+                            //RainArea[i].x = RainArea[i].dragLine.x;
+
+                            //RainArea[i].dragLine.vecx = RainArea[i].bg.x - Mouse.x;
+                            //RainArea[i].dragLine.vecy = RainArea[i].bg.y - Mouse.y;
+                            //RainArea[i].x = Mouse.x;
+                            //RainArea[i].y = Mouse.y;
+                        }
+                    }
+                    else
+                        RainArea[i].highlighted = false;
+                }
+
                 // Mouse is being currently pressed down
                 if (this.pressed) {
                     this.selectionBox.x = this.old_x;
                     this.selectionBox.y = this.old_y;
                     this.selectionBox.width = Mouse.x-this.old_x;
                     this.selectionBox.height = Mouse.y-this.old_y;
+
+
 
                     // Draw selection box
                     window.gfx.setLineDash([4]);
