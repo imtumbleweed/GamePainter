@@ -11,6 +11,8 @@ class Toolbox {
         this.RAINMAKER = 7;
         this.currentToolID = this.BOX_TOOL;
 
+        this.hand_dragging = false;
+
         //this.gridFriction = 0.01;
         //this.toolSpritesheet = new Spritesheet("tools.png");
         this.old_x = 0;
@@ -22,6 +24,10 @@ class Toolbox {
         this.pressed = false; // Mouse button is held down
         this.selectionBox = new Rectangle(0, 0, 0, 0);
         this.infoBox = new Rectangle(0, 0, 0, 0);
+
+        this.resetRain = () => {
+            this.pressed = true;
+        };
 
         // Turn all tools off and reset their functionality
         this.off = () => {
@@ -87,6 +93,11 @@ class Toolbox {
                     this.pressed = true;
                 }
                 if (window.clicked) { // Mouse was clicked up
+                    RainArea.add(this.selectionBox.x,
+                                 this.selectionBox.y,
+                                 this.selectionBox.width,
+                                 this.selectionBox.height,
+                                 200);
                     this.pressed = false;
                 }
             }
@@ -179,16 +190,16 @@ class Toolbox {
                         }
                         if (this.pressed) {
                             if (RainArea[i].attachedToMouse) {
-                                var seg = new Rectangle(RainArea[i].drag_x,RainArea[i].drag_y,10,10);
-                                seg.draw("red",true,true);
+                                //var seg = new Rectangle(RainArea[i].drag_x,RainArea[i].drag_y,10,10);
+                                //seg.draw("red",true,true);
                                 var arb_w = RainArea[i].dragLine.x - Mouse.x;
                                 var arb_h = RainArea[i].dragLine.y - Mouse.y;
                                 RainArea[i].ghostcloud.x = RainArea[i].drag_x - arb_w;
                                 RainArea[i].ghostcloud.y = RainArea[i].drag_y - arb_h;
-                                RainArea[i].ghostcloud.draw(1, "red");
+                                //RainArea[i].ghostcloud.draw(1, "red");
                                 RainArea[i].cloud.x = -grid.x + RainArea[i].ghostcloud.x;
                                 RainArea[i].cloud.y = -grid.y + RainArea[i].ghostcloud.y;
-                                RainArea[i].dragLine.draw(2, "teal");
+                                //RainArea[i].dragLine.draw(2, "teal");
 
                                 //RainArea[i].cloud.x = RainArea[i].drag_x - RainArea[i].bg.x + Mouse.x;
                                 //RainArea[i].y = RainArea[i].drag_y;
@@ -255,6 +266,18 @@ class Toolbox {
                 if (this.pressed) {
                     window.grid.x = this.drag_x + this.line.vecx;
                     window.grid.y = this.drag_y + this.line.vecy;
+
+                    // Adjust rain
+                    if (this.hand_dragging) {
+                        for (var j = 0; j < RainArea.length; j++) {
+                            //RainArea[j].cloud.x = -grid.x + RainArea[j].ghostcloud.x;
+                            //RainArea[j].cloud.y = -grid.y + RainArea[j].ghostcloud.y;
+
+                            RainArea[j].ghostcloud.x = grid.x + RainArea[j].cloud.x;
+                            RainArea[j].ghostcloud.y = grid.y + RainArea[j].cloud.y;
+                        }
+                    }
+
                 }
                 if (Mouse.down) { // Mouse-down -  Track single-frame "down" click - Remember x & y of click, but only once
                     this.old_x = Mouse.x;
@@ -262,12 +285,15 @@ class Toolbox {
                     this.drag_x = window.grid.x; // memorize current grid position in the world
                     this.drag_y = window.grid.y;
                     this.pressed = true; // Set "mouse is down" state
+                    this.hand_dragging = true;
                 }
                 if (window.clicked) { // Mouse up - This happens when mouse button is released
                     // Only now reset line coordinates
                     this.line.vecx = 0;
                     this.line.vecy = 0;
                     this.pressed = false; // Reset tool "mouse is down" state
+                    this.hand_dragging = false;
+
                     if(localStorage) {
                         localStorage.worldx = window.grid.x;
                         localStorage.worldy = window.grid.y;
@@ -279,7 +305,7 @@ class Toolbox {
             text("Game World at x=" + window.grid.x + "px, y=" + window.grid.y + "px", 16, 16, "yellow", "left", 11, "verdana");
 
             // Draw Game Painter version
-            text("Game Painter v0.002", game.width/2, 48, "yellow", "center", 14, "arial");
+            text("Game Painter v0.004", game.width/2, 48, "yellow", "center", 14, "arial");
 
             // Copyright
             text("Game making tool created by Tigris Games", game.width/2, 64, "#777", "center", 14, "arial");
