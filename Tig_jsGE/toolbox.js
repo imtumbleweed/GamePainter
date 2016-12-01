@@ -196,9 +196,9 @@ class Toolbox {
                                 var arb_h = RainArea[i].dragLine.y - Mouse.y;
                                 RainArea[i].ghostcloud.x = RainArea[i].drag_x - arb_w;
                                 RainArea[i].ghostcloud.y = RainArea[i].drag_y - arb_h;
-                                //RainArea[i].ghostcloud.draw(1, "red");
-                                RainArea[i].cloud.x = -grid.x + RainArea[i].ghostcloud.x;
-                                RainArea[i].cloud.y = -grid.y + RainArea[i].ghostcloud.y;
+                                RainArea[i].ghostcloud.draw(1, "red");
+                                RainArea[i].cloud.x = grid.x + RainArea[i].ghostcloud.x;
+                                RainArea[i].cloud.y = grid.y + RainArea[i].ghostcloud.y;
                                 //RainArea[i].dragLine.draw(2, "teal");
 
                                 //RainArea[i].cloud.x = RainArea[i].drag_x - RainArea[i].bg.x + Mouse.x;
