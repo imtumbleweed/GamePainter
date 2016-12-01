@@ -33,6 +33,9 @@
         $("#Tool6").on("click", function(){ toolbox.currentToolID = toolbox.SOME_TOOL; console.log("Selected Some Tool.");});
         $("#Tool7").on("click", function(){ toolbox.currentToolID = toolbox.RAINMAKER; console.log("Selected Rain Maker Tool.");});
 
+        $("#Tool2,#Tool3,#Tool4,#Tool5,#Tool6,#Tool7").on("click", function(){MakeRainsSelectable(false);})
+        $("#Tool1").on("click", function(){MakeRainsSelectable(true);})
+
         // Make clickable tool icons
         $('.ToolIcon').on("click", function() {
             $(".ToolIcon").removeClass("Selected");
