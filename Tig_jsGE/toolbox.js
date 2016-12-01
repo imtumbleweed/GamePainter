@@ -209,14 +209,17 @@ class Toolbox {
                         RainArea[i].highlighted = false;
                 }
 
+
+
                 // Mouse is being currently pressed down
                 if (this.pressed) {
+
+                    var moving_rain = RainIsBeingMoved();
+
                     this.selectionBox.x = this.old_x;
                     this.selectionBox.y = this.old_y;
-                    this.selectionBox.width = Mouse.x-this.old_x;
-                    this.selectionBox.height = Mouse.y-this.old_y;
-
-
+                    this.selectionBox.width = Mouse.x - this.old_x;
+                    this.selectionBox.height = Mouse.y - this.old_y;
 
                     // Draw selection box
                     window.gfx.setLineDash([4]);
@@ -227,20 +230,24 @@ class Toolbox {
                     window.gfx.setLineDash([]);
 
                     // See if player was selected
-                    if (Player.body.rectInside(this.selectionBox)) {
-                        Player.color = "#9a1a8c";
-                    } else Player.color = Player.materialColor;
+                    if (moving_rain == false) // The rain is being moved right now; disable all other selection functionality; just return
+                        if (Player.body.rectInside(this.selectionBox)) {
+                            Player.color = "#9a1a8c";
+                        } else Player.color = Player.materialColor;
 
                     // Browse through all objects and see if we're hovering over any of them, if so, delete object...
-                    for (var i=0;i<BoxManager.objects.length;i++) {
-                        if (BoxManager.objects[i] != undefined)
-                            if (BoxManager.objects[i].bg.rectInside(this.selectionBox)) {
-                                BoxManager.objects[i].color = "#22a28e";
-                                BoxManager.objects[i].selected = true;
-                            } else {
-                                BoxManager.objects[i].color = BoxManager.objects[i].materialColor;
-                                BoxManager.objects[i].selected = false;
+                    if (moving_rain == false) { // The rain is being moved right now; disable all other selection functionality; just return
+                        for (var i=0;i<BoxManager.objects.length;i++) {
+                            if (BoxManager.objects[i] != undefined)  {
+                                if (BoxManager.objects[i].bg.rectInside(this.selectionBox)) {
+                                    BoxManager.objects[i].color = "#22a28e";
+                                    BoxManager.objects[i].selected = true;
+                                } else {
+                                    BoxManager.objects[i].color = BoxManager.objects[i].materialColor;
+                                    BoxManager.objects[i].selected = false;
+                                }
                             }
+                        }
                     }
                 }
 

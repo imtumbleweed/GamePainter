@@ -98,3 +98,7 @@ function MakeRainsSelectable(boolean_state) {
         RainArea[i].draggableNow = boolean_state;
     }
 }
+
+function RainIsBeingMoved() { // Are any of the rains being moved by the designer right now in real-time?
+    for (var i = 0; i < RainArea.length; i++) if (RainArea[i].draggableNow) return true; return false;
+}
