@@ -32,6 +32,7 @@
         $("#Tool5").on("click", function(){ toolbox.currentToolID = toolbox.ERASER_TOOL; console.log("Selected Eraser Tool.");});
         $("#Tool6").on("click", function(){ toolbox.currentToolID = toolbox.SOME_TOOL; console.log("Selected Some Tool.");});
         $("#Tool7").on("click", function(){ toolbox.currentToolID = toolbox.RAINMAKER; console.log("Selected Rain Maker Tool.");});
+        $("#Tool8").on("click", function(){ toolbox.currentToolID = toolbox.CELESTIAL; console.log("Celestial Body Tool."); Celestial.place($(window).width()/2, $(window).height()/2); });
 
         $("#Tool2,#Tool3,#Tool4,#Tool5,#Tool6,#Tool7").on("click", function(){MakeRainsSelectable(false);})
         $("#Tool1").on("click", function(){MakeRainsSelectable(true);})
@@ -47,7 +48,7 @@
     <div id = "Tool1" class = "ToolIcon Toolpad"><img src = "ic1a.png" alt = "Select Objects"/></div><div id = "Tool2" class = "ToolIcon"><img src = "ic2a.png" alt = "Move World"/></div>
     <div id = "Tool3" class = "ToolIcon Toolpad ToolIC-Empty Selected"><img src = "boxtool.png" alt = "Box Tool"/></div><div id = "Tool4" class = "ToolIcon ToolIC-Empty"><img src = "circletool.png" alt = "Circle Tool"/></div>
     <div id = "Tool5" class = "ToolIcon Toolpad ToolIC-Empty"><img src = "erasertool.png" alt = "Box Tool"/></div><div id = "Tool6" class = "ToolIcon ToolIC-Empty"></div>
-    <div id = "Tool7" class = "ToolIcon Toolpad ToolIC-Empty"><img src = "rainmaker.png" alt = "Box Tool"/></div><div id = "Tool8" class = "ToolIcon ToolIC-Empty"></div>
+    <div id = "Tool7" class = "ToolIcon Toolpad ToolIC-Empty"><img src = "rainmaker.png" alt = "Box Tool"/></div><div id = "Tool8" class = "ToolIcon ToolIC-Empty"><img src = "celestialicon.png" alt = "Celestial Tool"/></div>
 </div>
 <div id = "SecondaryToolbar">
     <div class = "STAdjuster">
