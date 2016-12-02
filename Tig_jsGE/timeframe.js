@@ -1,10 +1,6 @@
-class TimelinePanel {
-    constructor(px, py, width, height) {
-        this.x = 0;
-        this.y = $(window).height() - height;
-        this.width = width;
-        this.height = height;
-        this.area = Rectangle(this.x,this.y,this.width,this.height);
+class TimeframePanel {
+    constructor(x, y, width, height) {
+        this.area = Rectangle(x,y,width,height);
         this.active = false;
         this.length = 0;                // Length of active animation
         this.process = () => {
@@ -21,3 +17,4 @@ class TimelinePanel {
     }
 };
 
+var Timeframe = new TimeframePanel();
