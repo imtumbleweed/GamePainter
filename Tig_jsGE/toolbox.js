@@ -56,7 +56,7 @@ class Toolbox {
             if (isCtrl && key.a) {
                 for (var i=0;i<BoxManager.objects.length;i++) {
                     BoxManager.objects[i].selected = true;
-                    BoxManager.objects[i].color = "teal"; 
+                    BoxManager.objects[i].color = "teal";
                 }
             }
 
@@ -170,6 +170,17 @@ class Toolbox {
                 if (window.clicked) {
                     // Add this box to box manager
                     this.pressed = false;
+
+                    // If negative width or height, swap parameters to [x, y] = upper left corner
+                    if (this.old_x > this.old_x + this.selectionBox.width) {
+                        this.old_x = this.old_x + this.selectionBox.width;
+                        this.selectionBox.width = -this.selectionBox.width;
+                    }
+                    if (this.old_y > this.old_y + this.selectionBox.height) {
+                        this.old_y = this.old_y + this.selectionBox.height;
+                        this.selectionBox.height = -this.selectionBox.height;
+                    }
+
                     // Ignore objects with 0 width or height
                     if (this.selectionBox.width != 0 || this.selectionBox.height != 0)
                         BoxManager.add(this.old_x, this.old_y, this.selectionBox.width, this.selectionBox.height);
