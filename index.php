@@ -424,7 +424,7 @@
 
             //if (Press.ed && home.pressed()) { game.state = -1; }
 
-            if (key.left) { }
+            if (key.left) { Player.x -= 1; }
             if (key.right) { }
             if (key.up) { }
             if (key.down) { }

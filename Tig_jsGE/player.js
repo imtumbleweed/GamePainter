@@ -2,6 +2,10 @@ class PlayerClass {
     constructor() {
         this.x = 0; // World coordinates
         this.y = 0;
+        this.velx = 0;  // velocity
+        this.vely = 0;
+        this.momx = 0;  // momentum
+        this.momy = 0;
         this.materialColor = "#9cff00";
         this.color = this.materialColor;
         this.body = new Rectangle(this.x,this.y,32,64);

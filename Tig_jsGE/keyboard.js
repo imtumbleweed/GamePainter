@@ -18,6 +18,7 @@ var DIR_S = 64;
 var DIR_SE = 128;
 
 var isShift = false; // var key = [false, false, false, false];
+var isCtrl = false;
 window.key = null;
 window.onscreen_kb = null;	// onscreen keyboard
 
@@ -203,7 +204,9 @@ function InitializeKeyboard()
     window.key = new Keyboard();
 
     $(document).keydown(function(e) {
-        if (e.keyCode == 16) isShift = true;
+
+		if (e.keyCode == 16) isShift = true;
+		if (e.keyCode == 17) isCtrl = true;
         if (e.keyCode == KEY_LEFT) { key.left = true; }
         if (e.keyCode == KEY_RIGHT) { key.right = true; }
         if (e.keyCode == KEY_UP) { key.up = true; }
@@ -216,6 +219,7 @@ function InitializeKeyboard()
 
     $(document).keyup(function(e) {
         if (e.keyCode == 16) isShift = false;
+		if (e.keyCode == 17) isCtrl = false;
         if (e.keyCode == KEY_LEFT) { key.left = false; }
         if (e.keyCode == KEY_RIGHT) { key.right = false; }
         if (e.keyCode == KEY_UP) { key.up = false; }

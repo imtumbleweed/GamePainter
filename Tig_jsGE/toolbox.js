@@ -52,6 +52,14 @@ class Toolbox {
         }
         this.process = function () {
 
+            // Keyboard shortcuts
+            if (isCtrl && key.a) {
+                for (var i=0;i<BoxManager.objects.length;i++) {
+                    BoxManager.objects[i].selected = true;
+                    BoxManager.objects[i].color = "teal"; 
+                }
+            }
+
             // Universal diagonal line!
             this.line.x = this.old_x;
             this.line.y = this.old_y;
@@ -257,7 +265,18 @@ class Toolbox {
                 }
 
                 // Mouse was clicked down
-                if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
+                if (Mouse.down) {
+
+                    // Check if any objects were under the mouse, and if so select them
+                    for (var i=0;i<BoxManager.objects.length;i++) {
+                        if (BoxManager.objects[i] != undefined) {
+                            if (BoxManager.objects[i].bg.pointInside(this.selectionBox.x, this.selectionBox.y)) {
+
+                            }
+                        }
+                    }
+
+                    this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
                 // Mouse was clicked up
                 if (window.clicked) {this.pressed = false; StopMovingAllRain(); }
             }
