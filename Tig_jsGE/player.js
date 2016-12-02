@@ -12,7 +12,9 @@ class PlayerClass {
         this.active = false;
         this.pressed = false;
         this.attachedToMouse = false;
-        this.gravityType = 0; // 0 = hovering (0-gravity)
+        this.controlKeysPressed = false;
+
+        this.gravityType = 1; // 0 = hovering (0-gravity)
                               // 1 = normal gravity
                               // 2 = top down view (Z-axis gravity)
 
@@ -27,6 +29,14 @@ class PlayerClass {
 
         this.process = () => {
             if (this.active) {
+
+                // Process player movement
+                if (this.gravityType == 1) {
+                    if (Player.controlKeysPressed == false) {
+                        this.momx -= this.momx * 0.05;
+                        this.x += this.momx;
+                    }
+                }
 
                 // Drag player around if attached to mouse
                 if (this.attachedToMouse) {
