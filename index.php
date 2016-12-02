@@ -44,7 +44,7 @@
     <script src = "Tig_jsGE/canvas.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/animate.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/spritesheet.js" type = "text/javascript"></script>
-    <script src = "Tig_jsGE/sprite.js?v=9" type = "text/javascript"></script>
+    <script src = "Tig_jsGE/sprite.js?v=10" type = "text/javascript"></script>
     <script src = "Tig_jsGE/sound.js?v=13" type = "text/javascript"></script>
     <script src = "Tig_jsGE/world.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/point.js" type = "text/javascript"></script>
@@ -355,13 +355,23 @@
 
                     // Draw player
                     Player.process();
-                   // Player.draw();
+                    //Player.draw();
 
                     //fox.draw(Player.x,Player.y);
-                    fox.rotAnim(Player.x,Player.y,[0,1,2,3,4],0,
-                        64, // width of one cell
-                        8, // cells per width in the spritesheet
-                        10);
+                    if (Player.dirx == RIGHT) {
+                        if (Player.controlKeysPressed)
+                            fox.rotAnim(Player.x, Player.y, [0, 1, 2, 3, 4], 0, 64, /* width of one cell */ 8, /* cells per width in the spritesheet */ 10);
+                        else
+                            fox.rotAnim(Player.x, Player.y, [17], 1, 64, 8, 10);
+                    }
+                    if (Player.dirx == LEFT) {
+                        if (Player.controlKeysPressed)
+                            fox.rotAnim(Player.x, Player.y, [24,25,26,27,28], 0, 64, /* width of one cell */ 8, /* cells per width in the spritesheet */ 10);
+                        else
+                            fox.rotAnim(Player.x, Player.y, [16], 1, 64, 8, 10);
+                    }
+
+
 
                     gfx.globalAlpha = 0.35;
                     FrameView.center(game.width/2, FrameView.height/2 + 100);
@@ -432,8 +442,8 @@
 
             //if (Press.ed && home.pressed()) { game.state = -1; }
 
-            if (key.left) { Player.x -= 1; Player.momx = -1; Player.controlKeysPressed = true; }
-            if (key.right) { Player.x += 1; Player.momx = 1; Player.controlKeysPressed = true; }
+            if (key.left) { Player.x -= 1; Player.momx = -1; Player.controlKeysPressed = true; Player.dirx = LEFT; }
+            if (key.right) { Player.x += 1; Player.momx = 1; Player.controlKeysPressed = true; Player.dirx = RIGHT; }
             if (key.up) { }
             if (key.down) { }
             if (key.w) { /* ... */ }
@@ -500,7 +510,7 @@
 
             gfx.globalAlpha = 1;
 
-        }, 1);
+        }, 0);
 
 
 

@@ -97,7 +97,7 @@ var Sprite = function(fn) {
                 AnimationCounter[AnimationCounterIndex].animationCurrentFrame = various[AnimationCounter[AnimationCounterIndex].animationIndexCounter];
             }
             var res = i2xy(AnimationCounter[AnimationCounterIndex].animationCurrentFrame, 8);
-            Context.context.drawImage(this.image, res[0]*32, res[1]*32, 32, 32, x, y, 32, 32);
+            Context.context.drawImage(this.image, res[0]*64, res[1]*64, 64, 64, x, y, 64, 64);
 
             AnimationCounterIndex++;
         }

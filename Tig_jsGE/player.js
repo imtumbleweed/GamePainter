@@ -1,3 +1,7 @@
+const LEFT = 0;
+const RIGHT = 2;
+const UP = 4;
+const DOWN = 8;
 class PlayerClass {
     constructor() {
         this.x = 0; // World coordinates
@@ -13,7 +17,8 @@ class PlayerClass {
         this.pressed = false;
         this.attachedToMouse = false;
         this.controlKeysPressed = false;
-
+        this.dirx = RIGHT; // defaults
+        this.diry = DOWN;
         this.gravityType = 1; // 0 = hovering (0-gravity)
                               // 1 = normal gravity
                               // 2 = top down view (Z-axis gravity)
