@@ -77,9 +77,9 @@ class RainManager {
         this.draw = () => {
             // draw background
             if (this.highlighted) {
-                gfx.globalAlpha = 0.7;
-                this.bg.draw("#111", true, false);
-                gfx.globalAlpha = 1;
+//                gfx.globalAlpha = 0.7;
+    //            this.bg.draw("#111", true, false);
+  //              gfx.globalAlpha = 1;
             }
             // draw cloud stretch
             this.cloud.drawAt(grid.x, grid.y, 1, "#fff");
