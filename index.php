@@ -67,6 +67,7 @@
     <script src = 'Tig_jsGE/player.js?v=2' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/rain.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/celestial.js?v=1' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/timeline.js' type = 'text/javascript'></script>
     <script type = "text/javascript">
 
         /** ----- Custom objects ----- **/
@@ -76,6 +77,8 @@
         var Player = new PlayerClass();
 
         var Celestial = new CelestialManager(0,0);
+
+        var Timeline = new TimelinePanel(0, 0, $(window).width(), $(window).height());
 
         var H2 = 0;
         var A1 = 169;
