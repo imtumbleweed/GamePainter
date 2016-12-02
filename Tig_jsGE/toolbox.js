@@ -9,7 +9,7 @@ class Toolbox {
         this.ERASER_TOOL = 5;
         this.SOME_TOOL = 6;
         this.RAINMAKER = 7;
-        this.CELESTIAL = 7;
+        this.CELESTIAL = 8;
         this.currentToolID = this.BOX_TOOL;
 
         this.hand_dragging = false;

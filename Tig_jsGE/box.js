@@ -50,19 +50,19 @@ class BoxManagerClass {
                 for (var i=0;i<objs.length;i++) {
                     BoxManager.objects[i] = new Box(objs[i].x,objs[i].y,objs[i].width,objs[i].height);
                 }
-                //console.log("object loaded = ");
+                console.log(BoxManager.objects.length + "object(s) loaded.");
                 //console.log(this.objects);
                 //console.log(this.objects.length);
                 BoxManager.objectsLoaded = true;
             }});
         };
         this.save = () => {// Save boxes
-            //console.log("BoxManager.save();");
+            console.log("BoxManager.save();");
             //console.log("saving...");
             //console.log(JSON.stringify());
             //console.log(this.objects);
             $.ajax({url:"saveboxes.php", type : "post", data:{"payload":JSON.stringify(this.objects)}, success: function(msg) {
-                //console.log("saveboxes.php = " + msg);
+                console.log("saveboxes.php = " + msg);
             }});
         };
         // Add new box

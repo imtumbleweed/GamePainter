@@ -9,10 +9,10 @@
     <meta http-equiv="content-language" content="en-US" />
     <meta http-equiv="content-type" content="text/html; charset=UTF8">
     <meta content = "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name = "viewport">
-    <meta property="og:title" content="Gemini"/>
+    <meta property="og:title" content="Game Painter"/>
     <meta property="og:type" content="game"/>
-    <meta property="og:image" content="http://www.tigrisgames.com/property_stealth/games/gemini/icon/icon.png"/>
-    <meta property="og:site_name" content="Gemini"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:site_name" content="Game Painter"/>
     <meta property="fb:admins" content="gregsidelnikov"/>
     <meta name = "apple-mobile-web-app-capable" content = "yes"> <!-- iPhone iOS //-->
     <meta name = "mobile-web-app-capable" content = "yes"> <!-- Android //-->
@@ -78,7 +78,7 @@
 
         var Celestial = new CelestialManager(0,0);
 
-        var Timeline = new TimelinePanel(0, 0, $(window).width(), $(window).height());
+        var Timeline = new TimelinePanel(0, 0, $(window).width(), 200);
 
         var H2 = 0;
         var A1 = 169;
@@ -159,8 +159,6 @@
                 }
             });
 
-            window.tigrisgames = new Sprite("http://localhost/autumn/resources/test.png");
-
             game.engineReady = true;
 
 
@@ -196,14 +194,15 @@
 
 
                 // Load graphics resources
-                $.ajax({"url" : "http://localhost/autumn/getResourceList.php", type : "POST", success: function(msg) {
+                $.ajax({"url" : "getResourceList.php", type : "POST", success: function(msg) {
+                    console.log("Loading graphics resources from getReourceList.php");
                     if (JSON.parse(msg) != undefined) {
                         var json = JSON.parse(msg);
                         game.resourceNumber = json.length;
                         for (var i = 0; i < json.length; i++) {
                             var appropriateName = json[i].split(".")[0];
                             window.LoadingFileName = json[i];
-                            window[appropriateName] = new Sprite("http://localhost/autumn/resources/" + window.LoadingFileName);
+                            window[appropriateName] = new Sprite("resources/" + window.LoadingFileName);
 							console.log(i + " loaded... ("+appropriateName+")");
                         }
                     }
@@ -360,6 +359,11 @@
                     FrameView.center(game.width/2, FrameView.height/2 + 100);
                     FrameView.draw("#fff", false, true);
                     gfx.globalAlpha = 1;
+
+
+                    // Draw timeline panel
+                    Timeline.process();
+                    Timeline.draw();
 
   //                  if (toolbox.currentToolID == toolbox.MOVE_WORLD) {
 //                        //smallhand1.draw(Mouse.x, Mouse.y);
