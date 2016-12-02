@@ -19,7 +19,7 @@ class CelestialManager {
                 return;
             this.sun_x2 = this.sun_x * Math.cos(this.angle) - this.sun_y * Math.sin(this.angle);
             this.sun_y2 = this.sun_y * Math.cos(this.angle) + this.sun_x * Math.sin(this.angle);
-            this.angle += 0.005;
+            this.angle += 0.002;
         };
         this.draw = () => {
             if (!this.active)
