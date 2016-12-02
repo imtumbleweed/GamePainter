@@ -104,7 +104,7 @@ var Sprite = function(fn) {
     };
 
 
-    this.rotAnim = function(x, y, sequence, angle, size, animationDelay)
+    this.rotAnim = function(x, y, sequence, angle, size, cellsPerWidth, animationDelay)
     {
     	that.x = x;
     	that.y = y;
@@ -120,7 +120,7 @@ var Sprite = function(fn) {
                 AnimationCounter[AnimationCounterIndex].animationIndexCounter = 0;
             AnimationCounter[AnimationCounterIndex].animationCurrentFrame = sequence[AnimationCounter[AnimationCounterIndex].animationIndexCounter];
         }
-        var res = i2xy(AnimationCounter[AnimationCounterIndex].animationCurrentFrame, 8);
+        var res = i2xy(AnimationCounter[AnimationCounterIndex].animationCurrentFrame, cellsPerWidth);
 
         Context.context.save();
         Context.context.translate(x+size/2, y+size/2);    // Translate sprite to its center
