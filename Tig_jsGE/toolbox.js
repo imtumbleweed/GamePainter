@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 
 const ACTION_MAKE_LEFT_SLOPE = 0;
-const ACTION_MAKE_RIGHT_SLOPE = 0;
+const ACTION_MAKE_RIGHT_SLOPE = 2;
 
 class Toolbox {
     constructor() {
@@ -54,20 +54,23 @@ class Toolbox {
         this.selectionBox = new Rectangle(0, 0, 0, 0);
         this.infoBox = new Rectangle(0, 0, 0, 0);
 
+        this.tmp = new Rectangle(0,0,0,0);
+
         this.resetRain = () => {
             this.pressed = true;
         };
 
         // Change shape type of selected elements
-        this.selection = (action) => {
-            for (var i = 0; i < BoxManager.object.length; i++)  {
-                if (BoxManager.object[i].selected) {
-                    if (action == ACTION_TO_LEFT_SLOPE) {
-                        BoxManager.object[i].type = BOX_TYPE_LEFTSLOPE;
+        this.action = (act) => {
+            for (var i = 0; i < BoxManager.objects.length; i++)  {
+                if (BoxManager.objects[i].selected) {
+                    if (act == ACTION_MAKE_LEFT_SLOPE) {
+                        BoxManager.objects[i].convert(BOX_TYPE_LEFTSLOPE);
+                        BoxManager.objects[i].type = BOX_TYPE_LEFTSLOPE;
                     }
                 }
             }
-        }
+        };
 
         // Turn all tools off and reset their functionality
         this.off = () => {
@@ -79,16 +82,16 @@ class Toolbox {
                 localStorage.worldx = window.grid.x;
                 localStorage.worldy = window.grid.y;
             }
-        }
+        };
 
         this.select = (tool_id) => {
             this.currentToolID = tool_id;
-        }
+        };
         this.draw = () => { // Draw current tool icon at mouse position
             //this.toolSpritesheet.draw();
             //if (this.pressed) // Draw the line only if mouse is currently held down
                //this.line.draw(1, "#0080e2");
-        }
+        };
         this.process = function () {
 
             // Do not process anything if context sub-menu is open
@@ -306,7 +309,11 @@ class Toolbox {
                     if (moving_rain == false) { // The rain is being moved right now; disable all other selection functionality; just return
                         for (var i=0;i<BoxManager.objects.length;i++) {
                             if (BoxManager.objects[i] != undefined)  {
-                                if (BoxManager.objects[i].bg.rectInside(this.selectionBox)) {
+                                this.tmp.x = grid.x+BoxManager.objects[i].bg.x;
+                                this.tmp.y = grid.y+BoxManager.objects[i].bg.y;
+                                this.tmp.width = BoxManager.objects[i].bg.width;
+                                this.tmp.height = BoxManager.objects[i].bg.height;
+                                if (this.tmp.rectInside(this.selectionBox)) {
                                     BoxManager.objects[i].color = "#22a28e";
                                     BoxManager.objects[i].selected = true;
                                 } else {
