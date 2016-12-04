@@ -30,6 +30,7 @@
             this.target_score = 0;			// For animating score counter
             this.lives = 3;					// Lives left
             this.level = 1;					// Current level
+            this.resourcesLoaded = false;   // Check if graphics (png) resources have finished loading
         };
         var game = new GameManager();
     </script>
@@ -177,7 +178,7 @@
 
 
             setTimeout(function() {
-                game.displayLoadingBar = true;
+                //game.displayLoadingBar = true;
 
 
 
@@ -210,6 +211,10 @@
 							console.log(i + " loaded... ("+appropriateName+")");
                         }
                     }
+
+                    // Graphics resources finished loading
+                    game.ResourcesLoaded = true;
+
                     BoxManager.load(); // Load box objects
                 }});
 
@@ -241,8 +246,8 @@
             gfx.fill();
         }
 
-        var ripple0 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/ripple0.png");
-        var ripple1 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/ripple1.png");
+        //var ripple0 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/ripple0.png");
+        //var ripple1 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/ripple1.png");
 
         var LogoRot = 0;
         var sub_beam_rot = 0;
@@ -253,7 +258,7 @@
         zoomPointX = game.width/2;
         zoomPointY = game.height/2;
 
-        var Diamond = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/diamond.png");
+       // var Diamond = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/diamond.png");
 
         InitializeAnimationCounters();
 
@@ -315,13 +320,13 @@
             ClearCanvas();
 
             if (game.ResourcesLoaded) {
-                if (window.Gemgrid == null) { // Grid is resource dependent, because it needs gem icons loaded
-                    window.Gemgrid = new Grid(game.boardWidth, game.boardHeight, game.boardCellSize);
-                    InitializeGalaxy(); // Create galaxy simulator
+                //if (window.Gemgrid == null) { // Grid is resource dependent, because it needs gem icons loaded
+                  //  window.Gemgrid = new Grid(game.boardWidth, game.boardHeight, game.boardCellSize);
+                    //InitializeGalaxy(); // Create galaxy simulator
 //					Sound.play(7); // delune music
-                }
-                if (game.state == -1)
-                    geminilogo.rotscale(mobileWidth/2, 135, 1,1, 0);
+                //}
+                //if (game.state == -1)
+                    //geminilogo.rotscale(mobileWidth/2, 135, 1,1, 0);
             }
 
             switch (game.state) {
