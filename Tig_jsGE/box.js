@@ -54,6 +54,11 @@ class BoxManagerClass {
                 //console.log(this.objects);
                 //console.log(this.objects.length);
                 BoxManager.objectsLoaded = true;
+
+                // Load player location, only after all boxes have been loaded;
+                // Otherwise the player will fall through without collision detection
+                Player.load();
+
             }});
         };
         this.save = () => {// Save boxes
