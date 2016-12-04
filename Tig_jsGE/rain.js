@@ -52,7 +52,7 @@ class RainManager {
                 // Raindrop hits game level
                 for (var j = 0; j < BoxManager.objects.length; j++) {
                     //BoxManager.objects[j].bg.draw("red");
-                    if (BoxManager.objects[j].bg.pointInside(grid.x + this.raindrop[i].segment.x, grid.y + this.raindrop[i].segment.y)) {
+                    if (BoxManager.objects[j].bg.pointInside(this.raindrop[i].segment.x, this.raindrop[i].segment.y)) {
                         // Reset raindrop if it hits an object
                         this.raindrop[i].segment.x = -grid.x + this.ghostcloud.x + Math.random() * this.width;
                         this.raindrop[i].segment.y = -grid.y + this.ghostcloud.y;
