@@ -38,7 +38,7 @@ class Toolbox {
         this.SOME_TOOL = 6;
         this.RAINMAKER = 7;
         this.CELESTIAL = 8;
-        this.currentToolID = this.BOX_TOOL;
+        this.currentToolID = this.SELECTION_TOOL;
 
         this.hand_dragging = false;
 
