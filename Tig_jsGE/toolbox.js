@@ -1,9 +1,10 @@
 $(document).ready(function() {
-
     // Now that DOM is loaded, configure right click on toolbox
     toolbox.ConfigureRightClick();
-
 });
+
+const ACTION_MAKE_LEFT_SLOPE = 0;
+const ACTION_MAKE_RIGHT_SLOPE = 0;
 
 class Toolbox {
     constructor() {
@@ -56,6 +57,17 @@ class Toolbox {
         this.resetRain = () => {
             this.pressed = true;
         };
+
+        // Change shape type of selected elements
+        this.selection = (action) => {
+            for (var i = 0; i < BoxManager.object.length; i++)  {
+                if (BoxManager.object[i].selected) {
+                    if (action == ACTION_TO_LEFT_SLOPE) {
+                        BoxManager.object[i].type = BOX_TYPE_LEFTSLOPE;
+                    }
+                }
+            }
+        }
 
         // Turn all tools off and reset their functionality
         this.off = () => {
