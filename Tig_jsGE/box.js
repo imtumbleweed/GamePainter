@@ -1,7 +1,13 @@
+const BOX_TYPE_RECT = 0;
+const BOX_TYPE_LEFTSLOPE = 2;
+const BOX_TYPE_RIGHTSLOPE = 3;
+const BOX_TYPE_BOTTOM_LEFTSLOPE = 4;
+const BOX_TYPE_BOTTOM_RIGHTSLOPE = 5;
 const MAX_BOX_NUMBER = 256000;
 var GlobalObjectIdentifier = 0;
 class Box {
     constructor(x,y,w,h) {
+
         this.identifier = GlobalObjectIdentifier++;
         this.x = x;
         this.y = y;
@@ -10,19 +16,23 @@ class Box {
         this.bg = new Rectangle(x,y,w,h);
         this.line = new Segment(0,0,10,10);
         this.otherline = new Segment(0,0,10,10);
+
         this.materialColor = "#222";
         this.color = this.materialColor;
         this.selected = false;
+
         this.draw = function() {
 
             this.line.x             = grid.x + this.x;
             this.line.y             = grid.y + this.y;
             this.line.vecx          = this.width;
             this.line.vecy          = this.height;
+
             this.otherline.x        = grid.x + this.x + this.width;
             this.otherline.y        = grid.y + this.y;
             this.otherline.vecx     = -this.width;
             this.otherline.vecy     = this.height;
+
             this.bg.x               = grid.x + this.x;
             this.bg.y               = grid.y + this.y;
             this.bg.width           = this.width;
