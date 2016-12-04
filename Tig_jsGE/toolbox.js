@@ -106,7 +106,7 @@ class Toolbox {
                                  this.selectionBox.y,
                                  this.selectionBox.width,
                                  this.selectionBox.height,
-                                 25);
+                                 75);
                     this.pressed = false;
                 }
             }
@@ -344,6 +344,8 @@ class Toolbox {
 
         // Process toolbox keyboard shortcuts
         $(document).on('keydown', function(e) {
+
+            // Delete key -- remove objects
             if (e.which == 46) {
                 var index = 0;
                 var s = "s";
