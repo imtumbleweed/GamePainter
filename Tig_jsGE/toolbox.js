@@ -1,15 +1,31 @@
+$(document).ready(function() {
+
+    // Now that DOM is loaded, configure right click on toolbox
+    toolbox.ConfigureRightClick();
+
+});
+
 class Toolbox {
-
     constructor() {
-
+        this.contextMenuOpen = false;
         this.ConfigureRightClick = () => {
-
+            $(".ContextItem").on("click", function() {
+                event.preventDefault();
+                var action = $(this).attr("action");
+                if (action == "Convert to Left Slope") {
+                }
+                if (action == "Convert to Right Slope") {
+                }
+                $("#ContextMenu").hide();
+                Toolbox.contextMenuOpen = false;
+            });
             $(document).on("contextmenu", function() {
                 event.preventDefault();
-
-
-
-            } );
+                $("#ContextMenu").show();
+                $("#ContextMenu").css({"left":(Mouse.x+16)+"px","top":Mouse.y+"px"})
+                $("#ContextMenu").fadeIn(200);
+                Toolbox.contextMenuOpen = true;
+            });
         }
 
         this.SELECTION_TOOL = 0;
@@ -62,6 +78,9 @@ class Toolbox {
                //this.line.draw(1, "#0080e2");
         }
         this.process = function () {
+
+            // Do not process anything if context sub-menu is open
+            if (Toolbox.contextMenuOpen) return;
 
             // Keyboard shortcuts
             if (isCtrl && key.a) {
