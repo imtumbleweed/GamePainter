@@ -64,7 +64,7 @@
     <script src = "Tig_jsGE/text.js?v=1" type = "text/javascript"></script>
     <script src = 'Tig_jsGE/register.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/grid.js?v=2' type = 'text/javascript'></script>
-    <script src = 'Tig_jsGE/toolbox.js' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/toolbox.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/box.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/player.js?v=3' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/rain.js?v=1' type = 'text/javascript'></script>
