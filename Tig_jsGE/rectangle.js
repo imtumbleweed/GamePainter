@@ -30,7 +30,7 @@ var Rectangle = function(x, y, width, height)
 			     offsety + this.y,
 			     offsetx + this.width,
 			     offsety + this.height); */
-		gfx.rect(this.x, this.y, this.width, this.height);
+		gfx.rect(offsetx + this.x, offsety+ this.y, this.width, this.height);
 
 		if (outline == true || outline == undefined) {
 			gfx.strokeStyle = color;
