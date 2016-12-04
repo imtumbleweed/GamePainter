@@ -2,6 +2,8 @@ const LEFT = 0;
 const RIGHT = 2;
 const UP = 4;
 const DOWN = 8;
+var temp = new Segment(0,0,0,0);
+var poi = new Point(0,0);
 class PlayerClass {
     constructor() {
         this.x = 0; // World coordinates
@@ -10,9 +12,9 @@ class PlayerClass {
         this.vely = 0;
         this.momx = 0;  // momentum
         this.momy = 0;
-        this.materialColor = "#9cff00";
+        this.materialColor = "#19a6ff";
         this.color = this.materialColor;
-        this.body = new Rectangle(this.x,this.y,32,64);
+        this.body = new Rectangle(this.x,this.y,64,64);
         this.active = false;
         this.pressed = false;
         this.attachedToMouse = false;
@@ -22,6 +24,12 @@ class PlayerClass {
         this.gravityType = 1; // 0 = hovering (0-gravity)
                               // 1 = normal gravity
                               // 2 = top down view (Z-axis gravity)
+
+        this.colray = new Segment(32, 8, 0, 80); // collision ray (down)
+
+        this.playerHeight = 32; // height of the player counting from top of the collision ray
+
+        this.falling = true;
 
         this.spawn = (px, py) => {
             console.log("Spawning player at " + px + ", " + py);
@@ -73,15 +81,85 @@ class PlayerClass {
                     }
                     this.pressed = false;
                 }
+
+                if (this.falling) {
+                    this.y += 2.8;
+                }
             }
         };
+
+        this.collide = () => {
+            if (this.active) {
+                var collision = false;
+                for (var i = 0; i < BoxManager.objects.length; i++) {
+                    temp.x = BoxManager.objects[i].bg.x;
+                    temp.y = BoxManager.objects[i].bg.y;
+                    temp.vecx = BoxManager.objects[i].bg.width;
+                    temp.vecy = 0;
+                    //temp.draw(1, "red");
+                    if (temp.intersect(this.colray) == DO_INTERSECT) {
+                        poi.x = window.int_x;
+                        poi.y = window.int_y;
+                        //poi.draw(3, "red");
+                        temp.x = this.colray.x;
+                        temp.y = this.colray.y;
+                        temp.width = 1;
+                        temp.height = poi.y - this.colray.y;
+                        if (temp.height > 0) {
+                            if (temp.height <= this.playerHeight) {
+                                this.falling = false;
+                                collision = true;
+                            }
+                        }
+                    }
+                }
+                if (collision == false) {
+                    this.falling = true;
+                }
+            }
+        }
 
         this.draw = () => {
             if (this.active) {
                 this.body.x = grid.x + this.x;
                 this.body.y = grid.y + this.y;
-                this.body.draw(this.color, true, true);
+                this.body.draw(this.color, false, true);
+                this.colray.x = this.body.x + 32;
+                this.colray.y = this.body.y + 8;
+                // this.colray.draw(2, "white");
             }
+        }
+
+        // Load player's previous position if available
+        this.load = () => {
+            console.log("Loading Player data.");
+            $.ajax( { url : "player.txt", type: "POST", success: function(msg) {
+                //if (Player instanceof PlayerClass) {
+                    var object = JSON.parse(msg);
+                    for (var property in object) {
+                        if (object.hasOwnProperty(property)) {
+                            //console.log(typeof(property));
+                            if (object[property] != "[object Object]") {
+                                Player[property] = object[property];
+                                //console.log(property + "=" + object[property]);
+                            }
+                        }
+                    }
+
+                    //console.log(msg);
+                    //Player = JSON.parse(msg);
+                //}
+            }});
+        }
+
+        // Save player position in file
+        this.save = () => {
+            $.ajax( {   url : "saveplayer.php",  type : "POST",
+                        data : { "payload" : JSON.stringify(Player)},
+                success: function(msg) {
+                    console.log(msg);
+                }
+            });
         }
     }
 }
