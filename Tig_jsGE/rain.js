@@ -38,7 +38,7 @@ class RainManager {
             this.raindrop[i] = new Raindrop(this.x + Math.random() * this.width,
                                             this.y,
                                             -0.23,
-                                            4 + Math.random() * 1.700);
+                                            3 + Math.random() * 1.100);
         }
 
         this.process = () => {
