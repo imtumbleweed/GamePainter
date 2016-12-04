@@ -81,6 +81,12 @@
 
         var Timeline = new TimelinePanel(0, 0, $(window).width(), 200);
 
+        var grid = new Grid(64, 64); // Initialize grid
+
+        var toolbox = new Toolbox();
+
+        toolbox.ConfigureRightClick();
+
         var fox = new Sprite("fox.png");
 
         var des = new Sprite("des.png");
@@ -118,9 +124,9 @@
             });
 
             // Load loading bar graphics
-            //window.LoadingBar1 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/loading1.png");
-            ///window.LoadingBar2 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/loading2.png");
-            //window.glowingbar = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/glowingbar.png");
+            // window.LoadingBar1 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/loading1.png");
+            // window.LoadingBar2 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/loading2.png");
+            // window.glowingbar = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/glowingbar.png");
 
             IsMobile();
             Resize();
@@ -302,9 +308,7 @@
 
         var x = 0;
 
-        // Initialize grid
-        var grid = new Grid(64, 64);
-        var toolbox = new Toolbox();
+
         //var cursorhand1 = new Sprite("cursorhand1.png");
 
         //RainArea.add(100,100,200,200,25)
@@ -499,7 +503,9 @@
             window.released = false;	// release touch
             window.clicked = false;		// reset click
             Press.ed = false;			// reset main Press object
-            Mouse.down = false;         // reset single frame mouse click
+            Mouse.down = false;    // reset single frame mouse click
+            Mouse.middleclick = false;
+            Mouse.rightclick = false;
 
             gfx.globalAlpha = 1;
 

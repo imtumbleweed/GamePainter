@@ -1,6 +1,15 @@
 class Toolbox {
 
     constructor() {
+
+        this.ConfigureRightClick = () => {
+
+            $(document).on("contextmenu", function() {
+                event.preventDefault();
+                console.log("contextmenu");
+            } );
+        }
+
         this.SELECTION_TOOL = 0;
         this.MOVE_WORLD = 1;
         this.BOX_TOOL = 2;
@@ -127,6 +136,7 @@ class Toolbox {
                 }
                 // Mouse was clicked down
                 if (Mouse.down) {
+
                     this.pressed = true;
                 }
                 // Mouse was clicked up
@@ -310,7 +320,7 @@ class Toolbox {
                     }
 
                 }
-                if (Mouse.down) { // Mouse-down -  Track single-frame "down" click - Remember x & y of click, but only once
+                if (Mouse.down) { // Mouse.down -  Track single-frame "down" click - Remember x & y of click, but only once
                     this.old_x = Mouse.x;
                     this.old_y = Mouse.y;
                     this.drag_x = window.grid.x; // memorize current grid position in the world
