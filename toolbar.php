@@ -50,6 +50,10 @@
         $("#Tool7").on("click", function(){ toolbox.currentToolID = toolbox.RAINMAKER; console.log("Selected Rain Maker Tool.");});
         $("#Tool8").on("click", function(){ toolbox.currentToolID = toolbox.CELESTIAL; console.log("Celestial Body Tool."); Celestial.place($(window).width()/2, $(window).height()/2 + 500); });
 
+        // Attach events to context menu
+        $("#Context1").on("click", function(){ Toolbox.selection(ACTION_MAKE_LEFT_SLOPE); });
+        $("#Context2").on("click", function(){ Toolbox.selection(ACTION_MAKE_RIGHT_SLOPE); });
+
         // Draggable mini map
         $( "#MinimapView" ).draggable({
             containment: '#Minimap',
@@ -93,6 +97,6 @@
 </div>
 <div class = "CameraIcon"></div>
 <div id = "ContextMenu">
-    <div class = "ContextItem" action = "Convert to Left Slope"><img src = "leftslope.png" alt = "Left slope"/> Left Slope</div>
-    <div class = "ContextItem" action = "Convert to Right Slope"><img src = "rightslope.png" alt = "Right slope"/> Right Slope</div>
+    <div id = "Context1" class = "ContextItem" action = "Convert to Left Slope"><img src = "leftslope.png" alt = "Left slope"/> Left Slope</div>
+    <div id = "Context2" class = "ContextItem" action = "Convert to Right Slope"><img src = "rightslope.png" alt = "Right slope"/> Right Slope</div>
 </div>
