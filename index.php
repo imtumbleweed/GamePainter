@@ -82,6 +82,8 @@
 
         var fox = new Sprite("fox.png");
 
+        var des = new Sprite("des.png");
+
         var H2 = 0;
         var A1 = 169;
 
@@ -302,7 +304,7 @@
 
         //RainArea.add(100,100,200,200,25)
 
-
+        //var loaded = false;
 
         setInterval(function() {
 
@@ -355,21 +357,25 @@
 
                     // Draw player
                     Player.process();
-                    //Player.draw();
+                    Player.draw();
+                    Player.collide(); // Collide player with the world
+
 
                     //fox.draw(Player.x,Player.y);
                     if (Player.dirx == RIGHT) {
                         if (Player.controlKeysPressed)
-                            fox.rotAnim(Player.x, Player.y, [0, 1, 2, 3, 4], 0, 64, /* width of one cell */ 8, /* cells per width in the spritesheet */ 10);
+                            fox.rotAnim(Player.body.x, Player.body.y, [0, 1, 2, 3, 4], 0, 64,8, 10);
                         else
-                            fox.rotAnim(Player.x, Player.y, [17], 1, 64, 8, 10);
+                            fox.rotAnim(Player.body.x, Player.body.y, [17], 1, 64, 8, 10);
                     }
                     if (Player.dirx == LEFT) {
                         if (Player.controlKeysPressed)
-                            fox.rotAnim(Player.x, Player.y, [24,25,26,27,28], 0, 64, /* width of one cell */ 8, /* cells per width in the spritesheet */ 10);
+                            fox.rotAnim(Player.body.x, Player.body.y, [24,25,26,27,28], 0, 64, 8,  10);
                         else
-                            fox.rotAnim(Player.x, Player.y, [16], 1, 64, 8, 10);
+                            fox.rotAnim(Player.body.x, Player.body.y, [16], 1, 64, 8, 10);
                     }
+
+
 
 
 
@@ -382,6 +388,13 @@
                     // Draw timeline panel
                     Timeline.process();
                     Timeline.draw();
+
+                    //room.draw(Mouse.x,Mouse.y);
+
+                    //des.rotAnim(Mouse.x + 210, Mouse.y + 280,
+                        //[1,2,3,4,5,6,7,8,9], 0, 96, 10,  7);
+
+
 
   //                  if (toolbox.currentToolID == toolbox.MOVE_WORLD) {
 //                        //smallhand1.draw(Mouse.x, Mouse.y);
