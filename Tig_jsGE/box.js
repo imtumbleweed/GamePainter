@@ -1,8 +1,8 @@
 const BOX_TYPE_RECT = 0;
-const BOX_TYPE_LEFTSLOPE = 2;
-const BOX_TYPE_RIGHTSLOPE = 3;
-const BOX_TYPE_BOTTOM_LEFTSLOPE = 4;
-const BOX_TYPE_BOTTOM_RIGHTSLOPE = 5;
+const BOX_TYPE_LEFTSLOPE = 1;
+const BOX_TYPE_RIGHTSLOPE = 2;
+const BOX_TYPE_BOTTOM_LEFTSLOPE = 3;
+const BOX_TYPE_BOTTOM_RIGHTSLOPE = 4;
 const MAX_BOX_NUMBER = 256000;
 var GlobalObjectIdentifier = 0;
 class Box {
@@ -34,43 +34,47 @@ class Box {
             this.type = type;
 
             if (this.type == BOX_TYPE_LEFTSLOPE) {
-                this.triangle.A.x = this.x + this.width;
-                this.triangle.A.y = this.y;
-                this.triangle.A.vecx = this.x - (this.x + this.width);
-                this.triangle.A.avecy = (this.y + this.height) - this.y;
+                this.triangle.A.x = (this.x + this.width);
+                this.triangle.A.y = (this.y);
+                this.triangle.A.vecx = (this.x - (this.x + this.width));
+                this.triangle.A.vecy = ((this.y + this.height) - this.y);
             }
         }
 
         this.draw = function() {
 
-            this.line.x             = grid.x + this.x;
-            this.line.y             = grid.y + this.y;
-            this.line.vecx          = this.width;
-            this.line.vecy          = this.height;
+            if (this.type == BOX_TYPE_RECT) {
 
-            this.otherline.x        = grid.x + this.x + this.width;
-            this.otherline.y        = grid.y + this.y;
-            this.otherline.vecx     = -this.width;
-            this.otherline.vecy     = this.height;
+                this.line.x             = this.x;
+                this.line.y             = this.y;
+                this.line.vecx          = this.width;
+                this.line.vecy          = this.height;
 
-            this.bg.x               = grid.x + this.x;
-            this.bg.y               = grid.y + this.y;
-            this.bg.width           = this.width;
-            this.bg.height          = this.height;
+                this.otherline.x        = this.x + this.width;
+                this.otherline.y        = this.y;
+                this.otherline.vecx     = -this.width;
+                this.otherline.vecy     = this.height;
 
-            //if (this.type = BOX_TYPE_RECT) {
+                this.bg.x               = this.x;
+                this.bg.y               = this.y;
+                this.bg.width           = this.width;
+                this.bg.height          = this.height;
+
                 // draw as rectangle
-                this.bg.draw(this.color, true, false);
-                // draw diagonal lines
-                this.line.draw(1, "#333");
-                this.otherline.draw(1, "#333");
-            //}
-
-            if (this.type = BOX_TYPE_LEFTSLOPE) {
-                this.triangle.A.draw();
+                this.bg.drawAt(grid.x, grid.y, this.color, true, false);
+                this.line.drawAt(grid.x, grid.y, 1, "#333");
+                this.otherline.drawAt(grid.x, grid.y, 1, "#333");
             }
 
-            if (this.type = BOX_TYPE_RIGHTSLOPE) {
+            if (this.type == BOX_TYPE_LEFTSLOPE) {
+                // Adjust to follow grid
+
+
+                // draw as triangle
+                this.triangle.A.drawAt(grid.x, grid.y, 1, "white");
+            }
+
+            if (this.type == BOX_TYPE_RIGHTSLOPE) {
 
             }
         };
