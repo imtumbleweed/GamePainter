@@ -12,6 +12,9 @@
     .STPlaceholder { position: relative; margin; 2px; display: inline-block; width: 33px; height; 26px; background: url("SecondaryToolbarSelected.png") no-repeat; }
     .STPlaceholder img { pointer-events: none; }
     .STAdjuster { position: absolute; top: 16px; left: 18px; }
+    #SidePanel { position: absolute; top: 32px; right: 32px; width: 226px; height: 250px; background: url("sidepanelbg.png") repeat-y; }
+    #Minimap { position: relative; margin: auto; width: 200px; height: 200px; background: black; }
+    #MinimapView { position: absolute; top: 0; left: 0; width: 50px; height: 50px; border: 1px solid #444; }
 </style>
 <script>$(document).ready(function() {
         //
@@ -33,6 +36,15 @@
         $("#Tool6").on("click", function(){ toolbox.currentToolID = toolbox.SOME_TOOL; console.log("Selected Some Tool.");});
         $("#Tool7").on("click", function(){ toolbox.currentToolID = toolbox.RAINMAKER; console.log("Selected Rain Maker Tool.");});
         $("#Tool8").on("click", function(){ toolbox.currentToolID = toolbox.CELESTIAL; console.log("Celestial Body Tool."); Celestial.place($(window).width()/2, $(window).height()/2 + 500); });
+
+        // Draggable mini map
+        $( "#MinimapView" ).draggable({
+            containment: '#Minimap',
+            drag: function(event) {
+                var top = $(this).position().top;
+                var left = $(this).position().left;
+            }
+        });
 
         $("#Tool2,#Tool3,#Tool4,#Tool5,#Tool6,#Tool7").on("click", function(){MakeRainsSelectable(false);})
         $("#Tool1").on("click", function(){MakeRainsSelectable(true);})
@@ -58,6 +70,12 @@
         <div class = "STPlaceholder">
             <img src = "controllericon.png" alt = ""/>
         </div>
+    </div>
+</div>
+<div id = "SidePanel">
+    <img src = "sidepanelheader.png" alt = ""/>
+    <div id = "Minimap">
+        <div id = "MinimapView"></div>
     </div>
 </div>
 <div class = "CameraIcon"></div>
