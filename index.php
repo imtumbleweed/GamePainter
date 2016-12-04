@@ -85,8 +85,6 @@
 
         var toolbox = new Toolbox();
 
-        toolbox.ConfigureRightClick();
-
         var fox = new Sprite("fox.png");
 
         var des = new Sprite("des.png");
