@@ -17,6 +17,8 @@ class Box {
         this.line = new Segment(0,0,10,10);
         this.otherline = new Segment(0,0,10,10);
 
+        this.triangle = new Triangle();
+
         this.materialColor = "#222";
         this.color = this.materialColor;
         this.selected = false;
