@@ -8,20 +8,38 @@ var GlobalObjectIdentifier = 0;
 class Box {
     constructor(x,y,w,h) {
 
+        // Basic parameters
         this.identifier = GlobalObjectIdentifier++;
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
+        this.type = BOX_TYPE_RECT;
+
+        // Assets
         this.bg = new Rectangle(x,y,w,h);
         this.line = new Segment(0,0,10,10);
         this.otherline = new Segment(0,0,10,10);
-
         this.triangle = new Triangle();
 
+        // Materials
         this.materialColor = "#222";
         this.color = this.materialColor;
+
         this.selected = false;
+
+        // Convert shape to a type
+        this.convert = (type) => {
+            // todo: check if the type is allowed / exists
+            this.type = type;
+
+            if (this.type == BOX_TYPE_LEFTSLOPE) {
+                this.triangle.A.x = this.x + this.width;
+                this.triangle.A.y = this.y;
+                this.triangle.A.vecx = this.x - (this.x + this.width);
+                this.triangle.A.avecy = (this.y + this.height) - this.y;
+            }
+        }
 
         this.draw = function() {
 
@@ -40,9 +58,21 @@ class Box {
             this.bg.width           = this.width;
             this.bg.height          = this.height;
 
-            this.bg.draw(this.color, true, false);
-            this.line.draw(1, "#333");
-            this.otherline.draw(1, "#333");
+            //if (this.type = BOX_TYPE_RECT) {
+                // draw as rectangle
+                this.bg.draw(this.color, true, false);
+                // draw diagonal lines
+                this.line.draw(1, "#333");
+                this.otherline.draw(1, "#333");
+            //}
+
+            if (this.type = BOX_TYPE_LEFTSLOPE) {
+                this.triangle.A.draw();
+            }
+
+            if (this.type = BOX_TYPE_RIGHTSLOPE) {
+
+            }
         };
     }
 }
@@ -62,7 +92,7 @@ class BoxManagerClass {
                 for (var i=0;i<objs.length;i++) {
                     BoxManager.objects[i] = new Box(objs[i].x,objs[i].y,objs[i].width,objs[i].height);
                 }
-                console.log(BoxManager.objects.length + "object(s) loaded.");
+                console.log(BoxManager.objects.length + " object(s) loaded.");
                 //console.log(this.objects);
                 //console.log(this.objects.length);
                 BoxManager.objectsLoaded = true;
@@ -79,7 +109,7 @@ class BoxManagerClass {
             //console.log(JSON.stringify());
             //console.log(this.objects);
             $.ajax({url:"saveboxes.php", type : "post", data:{"payload":JSON.stringify(this.objects)}, success: function(msg) {
-                console.log("saveboxes.php = " + msg);
+                //console.log("saveboxes.php = " + msg);
             }});
         };
         // Add new box
