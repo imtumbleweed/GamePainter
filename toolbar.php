@@ -51,8 +51,8 @@
         $("#Tool8").on("click", function(){ toolbox.currentToolID = toolbox.CELESTIAL; console.log("Celestial Body Tool."); Celestial.place($(window).width()/2, $(window).height()/2 + 500); });
 
         // Attach events to context menu
-        $("#Context1").on("click", function(){ Toolbox.selection(ACTION_MAKE_LEFT_SLOPE); });
-        $("#Context2").on("click", function(){ Toolbox.selection(ACTION_MAKE_RIGHT_SLOPE); });
+        $("#Context1").on("click", function(){ toolbox.action(ACTION_MAKE_LEFT_SLOPE); });
+        $("#Context2").on("click", function(){ toolbox.action(ACTION_MAKE_RIGHT_SLOPE); });
 
         // Draggable mini map
         $( "#MinimapView" ).draggable({
