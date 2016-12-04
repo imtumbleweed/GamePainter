@@ -27,7 +27,7 @@ class TimelinePanel {
             for (var i = 0; i < 50; i++) {
                 var x = this.panelOffset + i * 75;
                 var h = 17;
-                if (timespacing)
+                if (game.resourcesLoaded)
                     Context.context.drawImage(timespacing.image, x, this.area.y + 15, 75, h);
             }
 
