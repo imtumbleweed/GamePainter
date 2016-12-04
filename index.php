@@ -342,8 +342,8 @@
                     Celestial.draw();
 
                     // Drag cursor
-                    if (game.ResourcesLoaded)
-                        cursorhand1.draw(Mouse.x, Mouse.y);
+                    //if (game.ResourcesLoaded)
+                        //cursorhand1.draw(Mouse.x, Mouse.y);
 
                     // Process grid
                     toolbox.process();
@@ -380,15 +380,10 @@
                             fox.rotAnim(Player.body.x, Player.body.y, [16], 1, 64, 8, 10);
                     }
 
-
-
-
-
                     gfx.globalAlpha = 0.35;
                     FrameView.center(game.width/2, FrameView.height/2 + 100);
                     FrameView.draw("#fff", false, true);
                     gfx.globalAlpha = 1;
-
 
                     // Draw timeline panel
                     Timeline.process();
@@ -487,34 +482,14 @@
 
             if (!game.ResourcesLoaded) {
 
-                draw_gemini_loading_logo();
+                // Do something while game is loading
 
             } else {
                 if (game.state == -1) {
-                    draw_gemini_loading_logo();
-
-                    sins[0] = (Math.sin(sint[0]+=0.1) * 1.8);
-                    sins[1] = (Math.sin(sint[1]+=0.1) * 1.8);
-                    sins[2] = (Math.sin(sint[2]+=0.1) * 1.8);
-                    sins[3] = (Math.sin(sint[3]+=0.1) * 1.8);
-                    sins[4] = (Math.sin(sint[4]+=0.1) * 1.8);
-
-                    if (LoadingPercent >= 100) {
-
-                        if ($("#PlayerButtons").attr("visible") == "none") {
-                            $("#PlayerButtons").attr("visible", "-1");
-                            $("#PlayerButtons").fadeIn(300);
-                            $("#select_player").text("Select Player");
-                        }
-
+                    //if (LoadingPercent >= 100) {
 //                        text("Gemini requires a Tigris game account.", game.width/2, 350, "silver", "center", "13px", "Verdana");
-                        //debug_nextLvl.draw(100,450);
-//                        if (Press.ed && debug_nextLvl.pressed()) {
-//                            game.start(game.level + 1);
-                        //}
-//                        text("© 2016 Tigris Games. A division of River Tigris LLC.", game.width/2, game.height-48,
-  //                          "gray", "center", "11px", "Verdana");
-                    }
+//                        if (Press.ed && debug_nextLvl.pressed()) { game.start(game.level + 1); }
+                    //}
                 }
             }
 
