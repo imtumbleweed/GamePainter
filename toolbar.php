@@ -15,6 +15,19 @@
     #SidePanel { position: absolute; top: 32px; right: 32px; width: 226px; height: 250px; background: url("sidepanelbg.png") repeat-y; }
     #Minimap { position: relative; margin: auto; width: 200px; height: 200px; background: black; }
     #MinimapView { position: absolute; top: 0; left: 0; width: 50px; height: 50px; border: 1px solid #444; }
+    #ContextMenu { display: none; position: absolute; top: 0; left: 0; width: 150px; cursor:default;}
+    .ContextItem { background: #333; font-family: Arial; font-size: 11px; color: goldenrod; padding: 2px; }
+    .ContextItem:hover { background: #777; color: black; }
+    .ContextItem img { vertical-align: middle; }
+    .ContextItem {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
 </style>
 <script>$(document).ready(function() {
         //
@@ -79,3 +92,7 @@
     </div>
 </div>
 <div class = "CameraIcon"></div>
+<div id = "ContextMenu">
+    <div class = "ContextItem" action = "Convert to Left Slope"><img src = "leftslope.png" alt = "Left slope"/> Left Slope</div>
+    <div class = "ContextItem" action = "Convert to Right Slope"><img src = "rightslope.png" alt = "Right slope"/> Right Slope</div>
+</div>
