@@ -503,9 +503,8 @@
             window.released = false;	// release touch
             window.clicked = false;		// reset click
             Press.ed = false;			// reset main Press object
-            Mouse.down = false;    // reset single frame mouse click
-            Mouse.middleclick = false;
-            Mouse.rightclick = false;
+            Mouse.down = false;         // reset single frame mouse click
+            Mouse.reset();              // reset all mouse clicks
 
             gfx.globalAlpha = 1;
 

@@ -6,7 +6,9 @@ class Toolbox {
 
             $(document).on("contextmenu", function() {
                 event.preventDefault();
-                console.log("contextmenu");
+
+
+
             } );
         }
 
@@ -84,7 +86,7 @@ class Toolbox {
                  if (this.pressed) { // Mouse is being currently pressed down
 
                  }
-                 if (Mouse.down) { // Mouse was clicked down
+                 if (Mouse.leftdown) { // Mouse was clicked down
                      this.pressed = true;
                  }
                  if (window.clicked) { // Mouse was clicked up
@@ -106,7 +108,7 @@ class Toolbox {
                     this.selectionBox.draw("#555", false, true);
                     gfx.globalAlpha = 1;
                 }
-                if (Mouse.down) { // Mouse was clicked down
+                if (Mouse.leftdown) { // Mouse was clicked down
                     this.old_x = Mouse.x; this.old_y = Mouse.y;
                     this.pressed = true;
                 }
@@ -135,7 +137,7 @@ class Toolbox {
 
                 }
                 // Mouse was clicked down
-                if (Mouse.down) {
+                if (Mouse.leftdown) {
 
                     this.pressed = true;
                 }
@@ -175,7 +177,7 @@ class Toolbox {
 
                 //window.gfx.setLineDash([]);
                 // Mouse was clicked down
-                if (Mouse.down) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
+                if (Mouse.leftdown) { this.pressed = true; this.old_x = Mouse.x; this.old_y = Mouse.y; }
                 // Mouse was clicked up
                 if (window.clicked) {
                     // Add this box to box manager
@@ -204,7 +206,7 @@ class Toolbox {
                 for (var i = 0; i < RainArea.length; i++) {
                     if (RainArea[i].bg.pointInside(Mouse.x, Mouse.y)) {
                         RainArea[i].highlighted = true;
-                        if (Mouse.down) {
+                        if (Mouse.leftdown) {
                             RainArea[i].attachedToMouse = true;
                             // RainArea[i].mousedragx = Mouse.x - RainArea[i].bg.x;
                             // RainArea[i].mousedragy = Mouse.y - RainArea[i].bg.y;
@@ -286,7 +288,7 @@ class Toolbox {
                 }
 
                 // Mouse was clicked down
-                if (Mouse.down) {
+                if (Mouse.leftdown) {
 
                     // Check if any objects were under the mouse, and if so select them
                     for (var i=0;i<BoxManager.objects.length;i++) {
@@ -320,7 +322,7 @@ class Toolbox {
                     }
 
                 }
-                if (Mouse.down) { // Mouse.down -  Track single-frame "down" click - Remember x & y of click, but only once
+                if (Mouse.leftdown) { // Mouse.leftdown -  Track single-frame "down" click - Remember x & y of click, but only once
                     this.old_x = Mouse.x;
                     this.old_y = Mouse.y;
                     this.drag_x = window.grid.x; // memorize current grid position in the world
