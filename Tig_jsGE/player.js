@@ -92,10 +92,21 @@ class PlayerClass {
             if (this.active) {
                 var collision = false;
                 for (var i = 0; i < BoxManager.objects.length; i++) {
-                    temp.x = grid.x + BoxManager.objects[i].bg.x;
-                    temp.y = grid.y + BoxManager.objects[i].bg.y;
-                    temp.vecx = BoxManager.objects[i].bg.width;
-                    temp.vecy = 0;
+
+                    if (BoxManager.objects[i].type == BOX_TYPE_RECT) {
+                        temp.x = grid.x + BoxManager.objects[i].bg.x;
+                        temp.y = grid.y + BoxManager.objects[i].bg.y;
+                        temp.vecx = BoxManager.objects[i].bg.width;
+                        temp.vecy = 0;
+                    }
+
+                    if (BoxManager.objects[i].type == BOX_TYPE_LEFTSLOPE) {
+                        temp.x = grid.x + BoxManager.objects[i].triangle.A.x;
+                        temp.y = grid.y + BoxManager.objects[i].triangle.A.y;
+                        temp.vecx = -BoxManager.objects[i].width;
+                        temp.vecy = BoxManager.objects[i].triangle.A.vecy - BoxManager.objects[i].triangle.B.vecy;
+                    }
+
                     temp.draw(1,"red");
 
                     if (temp.intersect(this.colray) == DO_INTERSECT) {
@@ -113,6 +124,7 @@ class PlayerClass {
                             }
                         }
                     }
+
                 }
                 if (collision == false) {
                     this.falling = true;
