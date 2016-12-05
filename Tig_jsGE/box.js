@@ -38,28 +38,32 @@ class Box {
                 this.triangle.A.y = (this.y);
                 this.triangle.A.vecx = (this.x - (this.x + this.width));
                 this.triangle.A.vecy = ((this.y + this.height) - this.y);
+                this.triangle.B.x = this.triangle.A.x + this.triangle.A.vecx;
+                this.triangle.B.y = this.triangle.A.y + this.triangle.A.vecy;
+                this.triangle.B.vecx = this.width;
+                this.triangle.B.vecy = 0;
+                this.triangle.C.x = this.triangle.B.x + this.triangle.B.vecx;
+                this.triangle.C.y = this.triangle.B.y + this.triangle.B.vecy;
+                this.triangle.C.vecx = 0;
+                this.triangle.C.vecy =  - this.height;
             }
         }
 
         this.draw = function() {
 
             if (this.type == BOX_TYPE_RECT) {
-
                 this.line.x             = this.x;
                 this.line.y             = this.y;
                 this.line.vecx          = this.width;
                 this.line.vecy          = this.height;
-
                 this.otherline.x        = this.x + this.width;
                 this.otherline.y        = this.y;
                 this.otherline.vecx     = -this.width;
                 this.otherline.vecy     = this.height;
-
                 this.bg.x               = this.x;
                 this.bg.y               = this.y;
                 this.bg.width           = this.width;
                 this.bg.height          = this.height;
-
                 // draw as rectangle
                 this.bg.drawAt(grid.x, grid.y, this.color, true, false);
                 this.line.drawAt(grid.x, grid.y, 1, "#333");
@@ -67,11 +71,7 @@ class Box {
             }
 
             if (this.type == BOX_TYPE_LEFTSLOPE) {
-                // Adjust to follow grid
-
-
-                // draw as triangle
-                this.triangle.A.drawAt(grid.x, grid.y, 1, "white");
+                this.triangle.draw();
             }
 
             if (this.type == BOX_TYPE_RIGHTSLOPE) {

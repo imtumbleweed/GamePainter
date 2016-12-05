@@ -1,8 +1,8 @@
 class Triangle {
     constructor(ax,ay,avecx,avecy,
                 bx,by,bvecx,bvecy,
-                cx,cy,cvecx,cvecy) {
-
+                cx,cy,cvecx,cvecy)
+    {
         if (arguments.length == 0) {
             this.ax = 0;
             this.ay = 0;
@@ -41,9 +41,15 @@ class Triangle {
 
         this.color = "#fff";
         this.draw = () => {
-            this.A.draw(1, this.color);
-            this.B.draw(1, this.color);
-            this.C.draw(1, this.color);
+            gfx.lineWidth = 1;
+            gfx.strokeStyle = this.color;
+            gfx.beginPath();
+            gfx.moveTo(grid.x + this.A.x, grid.y + this.A.y);
+            gfx.lineTo(grid.x + this.B.x, grid.y + this.B.y);
+            gfx.lineTo(grid.x + this.C.x, grid.y + this.C.y);
+            gfx.lineTo(grid.A + this.A.x, grid.y + this.A.y);
+            gfx.closePath();
+            gfx.fill();
         }
     }
 };

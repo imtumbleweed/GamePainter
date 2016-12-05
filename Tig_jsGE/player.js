@@ -92,15 +92,16 @@ class PlayerClass {
             if (this.active) {
                 var collision = false;
                 for (var i = 0; i < BoxManager.objects.length; i++) {
-                    temp.x = BoxManager.objects[i].bg.x;
-                    temp.y = BoxManager.objects[i].bg.y;
+                    temp.x = grid.x + BoxManager.objects[i].bg.x;
+                    temp.y = grid.y + BoxManager.objects[i].bg.y;
                     temp.vecx = BoxManager.objects[i].bg.width;
                     temp.vecy = 0;
-                    //temp.draw(1, "red");
+                    temp.draw(1,"red");
+
                     if (temp.intersect(this.colray) == DO_INTERSECT) {
                         poi.x = window.int_x;
                         poi.y = window.int_y;
-                        //poi.draw(3, "red");
+                        poi.draw(3, "red");
                         temp.x = this.colray.x;
                         temp.y = this.colray.y;
                         temp.width = 1;

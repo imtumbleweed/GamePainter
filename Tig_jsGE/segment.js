@@ -35,8 +35,9 @@ var Segment = function(x, y, vecx, vecy)
 		gfx.lineTo(offset_x + this.x + this.vecx, offset_y + this.y + this.vecy);
 		gfx.strokeStyle = color;
 		gfx.stroke();
+		gfx.fill();
 	}
-	
+
 	this.length = function() {
 		var dx = this.vecx;
 		var dy = this.vecy;
