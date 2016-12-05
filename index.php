@@ -370,18 +370,17 @@
                     Player.collide(); // Collide player with the world
 
 
-                    //fox.draw(Player.x,Player.y);
                     if (Player.dirx == RIGHT) {
                         if (Player.controlKeysPressed)
-                            fox.rotAnim(Player.body.x, Player.body.y, [0, 1, 2, 3, 4], 0, 64,8, 10);
+                            fox.rotAnim(Player.drawx, Player.drawy - 8, [0, 1, 2, 3, 4], 0, 64,8, 10);
                         else
-                            fox.rotAnim(Player.body.x, Player.body.y, [17], 1, 64, 8, 10);
+                            fox.rotAnim(Player.drawx, Player.drawy - 8, [17], 1, 64, 8, 10);
                     }
                     if (Player.dirx == LEFT) {
                         if (Player.controlKeysPressed)
-                            fox.rotAnim(Player.body.x, Player.body.y, [24,25,26,27,28], 0, 64, 8,  10);
+                            fox.rotAnim(Player.drawx, Player.drawy - 8, [24,25,26,27,28], 0, 64, 8, 10);
                         else
-                            fox.rotAnim(Player.body.x, Player.body.y, [16], 1, 64, 8, 10);
+                            fox.rotAnim(Player.drawx, Player.drawy - 8, [16], 1, 64, 8, 10);
                     }
 
                     gfx.globalAlpha = 0.35;

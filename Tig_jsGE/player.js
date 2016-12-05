@@ -4,6 +4,26 @@ const UP = 4;
 const DOWN = 8;
 var temp = new Segment(0,0,0,0);
 var poi = new Point(0,0);
+
+// Collision detection
+const TOTAL_COLPOINTS = 256;
+const DEFAULT_GRAVITY = 0.85;
+const MAXIMUM_GRAVITY = 7;
+var downline = new Segment(300,300,0,100);
+
+class CollisionData {
+    constructor(x, y, height)  {
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.sett = function (x, y, ht) {
+            this.x = x;
+            this.y = y;
+            this.height = ht;
+        }
+    }
+};
+
 class PlayerClass {
     constructor() {
         this.x = 0; // World coordinates
@@ -21,15 +41,38 @@ class PlayerClass {
         this.controlKeysPressed = false;
         this.dirx = RIGHT; // defaults
         this.diry = DOWN;
+
+        this.collision = false;
+
+        this.drawx = 0; // actual drawing location of the sprite after collision
+        this.drawy = 0; // need to do it this way to fix collision-gravity jitter bug
+
         this.gravityType = 1; // 0 = hovering (0-gravity)
                               // 1 = normal gravity
                               // 2 = top down view (Z-axis gravity)
 
-        this.colray = new Segment(32, 8, 0, 80); // collision ray (down)
-
-        this.playerHeight = 32; // height of the player counting from top of the collision ray
-
         this.falling = true;
+        this.jumping = false;
+        this.grounded = false;
+        this.grounded2 = false;
+        this.playerHeight = 100;// height of the player counting from top of the collision ray
+
+        this.jumping = false;
+        this.dot = new Point(0,0);
+        this.JumpingVelocity = 35;
+        this.JumpingVelocityMult = 1.05;
+        this.Gravity = 1;
+
+        this.shortest_idx = 0;
+        this.shortest_height = 10000;
+        this.already_jumping = false;
+
+        this.rod = new Segment(0,0,0,0);
+
+        this.dots = new Array();
+
+        for (var i = 0; i < TOTAL_COLPOINTS; i++)
+            this.dots[i] = new CollisionData(0, 0, 0);
 
         this.spawn = (px, py) => {
             console.log("Spawning player at " + px + ", " + py);
@@ -43,10 +86,18 @@ class PlayerClass {
         this.process = () => {
             if (this.active) {
 
-                // Process player movement
+                if (this.jumping) {
+                    this.y -= 10; // JumpForce
+                    this.y += this.Gravity * 2;
+                    this.Gravity *= 1.055;
+                    if (this.Gravity >= MAXIMUM_GRAVITY)
+                        this.Gravity = MAXIMUM_GRAVITY;
+                }
+
+                // Process player movement (friction)
                 if (this.gravityType == 1) {
                     if (Player.controlKeysPressed == false) {
-                        this.momx -= this.momx * 0.05;
+                        this.momx -= this.momx * 0.075;
                         this.x += this.momx;
                     }
                 }
@@ -83,14 +134,23 @@ class PlayerClass {
                 }
 
                 if (this.falling) {
-                    this.y += 2.8;
+                   this.y += 1.5;
                 }
             }
         };
 
         this.collide = () => {
+
             if (this.active) {
-                var collision = false;
+
+                downline.x = grid.x + this.x;
+                downline.y = grid.y + this.y;
+                downline.draw(1, "green");
+
+                var colidx = 0;
+
+                for (var i = 0; i < TOTAL_COLPOINTS; i++) this.dots[i].height = 0;
+
                 for (var i = 0; i < BoxManager.objects.length; i++) {
 
                     if (BoxManager.objects[i].type == BOX_TYPE_RECT) {
@@ -107,29 +167,73 @@ class PlayerClass {
                         temp.vecy = BoxManager.objects[i].triangle.A.vecy - BoxManager.objects[i].triangle.B.vecy;
                     }
 
-                    temp.draw(1,"red");
+                        // find shortest
+                        if (temp.intersect(downline) == DO_INTERSECT) {
+                            this.dot.x = int_x;
+                            this.dot.y = int_y;
+                            this.dot.draw(2, "gray");
+                            this.dots[colidx].x = int_x;
+                            this.dots[colidx].y = int_y;
+                            this.dots[colidx++].height = int_y;
+                        }
+                }
 
-                    if (temp.intersect(this.colray) == DO_INTERSECT) {
-                        poi.x = window.int_x;
-                        poi.y = window.int_y;
-                        poi.draw(3, "red");
-                        temp.x = this.colray.x;
-                        temp.y = this.colray.y;
-                        temp.width = 1;
-                        temp.height = poi.y - this.colray.y;
-                        if (temp.height > 0) {
-                            if (temp.height <= this.playerHeight) {
-                                this.falling = false;
-                                collision = true;
+                if (colidx > 0) {
+
+                    this.JumpingVelocity = 1;
+                    this.jumping = false;
+                    this.falling = true;
+                    this.Gravity = DEFAULT_GRAVITY;
+
+                    // Now find the intersection with shortest distance
+                    this.shortest_height = 100000;
+                    for (var i = 0; i < colidx; i++) {
+                        if (this.dots[i] != undefined) {
+                            if (this.shortest_height > this.dots[i].height) {
+                                this.shortest_height = this.dots[i].height;
+                                this.shortest_idx = i;
                             }
                         }
                     }
 
+
+
+                    //text(this.shortest_idx, 220, 220);
+
+                    this.dot.x = this.dots[this.shortest_idx].x;
+                    this.dot.y = this.dots[this.shortest_idx].y;
+
+                    this.dot.draw(2, "red");
+
+                    var pt = new Point(grid.x+this.x, grid.y+this.y);
+                    pt.draw(2, "pink");
+
+                    var se = new Segment(pt.x,pt.y,0,this.dot.y-pt.y);
+
+
+                    if (se.vecy < 35) {
+                        se.draw(2, "red");
+                        this.y = -grid.y + this.dot.y - 35;
+                    } else
+                        se.draw(2, "yellow");
+
+                   // var hh = this.dot.y-this.y;//grid.y+this.dot.y-this.y;
+                    //var seg = new Segment(grid.x+this.x,grid.y+this.y,0,hh);
+                    //seg.draw(2,"yellow");
+
+                    // adjust player position
+                    //if (hh < 50) {
+                    //    this.y = this.dot.y - 50;
+                    //}
+
+
+                    // calculate sprite location
+                    this.drawx = this.dot.x - 32;
+                    this.drawy = this.dot.y - 32;
                 }
-                if (collision == false) {
-                    this.falling = true;
-                }
+
             }
+
         }
 
         this.draw = () => {
@@ -137,8 +241,8 @@ class PlayerClass {
                 this.body.x = grid.x + this.x;
                 this.body.y = grid.y + this.y;
                 this.body.draw(this.color, false, true);
-                this.colray.x = this.body.x + 32;
-                this.colray.y = this.body.y + 8;
+                //this.colray.x = this.body.x + 32;
+                //this.colray.y = this.body.y + 0;
                 // this.colray.draw(2, "white");
             }
         }
