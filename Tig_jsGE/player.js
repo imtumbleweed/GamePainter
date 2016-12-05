@@ -145,7 +145,7 @@ class PlayerClass {
 
                 downline.x = grid.x + this.x;
                 downline.y = grid.y + this.y;
-                downline.draw(1, "green");
+                //downline.draw(1, "green");
 
                 var colidx = 0;
 
@@ -167,11 +167,20 @@ class PlayerClass {
                         temp.vecy = BoxManager.objects[i].triangle.A.vecy - BoxManager.objects[i].triangle.B.vecy;
                     }
 
+                    if (BoxManager.objects[i].type == BOX_TYPE_RIGHTSLOPE) {
+                        temp.x = grid.x + BoxManager.objects[i].triangle.A.x;
+                        temp.y = grid.y + BoxManager.objects[i].triangle.A.y;
+                        temp.vecx = BoxManager.objects[i].triangle.A.vecx;
+                        temp.vecy = BoxManager.objects[i].triangle.B.vecy + BoxManager.objects[i].height;
+                    }
+
+                    //temp.draw(1, "yellow");
+
                         // find shortest
                         if (temp.intersect(downline) == DO_INTERSECT) {
                             this.dot.x = int_x;
                             this.dot.y = int_y;
-                            this.dot.draw(2, "gray");
+                            //this.dot.draw(2, "gray");
                             this.dots[colidx].x = int_x;
                             this.dots[colidx].y = int_y;
                             this.dots[colidx++].height = int_y;
@@ -203,19 +212,19 @@ class PlayerClass {
                     this.dot.x = this.dots[this.shortest_idx].x;
                     this.dot.y = this.dots[this.shortest_idx].y;
 
-                    this.dot.draw(2, "red");
+                    //this.dot.draw(2, "red");
 
                     var pt = new Point(grid.x+this.x, grid.y+this.y);
-                    pt.draw(2, "pink");
+                    //pt.draw(2, "pink");
 
                     var se = new Segment(pt.x,pt.y,0,this.dot.y-pt.y);
 
 
                     if (se.vecy < 35) {
-                        se.draw(2, "red");
+                      //  se.draw(2, "red");
                         this.y = -grid.y + this.dot.y - 35;
-                    } else
-                        se.draw(2, "yellow");
+                    }// else
+                       // se.draw(2, "yellow");
 
                    // var hh = this.dot.y-this.y;//grid.y+this.dot.y-this.y;
                     //var seg = new Segment(grid.x+this.x,grid.y+this.y,0,hh);

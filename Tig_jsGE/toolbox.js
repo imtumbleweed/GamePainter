@@ -64,10 +64,10 @@ class Toolbox {
         this.action = (act) => {
             for (var i = 0; i < BoxManager.objects.length; i++)  {
                 if (BoxManager.objects[i].selected) {
-                    if (act == ACTION_MAKE_LEFT_SLOPE) {
+                    if (act == ACTION_MAKE_LEFT_SLOPE)
                         BoxManager.objects[i].convert(BOX_TYPE_LEFTSLOPE);
-                        BoxManager.objects[i].type = BOX_TYPE_LEFTSLOPE;
-                    }
+                    if (act == ACTION_MAKE_RIGHT_SLOPE)
+                        BoxManager.objects[i].convert(BOX_TYPE_RIGHTSLOPE);
                 }
             }
         };

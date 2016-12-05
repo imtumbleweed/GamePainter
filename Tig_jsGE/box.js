@@ -6,7 +6,7 @@ const BOX_TYPE_BOTTOM_RIGHTSLOPE = 4;
 const MAX_BOX_NUMBER = 256000;
 var GlobalObjectIdentifier = 0;
 class Box {
-    constructor(x,y,w,h) {
+    constructor(x,y,w,h,type) {
 
         // Basic parameters
         this.identifier = GlobalObjectIdentifier++;
@@ -14,7 +14,11 @@ class Box {
         this.y = y;
         this.width = w;
         this.height = h;
-        this.type = BOX_TYPE_RECT;
+
+        if (type == undefined)
+            this.type = BOX_TYPE_RECT;
+        else
+            this.type = type;
 
         // Assets
         this.bg = new Rectangle(x,y,w,h);
@@ -47,6 +51,23 @@ class Box {
                 this.triangle.C.vecx = 0;
                 this.triangle.C.vecy =  - this.height;
             }
+            if (this.type == BOX_TYPE_RIGHTSLOPE) {
+                this.triangle.A.x = this.x;
+                this.triangle.A.y = this.y;
+                this.triangle.A.vecx = this.width;
+                this.triangle.A.vecy = this.height;
+                this.triangle.B.x =  this.triangle.A.x + this.width;
+                this.triangle.B.y =  this.triangle.A.y + this.height;
+                this.triangle.B.vecx = -this.width;
+                this.triangle.B.vecy = 0;
+                this.triangle.C.x = this.triangle.B.x + this.triangle.B.vecx;
+                this.triangle.C.y = this.triangle.B.y + this.triangle.B.vecy;
+                this.triangle.C.vecx = 0;
+                this.triangle.C.vecy = -this.height;
+            }
+
+            // resave level data
+            BoxManager.save();
         }
 
         this.draw = function() {
@@ -75,7 +96,7 @@ class Box {
             }
 
             if (this.type == BOX_TYPE_RIGHTSLOPE) {
-
+                this.triangle.draw();
             }
         };
     }
@@ -95,6 +116,8 @@ class BoxManagerClass {
                 var objs = JSON.parse(msg);
                 for (var i=0;i<objs.length;i++) {
                     BoxManager.objects[i] = new Box(objs[i].x,objs[i].y,objs[i].width,objs[i].height);
+                    BoxManager.objects[i].convert(objs[i].type);
+
                 }
                 console.log(BoxManager.objects.length + " object(s) loaded.");
                 //console.log(this.objects);
