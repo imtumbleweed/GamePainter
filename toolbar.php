@@ -53,6 +53,7 @@
         // Attach events to context menu
         $("#Context1").on("click", function(){ toolbox.action(ACTION_MAKE_LEFT_SLOPE); });
         $("#Context2").on("click", function(){ toolbox.action(ACTION_MAKE_RIGHT_SLOPE); });
+        $("#Context3").on("click", function(){ toolbox.action(ACTION_MAKE_COLLECTIBLE); });
 
         // Draggable mini map
         $( "#MinimapView" ).draggable({
@@ -99,4 +100,5 @@
 <div id = "ContextMenu">
     <div id = "Context1" class = "ContextItem" action = "Convert to Left Slope"><img src = "leftslope.png" alt = "Left slope"/> Left Slope</div>
     <div id = "Context2" class = "ContextItem" action = "Convert to Right Slope"><img src = "rightslope.png" alt = "Right slope"/> Right Slope</div>
+    <div id = "Context3" class = "ContextItem" action = "Convert to Collectible"><img src = "collectible.png" alt = "Right slope"/> Collectible</div>
 </div>

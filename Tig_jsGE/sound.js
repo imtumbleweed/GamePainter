@@ -84,7 +84,7 @@ var SoundStation = function(filename)
 
 function LoadSfx() {
 	console.log("LoadSfx()...");
-	//Sound.load(25, "http://localhost/autumn/sfx/nevermind.mp3");
+	Sound.load(0, "http://localhost/autumn/sfx/coin.mp3");
 	// Sound.load(8, "http://www.learnjquery.org/games/gem/sfx/delune.mp3");
 }
 

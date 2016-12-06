@@ -3,6 +3,7 @@ const BOX_TYPE_LEFTSLOPE = 1;
 const BOX_TYPE_RIGHTSLOPE = 2;
 const BOX_TYPE_BOTTOM_LEFTSLOPE = 3;
 const BOX_TYPE_BOTTOM_RIGHTSLOPE = 4;
+const BOX_TYPE_COLLECTIBLE = 5;
 const MAX_BOX_NUMBER = 256000;
 var GlobalObjectIdentifier = 0;
 class Box {
@@ -65,6 +66,9 @@ class Box {
                 this.triangle.C.vecx = 0;
                 this.triangle.C.vecy = -this.height;
             }
+            if (this.type == BOX_TYPE_COLLECTIBLE) {
+                this.color = "yellow";
+            }
 
             // resave level data
             BoxManager.save();
@@ -85,6 +89,7 @@ class Box {
                 this.bg.y               = this.y;
                 this.bg.width           = this.width;
                 this.bg.height          = this.height;
+
                 // draw as rectangle
                 this.bg.drawAt(grid.x, grid.y, this.color, true, false);
                 this.line.drawAt(grid.x, grid.y, 1, "#333");
@@ -97,6 +102,24 @@ class Box {
 
             if (this.type == BOX_TYPE_RIGHTSLOPE) {
                 this.triangle.draw();
+            }
+
+            if (this.type == BOX_TYPE_COLLECTIBLE) {
+                this.line.x             = this.x;
+                this.line.y             = this.y;
+                this.line.vecx          = this.width;
+                this.line.vecy          = this.height;
+                this.otherline.x        = this.x + this.width;
+                this.otherline.y        = this.y;
+                this.otherline.vecx     = -this.width;
+                this.otherline.vecy     = this.height;
+                this.bg.x               = this.x;
+                this.bg.y               = this.y;
+                this.bg.width           = this.width;
+                this.bg.height          = this.height;
+                this.bg.drawAt(grid.x, grid.y, this.color, true, false);
+                this.line.drawAt(grid.x, grid.y, 1, "#333");
+                this.otherline.drawAt(grid.x, grid.y, 1, "#333");
             }
         };
     }

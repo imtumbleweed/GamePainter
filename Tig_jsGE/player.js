@@ -153,6 +153,16 @@ class PlayerClass {
 
                 for (var i = 0; i < BoxManager.objects.length; i++) {
 
+                    if (BoxManager.objects[i].type == BOX_TYPE_COLLECTIBLE) {
+                        var pbox = new Rectangle(this.x,this.y,32,32);
+                        pbox.draw("red",false,true);
+                        if (pbox.rectInside(BoxManager.objects[i].bg)) {
+                            BoxManager.objects[i].type = -1;// = "black"; // hide
+                            Sound.play(0);
+                            continue;
+                        }
+                    }
+
                     if (BoxManager.objects[i].type == BOX_TYPE_RECT) {
                         temp.x = grid.x + BoxManager.objects[i].bg.x;
                         temp.y = grid.y + BoxManager.objects[i].bg.y;

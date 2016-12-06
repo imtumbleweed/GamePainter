@@ -1,10 +1,10 @@
 $(document).ready(function() {
-    // Now that DOM is loaded, configure right click on toolbox
-    toolbox.ConfigureRightClick();
+    toolbox.ConfigureRightClick(); // Now that DOM is loaded, configure right click on toolbox
 });
 
 const ACTION_MAKE_LEFT_SLOPE = 0;
-const ACTION_MAKE_RIGHT_SLOPE = 2;
+const ACTION_MAKE_RIGHT_SLOPE = 1;
+const ACTION_MAKE_COLLECTIBLE = 2;
 
 class Toolbox {
     constructor() {
@@ -23,7 +23,7 @@ class Toolbox {
             $(document).on("contextmenu", function() {
                 event.preventDefault();
                 $("#ContextMenu").show();
-                $("#ContextMenu").css({"left":(Mouse.x+16)+"px","top":Mouse.y+"px"})
+                $("#ContextMenu").css({"left":(Mouse.x+16)+"px","top":Mouse.y+"px"});
                 $("#ContextMenu").fadeIn(200);
                 Toolbox.contextMenuOpen = true;
             });
@@ -68,6 +68,8 @@ class Toolbox {
                         BoxManager.objects[i].convert(BOX_TYPE_LEFTSLOPE);
                     if (act == ACTION_MAKE_RIGHT_SLOPE)
                         BoxManager.objects[i].convert(BOX_TYPE_RIGHTSLOPE);
+                    if (act == ACTION_MAKE_COLLECTIBLE)
+                        BoxManager.objects[i].convert(BOX_TYPE_COLLECTIBLE);
                 }
             }
         };
@@ -309,10 +311,12 @@ class Toolbox {
                     if (moving_rain == false) { // The rain is being moved right now; disable all other selection functionality; just return
                         for (var i=0;i<BoxManager.objects.length;i++) {
                             if (BoxManager.objects[i] != undefined)  {
-                                this.tmp.x = grid.x+BoxManager.objects[i].bg.x;
-                                this.tmp.y = grid.y+BoxManager.objects[i].bg.y;
+
+                                this.tmp.x = grid.x+BoxManager.objects[i].x;
+                                this.tmp.y = grid.y+BoxManager.objects[i].y;
                                 this.tmp.width = BoxManager.objects[i].bg.width;
                                 this.tmp.height = BoxManager.objects[i].bg.height;
+
                                 if (this.tmp.rectInside(this.selectionBox)) {
                                     BoxManager.objects[i].color = "#22a28e";
                                     BoxManager.objects[i].selected = true;
