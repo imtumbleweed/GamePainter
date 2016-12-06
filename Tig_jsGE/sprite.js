@@ -1,3 +1,4 @@
+window.ResourceId = 0;
 var SpriteSilentLoad = false; // Do not output to loading state to console; if enabled.
 var Sprite = function(fn) {
     var that = this;
@@ -16,9 +17,12 @@ var Sprite = function(fn) {
         this.image.onload = function(event) {
             that.width = this.width;
             that.height = this.height;
-            if (SpriteSilentLoad)
-                console.log("Loaded sprite (" + that.width + "x" + that.height + ")" + fn);
-            window.ResourceId++;
+            // Only count resources loaded from the resource folder here, not sprites explicitly created by programmer; because otherwise it'll mess with the loading bar counter
+            // Programmer-instantiated sprites are a special case and should be handled separately
+            if (fn.substr(0,9) == "resources")
+                window.ResourceId++;
+            //if (SpriteSilentLoad)
+            console.log("Loaded sprite (" + that.width + "x" + that.height + ") " + fn + " ("+window.ResourceId+" of " + game.resourceNumber + ")");
             if (window.ResourceId >= game.resourceNumber) {
                 game.ResourcesLoaded = true;
                 console.log("All resources have finished downloading.");
