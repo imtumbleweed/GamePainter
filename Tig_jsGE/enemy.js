@@ -31,6 +31,10 @@ class CollisionData {
 
 class EnemyClass {
     constructor() {
+        this.fly_y = 0;
+        this.life = 100;
+        this.hit = false;
+        this.hitfalloff = 100;
         this.x = 0; // World coordinates
         this.y = 0;
         this.velx = 0;  // velocity
@@ -39,13 +43,16 @@ class EnemyClass {
         this.momy = 0;
         this.materialColor = "#19a6ff";
         this.color = this.materialColor;
-        this.body = new Rectangle(this.x,this.y,64,64);
+        this.body = new Rectangle(this.x,this.y,32,64);
         this.active = false;
+        this.action = 0; // 0 - walk
+                         // 1 - bubble up
         this.pressed = false;
         this.attachedToMouse = false;
         this.controlKeysPressed = false;
         this.dirx = RIGHT; // defaults
         this.diry = DOWN;
+        this.dir = -1;
         this.firing = false;
         this.collision = false;
         this.drawx = 0; // actual drawing location of the sprite after collision
@@ -73,6 +80,8 @@ class EnemyClass {
 
         this.dots = new Array();
 
+        this.animationCounter = new Animate(0,0,0);
+
         for (var i = 0; i < TOTAL_COLPOINTS; i++)
             this.dots[i] = new CollisionData(0, 0, 0);
 
@@ -87,6 +96,15 @@ class EnemyClass {
 
         this.process = () => {
             if (this.active) {
+
+                if (this.hit) {
+                    if (this.hitfalloff > 25) {
+                        this.hitfalloff--;
+                    } else {
+                        this.hit = false;
+                        this.hitfalloff = 25;
+                    }
+                }
 
                 if (this.jumping) {
                     this.y -= 10; // JumpForce
@@ -143,6 +161,10 @@ class EnemyClass {
 
         this.collide = () => {
 
+            // only if its not defeated
+            if (this.action != 0)
+             return;
+
             if (this.active) {
 
                 downline.x = grid.x + this.x;
@@ -154,6 +176,7 @@ class EnemyClass {
 
                 for (var i = 0; i < BoxManager.objects.length; i++) {
 
+                    /* Enemies cannot collect collectibles
                     if (BoxManager.objects[i].type == BOX_TYPE_COLLECTIBLE) {
                         var pbox = new Rectangle(this.x,this.y,32,32);
                         pbox.draw("red",false,true);
@@ -162,7 +185,7 @@ class EnemyClass {
                             Sound.play(0);
                             continue;
                         }
-                    }
+                    } */
 
                     if (BoxManager.objects[i].type == BOX_TYPE_RECT) {
                         temp.x = grid.x + BoxManager.objects[i].bg.x;
@@ -219,7 +242,7 @@ class EnemyClass {
                     this.dot.x = this.dots[this.shortest_idx].x;
                     this.dot.y = this.dots[this.shortest_idx].y;
 
-                    // this.dot.draw(2, "red");
+                    //this.dot.draw(2, "red");
 
                     var pt = new Point(grid.x+this.x, grid.y+this.y);
                     //pt.draw(2, "pink");
@@ -240,8 +263,51 @@ class EnemyClass {
 
         this.draw = () => {
             if (this.active) {
-                this.body.x = grid.x + this.x;
-                this.body.y = grid.y + this.y;
+                this.body.x = this.x;
+                this.body.y = this.y;
+                this.body.drawAt(grid.x,grid.y,"#111", false, true);
+
+                var sequence = [];
+                if (this.dir == -1)  {
+                    sequence = [0,1];
+                    if (this.hit) sequence = [4,5];
+
+                    if (this.action == 0)
+                        this.x -= 0.1;
+                }
+                if (this.dir == 1)  {
+                    sequence = [2,3];
+                    if (this.hit) sequence = [6,7];
+
+                    if (this.action == 0)
+                        this.x += 0.1;
+                }
+
+                this.flyy -= 1;
+                if (this.action == 1) {
+                    this.drawy -= 0.5;
+                    // Draw the enemy sprite
+                    bug.rotAnim2(this.drawx, this.drawy,
+                        [8],
+                        0,
+                        64,
+                        4,
+                        20,
+                        this.animationCounter);
+                } else {
+                    // Draw the enemy sprite
+                    bug.rotAnim2(+this.drawx, this.drawy - 8,
+                        sequence,
+                        0,
+                        64,
+                        4,
+                        20,
+                        this.animationCounter);
+                }
+
+
+
+
             }
         }
 
