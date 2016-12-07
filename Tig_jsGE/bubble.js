@@ -2,6 +2,7 @@ const BUBBLE_DEFAULT_MOVEMENT_SPEED = 2.5;
 
 var BubbleParticle = function()  {
     this.segment = new Segment(100,100);
+    this.bounding = new Rectangle(0,0,0,0);
     this.state = false;
     this.type = 0; // 0,1,2 or 3 to alternate sprites
     this.counter = 0; // life counter
@@ -12,7 +13,7 @@ var BubbleParticle = function()  {
 }
 
 /* Dust particle processor */
-var BUBBLE_MAX = 250;
+var BUBBLE_MAX = 30;
 var bubbleparticle = new Array();
 var bub_idx = 0;
 
@@ -26,7 +27,7 @@ function add_bubbleparticle(xx, yy, ddir) {
     if (bub_idx >= BUBBLE_MAX)
         bub_idx = 0;
     bubbleparticle[bub_idx].dir = ddir;
-    bubbleparticle[bub_idx].segment = new Segment(xx,yy+16+Math.random()*8,    0,0);
+    bubbleparticle[bub_idx].segment = new Segment(xx,yy+20+Math.random()*8,    0,0);
     bubbleparticle[bub_idx].state = true;
     bubbleparticle[bub_idx].movementspeed = BUBBLE_DEFAULT_MOVEMENT_SPEED + Math.random()*0.5;
 
@@ -37,6 +38,12 @@ function add_bubbleparticle(xx, yy, ddir) {
 function proc_bubbleparticle() {
     for (var i = 0; i < BUBBLE_MAX; i++) {
         if (bubbleparticle[i].state == true) {
+
+            bubbleparticle[i].bounding.x = bubbleparticle[i].segment.x;
+            bubbleparticle[i].bounding.y = bubbleparticle[i].segment.y;
+            bubbleparticle[i].bounding.width = 16;
+            bubbleparticle[i].bounding.height = 16;
+
             //bubbleparticle[i].segment.x += bubbleparticle[i].segment.vecx * 0.25;
 
             bubbleparticle[i].segment.x += bubbleparticle[i].movementspeed * bubbleparticle[i].dir;
