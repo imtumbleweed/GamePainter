@@ -87,7 +87,7 @@ var Sprite = function(fn) {
         Context.context.drawImage(this.image, x, y, BLOCK_W, BLOCK_H);
     };
 
-    this.draw = function(x, y, various) {
+    this.draw = function(x, y, various, sprite_width, cellsPerWidth) {
         that.x = x;
         that.y = y;
 
@@ -98,8 +98,8 @@ var Sprite = function(fn) {
 
         // If various is a single numeric frame id
         if ($.isNumeric(various) && various >= 0) {
-            var res = i2xy(various, 8);
-            Context.context.drawImage(this.image, res[0]*32, res[1]*32, 32, 32, x, y, 32, 32);
+            var res = i2xy(various, cellsPerWidth);
+            Context.context.drawImage(this.image, res[0]*cellsPerWidth, res[1]*cellsPerWidth, cellsPerWidth, cellsPerWidth, x, y, cellsPerWidth, cellsPerWidth);
         } else
 
         // if various is Animation Sequence - an array like [1,2,3,4] or [17,18,19,20];
@@ -112,28 +112,30 @@ var Sprite = function(fn) {
                     AnimationCounter[AnimationCounterIndex].animationIndexCounter = 0;
                 AnimationCounter[AnimationCounterIndex].animationCurrentFrame = various[AnimationCounter[AnimationCounterIndex].animationIndexCounter];
             }
-            var res = i2xy(AnimationCounter[AnimationCounterIndex].animationCurrentFrame, 8);
-            Context.context.drawImage(this.image, res[0]*64, res[1]*64, 64, 64, x, y, 64, 64);
+            var res = i2xy(AnimationCounter[AnimationCounterIndex].animationCurrentFrame, cellsPerWidth);
+            Context.context.drawImage(this.image, res[0]*sprite_width, res[1]*sprite_width,
+                sprite_width, sprite_width, x, y, sprite_width, sprite_width);
 
             AnimationCounterIndex++;
+
+           // if (AnimationCounterIndex >= 32000)
+              //  AnimationCounterIndex = 0;
         }
     };
 
 
-    this.rotAnim = function(x, y, sequence, angle, size, cellsPerWidth, animationDelay)
+    this.rotAnim = function(x, y, sequence, angle, size, cellsPerWidth, animationDelayX/*, callback_end_sequence*/)
     {
         that.x = x;
         that.y = y;
 
-        var rate = 3;
-        if (animationDelay != undefined)
-            rate = animationDelay;
-
-        if (AnimationCounter[AnimationCounterIndex].animationDelay++ >= animationDelay) {
+        if (AnimationCounter[AnimationCounterIndex].animationDelay++ >= animationDelayX) {
             AnimationCounter[AnimationCounterIndex].animationDelay = 0;
             AnimationCounter[AnimationCounterIndex].animationIndexCounter++;
+
             if (AnimationCounter[AnimationCounterIndex].animationIndexCounter >= sequence.length)
                 AnimationCounter[AnimationCounterIndex].animationIndexCounter = 0;
+
             AnimationCounter[AnimationCounterIndex].animationCurrentFrame = sequence[AnimationCounter[AnimationCounterIndex].animationIndexCounter];
         }
         var res = i2xy(AnimationCounter[AnimationCounterIndex].animationCurrentFrame, cellsPerWidth);
@@ -146,7 +148,49 @@ var Sprite = function(fn) {
             size, size);
         Context.context.restore();
 
-        AnimationCounterIndex++;
+        window.AnimationCounterIndex++;
+    };
+
+    this.rotAnim2 = function(x, y, sequence, angle,
+                             size, // size of a single sprite
+                             cellsPerWidth, // # of cells per width in entire spritesheet
+                             animationDelayX,
+                             AnimationCounterObject // pass its own animation counter
+                             /*, callback_end_sequence*/)
+    {
+        that.x = x;
+        that.y = y;
+        var res = 0;
+        // Passes its own animation counter object?
+        if (AnimationCounterObject != null && AnimationCounterObject != undefined) {
+            if (AnimationCounterObject.animationDelay++ >= animationDelayX) {
+                AnimationCounterObject.animationDelay = 0;
+                AnimationCounterObject.animationIndexCounter++;
+                if (AnimationCounterObject.animationIndexCounter >= sequence.length)
+                    AnimationCounterObject.animationIndexCounter = 0;
+                AnimationCounterObject.animationCurrentFrame = sequence[AnimationCounterObject.animationIndexCounter];
+            }
+            res = i2xy(AnimationCounterObject.animationCurrentFrame, cellsPerWidth);
+        } else { // Uses global animation counter
+            /*
+            if (AnimationCounter[AnimationCounterIndex].animationDelay++ >= animationDelayX) {
+                AnimationCounter[AnimationCounterIndex].animationDelay = 0;
+                AnimationCounter[AnimationCounterIndex].animationIndexCounter++;
+                if (AnimationCounter[AnimationCounterIndex].animationIndexCounter >= sequence.length)
+                    AnimationCounter[AnimationCounterIndex].animationIndexCounter = 0;
+                AnimationCounter[AnimationCounterIndex].animationCurrentFrame = sequence[AnimationCounter[AnimationCounterIndex].animationIndexCounter];
+            }
+            res = i2xy(AnimationCounter[AnimationCounterIndex].animationCurrentFrame, cellsPerWidth);
+            */
+        }
+        Context.context.save();
+        Context.context.translate(x+size/2, y+size/2);    // Translate sprite to its center
+        Context.context.rotate(angle * this.TO_RADIANS);    // Rotate sprite around its center
+        Context.context.drawImage(this.image, res[0]*size, res[1]*size, size, size,
+            -size/2, -size/2,                         // Translate sprite back to its original position
+            size, size);
+        Context.context.restore();
+       // AnimationCounterIndex++;
     };
 
     // Stretched draw
