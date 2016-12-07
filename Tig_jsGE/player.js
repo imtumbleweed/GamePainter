@@ -42,6 +42,8 @@ class PlayerClass {
         this.dirx = RIGHT; // defaults
         this.diry = DOWN;
 
+        this.firing = false;
+
         this.collision = false;
 
         this.drawx = 0; // actual drawing location of the sprite after collision
