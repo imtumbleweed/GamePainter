@@ -46,7 +46,7 @@
     <script src = "Tig_jsGE/animate.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/spritesheet.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/sprite.js?v=10" type = "text/javascript"></script>
-    <script src = "Tig_jsGE/sound.js?v=13" type = "text/javascript"></script>
+    <script src = "Tig_jsGE/sound.js?v=14" type = "text/javascript"></script>
     <script src = "Tig_jsGE/world.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/point.js" type = "text/javascript"></script>
     <script src = "Tig_jsGE/vector.js" type = "text/javascript"></script>
@@ -71,6 +71,7 @@
     <script src = 'Tig_jsGE/celestial.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/timeline.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/dust.js?v=1' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/bubble.js?v=1' type = 'text/javascript'></script>
 
     <script type = "text/javascript">
 
@@ -179,11 +180,6 @@
             //RainArea.add(700,200,200,800,150);
 
 
-
-
-
-
-
             setTimeout(function() {
                 //game.displayLoadingBar = true;
 
@@ -263,6 +259,7 @@
         var panorama_s = 0;
 
         var dust_counter = 0;
+        var bub_counter = 0;
 
         zoomPointX = game.width/2;
         zoomPointY = game.height/2;
@@ -384,14 +381,27 @@
                     proc_dustparticle();
                     draw_dustparticle();
 
+                    // Dust bubbles
+                    proc_bubbleparticle();
+                    draw_bubbleparticle();
+
                     if (game.ResourcesLoaded) {
                         if (Player.dirx == RIGHT) {
                             if (Player.controlKeysPressed) {
                                 dust_counter++;
                                 if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
                                 girl.rotAnim(Player.drawx, Player.drawy + 4, [0, 1, 2, 3], 1, 32, 4, 10);
-                            }  else
-                                girl.rotAnim(Player.drawx, Player.drawy + 4, [0], 1, 32, 8, 10);
+                            }  else {
+                                    girl.rotAnim(Player.drawx, Player.drawy + 4, [0], 1, 32, 8, 10);
+                            }
+
+                            if (Player.firing) { /* Fire button pressed */
+                                Player.x -= 0.5;
+                                girl.rotAnim(Player.drawx, Player.drawy + 4, [8], 1, 32, 4, 10);
+                                bub_counter++;
+                                if (bub_counter > 10) { add_bubbleparticle(Player.drawx, Player.y - 8, 1); bub_counter = 0; }
+                            }
+
                         }
                         if (Player.dirx == LEFT) {
                             if (Player.controlKeysPressed) {
@@ -399,10 +409,36 @@
                                 if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
                                 girl.rotAnim(Player.drawx, Player.drawy + 4, [4, 5, 6, 7], 1, 32, 4, 10);
                             }
-                            else
+                            else {
                                 girl.rotAnim(Player.drawx, Player.drawy + 4, [4], 1, 32, 4, 10);
+                            }
+                            if (Player.firing) { /* Fire button pressed */
+                                Player.x += 0.5;
+                                girl.rotAnim(Player.drawx, Player.drawy + 4, [9], 1, 32, 4, 10);
+                                bub_counter++;
+                                if (bub_counter > 10) { add_bubbleparticle(Player.drawx, Player.y - 8, -1); bub_counter = 0; }
+                            }
                         }
                     }
+
+                    if (key.left) { Player.x -= 1; Player.momx = -1; Player.controlKeysPressed = true; Player.dirx = LEFT; }
+                    if (key.right) { Player.x += 1; Player.momx = 1; Player.controlKeysPressed = true; Player.dirx = RIGHT; }
+                    if (key.up) { }
+                    if (key.down) { }
+                    if (key.w) { /* ... */ }
+                    if (key.s) {
+                        Player.firing = true;
+                    } else {
+                        Player.firing = false;
+                    }
+                    if (key.a) { /* ... */ }
+                    if (key.d) { /* ... */ }
+
+                    if (!key.left && !key.right && !key.top && !key.down) {
+                        Player.controlKeysPressed = false;
+                    }
+
+
 
                     //gfx.globalAlpha = 0.35;
                     //FrameView.center(game.width/2, FrameView.height/2 + 100);
@@ -486,18 +522,7 @@
 
             //if (Press.ed && home.pressed()) { game.state = -1; }
 
-            if (key.left) { Player.x -= 1; Player.momx = -1; Player.controlKeysPressed = true; Player.dirx = LEFT; }
-            if (key.right) { Player.x += 1; Player.momx = 1; Player.controlKeysPressed = true; Player.dirx = RIGHT; }
-            if (key.up) { }
-            if (key.down) { }
-            if (key.w) { /* ... */ }
-            if (key.s) { /* ... */ }
-            if (key.a) { /* ... */ }
-            if (key.d) { /* ... */ }
 
-            if (!key.left && !key.right && !key.top && !key.down) {
-                Player.controlKeysPressed = false;
-            }
 
 
 
