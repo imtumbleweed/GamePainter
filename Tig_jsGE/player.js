@@ -222,7 +222,7 @@ class PlayerClass {
                     this.dot.x = this.dots[this.shortest_idx].x;
                     this.dot.y = this.dots[this.shortest_idx].y;
 
-                    //this.dot.draw(2, "red");
+                   // this.dot.draw(2, "red");
 
                     var pt = new Point(grid.x+this.x, grid.y+this.y);
                     //pt.draw(2, "pink");
@@ -247,8 +247,8 @@ class PlayerClass {
 
 
                     // calculate sprite location
-                    this.drawx = this.dot.x - 32;
-                    this.drawy = this.dot.y - 32;
+                    this.drawx = this.dot.x - 16;
+                    this.drawy = this.dot.y - 34;
                 }
 
             }
@@ -259,7 +259,7 @@ class PlayerClass {
             if (this.active) {
                 this.body.x = grid.x + this.x;
                 this.body.y = grid.y + this.y;
-                this.body.draw(this.color, false, true);
+               // this.body.draw(this.color, false, true);
                 //this.colray.x = this.body.x + 32;
                 //this.colray.y = this.body.y + 0;
                 // this.colray.draw(2, "white");
