@@ -7,7 +7,7 @@ var DustParticle = function()  {
 }
 
 /* Dust particle processor */
-var DUST_MAX = 250;
+var DUST_MAX = 30;
 var dustparticle = new Array();
 var dust_idx = 0;
 
