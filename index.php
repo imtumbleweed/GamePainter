@@ -70,6 +70,7 @@
     <script src = 'Tig_jsGE/rain.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/celestial.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/timeline.js' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/dust.js?v=1' type = 'text/javascript'></script>
 
     <script type = "text/javascript">
 
@@ -261,6 +262,8 @@
         var panorama_y_target = 0;
         var panorama_s = 0;
 
+        var dust_counter = 0;
+
         zoomPointX = game.width/2;
         zoomPointY = game.height/2;
 
@@ -315,13 +318,18 @@
 
         //var loaded = false;
 
+
+
         setInterval(function() {
+
+            ResetAnimationCounter();
 
             Press.capture(Mouse, Touch); // Press stores either mouse or touch (whichever was done)
 
             //scalechange = scalefactor - 1; // calculate camera zoom in real time
 
             ClearCanvas();
+
 
             if (game.ResourcesLoaded) {
                 //if (window.Gemgrid == null) { // Grid is resource dependent, because it needs gem icons loaded
@@ -342,8 +350,8 @@
                     grid.draw();
 
                     // Draw celestial
-                    Celestial.process();
-                    Celestial.draw();
+                    //Celestial.process();
+                    //Celestial.draw();
 
                     // Drag cursor
                     //if (game.ResourcesLoaded)
@@ -364,33 +372,53 @@
                         BoxManager.draw();
                     }
 
+
+
+
                     // Draw player
                     Player.process();
                     Player.draw();
                     Player.collide(); // Collide player with the world
 
+                    // Dust particles for walking...
+                    proc_dustparticle();
+                    draw_dustparticle();
 
-                    if (Player.dirx == RIGHT) {
-                        if (Player.controlKeysPressed)
-                            fox.rotAnim(Player.drawx, Player.drawy - 8, [0, 1, 2, 3, 4], 0, 64,8, 10);
-                        else
-                            fox.rotAnim(Player.drawx, Player.drawy - 8, [17], 1, 64, 8, 10);
-                    }
-                    if (Player.dirx == LEFT) {
-                        if (Player.controlKeysPressed)
-                            fox.rotAnim(Player.drawx, Player.drawy - 8, [24,25,26,27,28], 0, 64, 8, 10);
-                        else
-                            fox.rotAnim(Player.drawx, Player.drawy - 8, [16], 1, 64, 8, 10);
+                    if (game.ResourcesLoaded) {
+                        if (Player.dirx == RIGHT) {
+                            if (Player.controlKeysPressed) {
+                                dust_counter++;
+                                if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
+                                girl.rotAnim(Player.drawx, Player.drawy + 4, [0, 1, 2, 3], 1, 32, 4, 10);
+                            }  else
+                                girl.rotAnim(Player.drawx, Player.drawy + 4, [0], 1, 32, 8, 10);
+                        }
+                        if (Player.dirx == LEFT) {
+                            if (Player.controlKeysPressed) {
+                                dust_counter++;
+                                if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
+                                girl.rotAnim(Player.drawx, Player.drawy + 4, [4, 5, 6, 7], 1, 32, 4, 10);
+                            }
+                            else
+                                girl.rotAnim(Player.drawx, Player.drawy + 4, [4], 1, 32, 4, 10);
+                        }
                     }
 
-                    gfx.globalAlpha = 0.35;
-                    FrameView.center(game.width/2, FrameView.height/2 + 100);
-                    FrameView.draw("#fff", false, true);
-                    gfx.globalAlpha = 1;
+                    //gfx.globalAlpha = 0.35;
+                    //FrameView.center(game.width/2, FrameView.height/2 + 100);
+                    //FrameView.draw("#fff", false, true);
+                   // gfx.globalAlpha = 1;
 
                     // Draw timeline panel
                     Timeline.process();
                     Timeline.draw();
+
+                    // animation processors must be done last, that's just the way animation counters are implemented
+                    //ProgressAnimationCounter(5000);
+                    //proc_dustparticle();
+
+
+
 
                     //room.draw(Mouse.x,Mouse.y);
 
@@ -481,7 +509,7 @@
              icon_controller.rotscale(220, 540,0.75,0.75,0);
              }*/
 
-            ResetAnimationCounter();
+
 
             if (!game.ResourcesLoaded) {
 
@@ -498,12 +526,16 @@
 
             // Always last step...
 
+
+
             window.touched = false;		// reset touch
             window.released = false;	// release touch
             window.clicked = false;		// reset click
             Press.ed = false;			// reset main Press object
             Mouse.down = false;         // reset single frame mouse click
             Mouse.reset();              // reset all mouse clicks
+
+            gfx.scale(1,1);
 
             gfx.globalAlpha = 1;
 
