@@ -8,7 +8,7 @@ var poi = new Point(0,0);
 // Collision detection
 const TOTAL_COLPOINTS = 256;
 const DEFAULT_GRAVITY = 0.85;
-const MAXIMUM_GRAVITY = 7;
+const MAXIMUM_GRAVITY = 5;
 var downline = new Segment(300,300,0,100);
 
 class CollisionData {
@@ -89,7 +89,7 @@ class PlayerClass {
             if (this.active) {
 
                 if (this.jumping) {
-                    this.y -= 10; // JumpForce
+                    this.y -= 2; // JumpForce
                     this.y += this.Gravity * 2;
                     this.Gravity *= 1.055;
                     if (this.Gravity >= MAXIMUM_GRAVITY)
