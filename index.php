@@ -72,6 +72,7 @@
     <script src = 'Tig_jsGE/timeline.js' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/dust.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/bubble.js?v=1' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/enemy.js?v=1' type = 'text/javascript'></script>
 
     <script type = "text/javascript">
 
@@ -92,6 +93,17 @@
         var fox = new Sprite("fox.png");
 
         var des = new Sprite("des.png");
+
+        var Enemy = new Array();
+
+        var BubbleDepletionAnimationCounter = new Animate(0, 0, 0);
+
+        var BubbleMeter = new Rectangle(0,0,0,0);
+
+        for (var i = 0; i < 10; i++) Enemy[i] = new EnemyClass();
+
+        var BubbleFlashCounter = 0;
+        var BubbleFlashState = false;
 
         var H2 = 0;
         var A1 = 169;
@@ -315,7 +327,11 @@
 
         //var loaded = false;
 
+        Enemy[0].spawn(200,200);
 
+        BubbleMeter.width = 16;
+
+        BubbleMeter.height = 3;
 
         setInterval(function() {
 
@@ -346,13 +362,15 @@
 
                     grid.draw();
 
+                    background.draw(250,15);
+
                     // Draw celestial
                     //Celestial.process();
                     //Celestial.draw();
 
                     // Drag cursor
-                    //if (game.ResourcesLoaded)
-                        //cursorhand1.draw(Mouse.x, Mouse.y);
+                    // if (game.ResourcesLoaded)
+                        // cursorhand1.draw(Mouse.x, Mouse.y);
 
                     // Process grid
                     toolbox.process();
@@ -369,13 +387,47 @@
                         BoxManager.draw();
                     }
 
-
-
-
                     // Draw player
                     Player.process();
                     Player.draw();
                     Player.collide(); // Collide player with the world
+
+                    // Soap depletion bar
+                    BubbleMeter.x = Player.x - 8;
+                    BubbleMeter.y = Player.y;
+
+                    if (BubbleMeter.width >= 0) {
+                        if (BubbleFlashState)
+                            BubbleMeter.draw("white", true, false);
+                        BubbleMeter.draw("#0078fe", false, true);
+                    }
+
+                    if (BubbleMeter.width <= 8)  {
+                        BubbleFlashCounter++;
+                        if (BubbleFlashCounter > 50) {
+                            BubbleFlashCounter = 0;
+                            BubbleFlashState = !BubbleFlashState;
+                        }
+                    } else {
+                        BubbleFlashState = true;
+                    }
+
+                    /*
+                    dust.rotAnim2(
+                        Player.x,
+                        Player.y,
+                        [24],
+                        0,
+                        16,
+                        8,
+                        20,
+                        BubbleDepletionAnimationCounter
+                    );*/
+
+                    // Draw enemies
+                    Enemy[0].process();
+                    Enemy[0].draw();
+                    Enemy[0].collide();
 
                     // Dust particles for walking...
                     proc_dustparticle();
@@ -385,6 +437,43 @@
                     proc_bubbleparticle();
                     draw_bubbleparticle();
 
+                    // check if bubbles touch enemies
+
+                    var itshit = false;
+                    for (var i = 0; i < BUBBLE_MAX; i++) {
+                        for (var j = 0; j < 1; j++) {
+                            if (bubbleparticle[i].state == true) {
+                                //bubbleparticle[i].bounding.draw("red", false, true);
+                                if (bubbleparticle[i].bounding.rectInside(Enemy[j].body)) {
+                                    Sound.play(1);
+                                    itshit = true;
+                                    bubbleparticle[i].state = false;
+                                    Enemy[j].hit = true;
+
+                                    Enemy[j].life -= 10;
+                                    if (Enemy[j].life <= 0) {
+                                        Enemy[j].action = 1;
+                                    }
+
+                                    // Enemy[j].hitfalloff = 30;
+                                }
+                            }
+                        }
+                    }
+
+                    if (itshit) {
+                        Enemy[0].hit = true;
+                        Enemy[0].hitfalloff = 35;
+                    }
+
+
+                    //if (Player.jumping)
+                    //{
+                        //girl.rotAnim(Player.x - 16, Player.y + 4, [0], 1, 32, 8, 10);
+                    //}
+
+
+
                     if (game.ResourcesLoaded) {
                         if (Player.dirx == RIGHT) {
                             if (Player.controlKeysPressed) {
@@ -392,7 +481,7 @@
                                 if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
                                 girl.rotAnim(Player.drawx, Player.drawy + 4, [0, 1, 2, 3], 1, 32, 4, 10);
                             }  else {
-                                    girl.rotAnim(Player.drawx, Player.drawy + 4, [0], 1, 32, 8, 10);
+                                girl.rotAnim(Player.drawx, Player.drawy + 4, [0], 1, 32, 8, 10);
                             }
 
                             if (Player.firing) { /* Fire button pressed */
@@ -428,11 +517,15 @@
                     if (key.w) { /* ... */ }
                     if (key.s) {
                         Player.firing = true;
+                        BubbleMeter.width -= 0.01;
                     } else {
                         Player.firing = false;
                     }
                     if (key.a) { /* ... */ }
-                    if (key.d) { /* ... */ }
+                    if (key.d) {
+
+                        Player.jumping = true;
+                    }
 
                     if (!key.left && !key.right && !key.top && !key.down) {
                         Player.controlKeysPressed = false;
