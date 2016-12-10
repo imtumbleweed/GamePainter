@@ -60,7 +60,7 @@ function proc_bubbleparticle() {
 //							add_dustet( s );
             // }
             //
-            if (bubbleparticle[i].counter >= 200) {
+            if (bubbleparticle[i].counter >= 180) {
 
                 Sound.play(1);
 
@@ -83,7 +83,8 @@ function draw_bubbleparticle() {
             dust.rotAnim2(
                 bubbleparticle[i].segment.x,
                 bubbleparticle[i].segment.y,
-                [8,9,10,11,12,13,14,15,16,17,18],
+                [8,9,10,11,12,13,14,15,16,17,18], // bubble
+                //[32,33,34,35,36,37,38,39,40,41,42], // fire
                 0, // angle
                 16, // each dust particle is 16x16
                 8, // # of sprites per width of the spritesheet
