@@ -73,6 +73,7 @@
     <script src = 'Tig_jsGE/dust.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/bubble.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/enemy.js?v=1' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/textarea.js?v=1' type = 'text/javascript'></script>
     <link rel = 'stylesheet' type = 'text/css' href = 'gamepainter.css' />
     <script type = "text/javascript">
 
@@ -102,6 +103,10 @@
 
         var H2 = 0;
         var A1 = 169;
+
+        var ta = new TextArea(100, 100, "Hello from textarea... 2134734$#%#@");
+
+
 
         function IsMobile() { if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) { window.mobile = true; $("body *").addClass("IncreaseFontSize"); } }
         function Resize() {
@@ -188,7 +193,7 @@
                         var json = JSON.parse(msg);
                         game.resourceNumber = json.length;
                         var span_width = $("#ProgressBar").width() / game.resourceNumber;
-                        console.log("span width = " + span_width);
+                        //console.log("span width = " + span_width);
                         $("#a").text(0);
                         $("#b").text(game.resourceNumber);
                         $("#ProgressBarCounter").show();
@@ -196,23 +201,24 @@
                             var appropriateName = json[i].split(".")[0];
                             window.LoadingFileName = json[i];
                             window[appropriateName] = new Sprite("resources/" + window.LoadingFileName);
-							console.log(i + " loaded... (" + appropriateName + ")");
+							// console.log(i + " loaded... (" + appropriateName + ")");
                             var barwidth = 0;
                             //if (i != 0) {
                                 barwidth = (i) * ($("#ProgressBar").width()) / (game.resourceNumber);
-                                console.log("barwidth = " + barwidth);
+                                //console.log("barwidth = " + barwidth);
                             //}
                             $("#a").text(i + 1);
                             $("#ProgressBarPercent").css( { "width" : (barwidth + 5) + "px" } );
                             if (i + 1 == game.resourceNumber) {
                                 $("#MakeGamesButtonOn").fadeIn();
+                                game.ResourcesLoaded = true;
+                                sfxclick1.play();
                             }
                         }
                     }
 
                     // Graphics resources finished loading
                     // Graphics resources finished loading
-                    //game.ResourcesLoaded = true;
 
                     BoxManager.load(); // Load box objects
                 }});
@@ -419,6 +425,9 @@
                     // Draw timeline panel
                     Timeline.process();
                     Timeline.draw();
+
+                    // Draw on-screen text
+                    ta.draw(100,100);
 
                 break;
 
