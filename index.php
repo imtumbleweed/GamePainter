@@ -66,7 +66,7 @@
     <script src = 'Tig_jsGE/grid.js?v=2' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/toolbox.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/box.js' type = 'text/javascript'></script>
-    <script src = 'Tig_jsGE/player.js?v=3' type = 'text/javascript'></script>
+    <script src = 'Tig_jsGE/player.js?v=4' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/rain.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/celestial.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/timeline.js' type = 'text/javascript'></script>
@@ -365,38 +365,41 @@
                     Enemy[0].draw();
                     Enemy[0].collide();
 
+                    var PlayerSize = 64;
+                    var PlayerYAdjusted = -30;
+
                     if (game.ResourcesLoaded) {
                         if (Player.dirx == RIGHT) {
                             if (Player.controlKeysPressed) {
                                 dust_counter++;
-                                if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
-                                girl.rotAnim(Player.drawx, Player.drawy + 4, [0, 1, 2, 3], 1, 32, 4, 10);
+                                //if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
+                                girl2.rotAnim(Player.drawx, Player.drawy + PlayerYAdjusted, [0, 1, 2, 3], 1, PlayerSize, 4, 10);
                             }  else {
-                                girl.rotAnim(Player.drawx, Player.drawy + 4, [0], 1, 32, 8, 10);
+                                girl2.rotAnim(Player.drawx, Player.drawy + PlayerYAdjusted, [0], 1, PlayerSize, 8, 10);
                             }
 
                             if (Player.firing) { /* Fire button pressed */
                                 Player.x -= 0.5;
-                                girl.rotAnim(Player.drawx, Player.drawy + 4, [8], 1, 32, 4, 10);
+                                girl2.rotAnim(Player.drawx, Player.drawy + PlayerYAdjusted, [8], 1, PlayerSize, 4, 10);
                                 bub_counter++;
-                                if (bub_counter > 10) { add_bubbleparticle(Player.drawx, Player.y - 8, 1); bub_counter = 0; }
+                                //if (bub_counter > 10) { add_bubbleparticle(Player.drawx, Player.y - 8, 1); bub_counter = 0; }
                             }
 
                         }
                         if (Player.dirx == LEFT) {
                             if (Player.controlKeysPressed) {
                                 dust_counter++;
-                                if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
-                                girl.rotAnim(Player.drawx, Player.drawy + 4, [4, 5, 6, 7], 1, 32, 4, 10);
+                                //if (dust_counter > 10) { add_dustparticle(Player.drawx, Player.y + 24); dust_counter = 0; }
+                                girl2.rotAnim(Player.drawx, Player.drawy + PlayerYAdjusted, [4, 5, 6, 7], 1, PlayerSize, 4, 10);
                             }
                             else {
-                                girl.rotAnim(Player.drawx, Player.drawy + 4, [4], 1, 32, 4, 10);
+                                girl2.rotAnim(Player.drawx, Player.drawy + PlayerYAdjusted, [4], 1, PlayerSize, 4, 10);
                             }
                             if (Player.firing) { /* Fire button pressed */
                                 Player.x += 0.5;
-                                girl.rotAnim(Player.drawx, Player.drawy + 4, [9], 1, 32, 4, 10);
+                                girl2.rotAnim(Player.drawx, Player.drawy + PlayerYAdjusted, [9], 1, PlayerSize, 4, 10);
                                 bub_counter++;
-                                if (bub_counter > 10) { add_bubbleparticle(Player.drawx, Player.y - 8, -1); bub_counter = 0; }
+                                //if (bub_counter > 10) { add_bubbleparticle(Player.drawx, Player.y - 8, -1); bub_counter = 0; }
                             }
                         }
                     }
