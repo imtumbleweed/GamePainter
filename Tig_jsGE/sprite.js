@@ -21,7 +21,7 @@ var Sprite = function(fn) {
             // Programmer-instantiated sprites are a special case and should be handled separately
             if (fn.substr(0,9) == "resources")
                 window.ResourceId++;
-            //if (SpriteSilentLoad)
+            if (SpriteSilentLoad)
             console.log("Loaded sprite (" + that.width + "x" + that.height + ") " + fn + " ("+window.ResourceId+" of " + game.resourceNumber + ")");
             if (window.ResourceId >= game.resourceNumber) {
                 game.ResourcesLoaded = true;
@@ -151,6 +151,8 @@ var Sprite = function(fn) {
         window.AnimationCounterIndex++;
     };
 
+    // The difference is that rotAnim2 requires its own custom animation counter object;
+    // this is useful when you have animated particles, otherwise global counter can quickly get out of control...
     this.rotAnim2 = function(x, y, sequence, angle,
                              size, // size of a single sprite
                              cellsPerWidth, // # of cells per width in entire spritesheet
