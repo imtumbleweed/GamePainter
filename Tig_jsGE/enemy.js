@@ -287,22 +287,24 @@ class EnemyClass {
                 if (this.action == 1) {
                     this.drawy -= 0.5;
                     // Draw the enemy sprite
-                    bug.rotAnim2(this.drawx, this.drawy,
-                        [8],
-                        0,
-                        64,
-                        4,
-                        20,
-                        this.animationCounter);
+                    if (game.ResourcesLoaded)
+                        bug.rotAnim2(this.drawx, this.drawy,
+                            [8],
+                            0,
+                            64,
+                            4,
+                            20,
+                            this.animationCounter);
                 } else {
                     // Draw the enemy sprite
-                    bug.rotAnim2(+this.drawx, this.drawy - 8,
-                        sequence,
-                        0,
-                        64,
-                        4,
-                        20,
-                        this.animationCounter);
+                    if (game.ResourcesLoaded)
+                        bug.rotAnim2(+this.drawx, this.drawy - 8,
+                            sequence,
+                            0,
+                            64,
+                            4,
+                            20,
+                            this.animationCounter);
                 }
 
 
