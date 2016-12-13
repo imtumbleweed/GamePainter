@@ -141,6 +141,7 @@ class PlayerClass {
             }
         };
 
+
         this.collide = () => {
 
             if (this.active) {
@@ -160,7 +161,13 @@ class PlayerClass {
                         pbox.draw("red",false,true);
                         if (pbox.rectInside(BoxManager.objects[i].bg)) {
                             BoxManager.objects[i].type = -1;// = "black"; // hide
-                            Sound.play(0);
+
+                            var sfxtag = "sfxcoin" + window.collectibleCurrentSfx;
+                            window[sfxtag].play();
+                            if (window.collectibleCurrentSfx++ >= 7)
+                                window.collectibleCurrentSfx = 0;
+
+
                             continue;
                         }
                     }
