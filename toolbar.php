@@ -89,5 +89,5 @@
         <div id = "ProgressBarCounter" style = "text-shadow: 0 0 5px #000; display: none; width: 60px; font-weight: normal; position: absolute; top: -16px; left: 35px; font-family: Arial; font-size: 10px; color: silver;"><span id = "a"></span> of <span id = "b"></span></div>
     </div>
     <div class = "StaticButton" id = "MakeGamesButton">Make Games</div>
-    <div class = "StaticButton" id = "MakeGamesButtonOn" onclick = "$('#WelcomeToolbar').fadeOut()">Make Games</div>
+    <div class = "StaticButton" id = "MakeGamesButtonOn" onclick = "window.sfxclick1.play(); $('#WelcomeToolbar').fadeOut()">Make Games</div>
 </div>
