@@ -81,13 +81,23 @@ var SoundStation = function(filename)
 	}
 }
 
+window.collectibleCurrentSfx = 1;
 function LoadSfx() {
 	console.log("LoadSfx()...");
 	Sound.load(0, "sfx/coin.mp3");
-	Sound.load(1, "sfx/bubble.mp3");
-	Sound.load(2, "sfx/click1.mp3");
-	Sound.load(2, "sfx/click2.mp3");
+	Sound.load(1, "sfx/coin1.mp3");
+	Sound.load(2, "sfx/coin2.mp3");
+	Sound.load(3, "sfx/coin3.mp3");
+	Sound.load(4, "sfx/coin4.mp3");
+	Sound.load(5, "sfx/coin5.mp3");
+	Sound.load(6, "sfx/coin6.mp3");
+	Sound.load(7, "sfx/coin7.mp3");
+	Sound.load(8, "sfx/bubble.mp3");
+	Sound.load(9, "sfx/click1.mp3");
+	Sound.load(10, "sfx/click2.mp3");
+
 	// Sound.load(8, "http://www.learnjquery.org/games/gem/sfx/delune.mp3");
+
 }
 
 var Sound = new SoundStation();
