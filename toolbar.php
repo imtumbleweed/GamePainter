@@ -1,33 +1,4 @@
 <style>
-    #Tools { box-shadow: 0 0 40px #222; background: #535353 url('toolboxbody.png') repeat-y; width: 72px; height: 200px; position: absolute; top: 80px; left: calc(50% + 200px); }
-    #ToolsHeader { position: relative; width: 72px; height: 22px; background: #535353 url('toolbox-top.png') no-repeat; }
-    .ToolIcon { width: 33px; height: 26px; background: url("ic-empty.png") no-repeat; display: inline-block; margin:0; }
-    .Toolpad { margin-left: 3px; }
-    .ToolIC1 { background: url("") no-repeat; }
-    .ToolIC-Empty { background: url("ic-empty.png") no-repeat; }
-    .ToolIcon:hover { background: url("ic-empty.png") no-repeat; cursor: pointer; }
-    .ToolIcon.Selected { background: url("ic-selected.png") no-repeat; }
-    .CameraIcon { background: transparent url('camera.png') repeat-y; width: 24px; height: 24px; position: absolute; top: 70px; left: calc(50% - 350px); }
-    #SecondaryToolbar { box-shadow: 0 0 40px #222;  background: #535353 url('SecondaryToolbar.png'); width: 100px; height: 50px; position: absolute; top: 32px; left: calc(50% + 140px); }
-    .STPlaceholder { position: relative; margin; 2px; display: inline-block; width: 33px; height; 26px; background: url("SecondaryToolbarSelected.png") no-repeat; }
-    .STPlaceholder img { pointer-events: none; }
-    .STAdjuster { position: absolute; top: 16px; left: 18px; }
-    #SidePanel { position: absolute; top: 32px; right: 32px; width: 226px; height: 250px; background: url("sidepanelbg.png") repeat-y; }
-    #Minimap { position: relative; margin: auto; width: 200px; height: 200px; background: black; }
-    #MinimapView { position: absolute; top: 0; left: 0; width: 50px; height: 50px; border: 1px solid #444; }
-    #ContextMenu { display: none; position: absolute; top: 0; left: 0; width: 150px; cursor:default;}
-    .ContextItem { background: #333; font-family: Arial; font-size: 11px; color: goldenrod; padding: 2px; }
-    .ContextItem:hover { background: #777; color: black; }
-    .ContextItem img { vertical-align: middle; }
-    .ContextItem {
-        -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none; /* Chrome/Safari/Opera */
-        -khtml-user-select: none; /* Konqueror */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-        user-select: none; /* Non-prefixed version, currently
-                                  not supported by any browser */
-    }
     #WelcomeToolbar { position: absolute; top: 100px; left: 100px; width: 236px; height: 201px; background: url("welcomebox.png") no-repeat; }
     #WelcomeToolbar .ProgressBar { position: absolute; top: 106px; left: 61px; width: 114px; height: 12px; background: url("progressbar.png") no-repeat; }
 </style>
