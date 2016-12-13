@@ -212,7 +212,7 @@
                             if (i + 1 == game.resourceNumber) {
                                 $("#MakeGamesButtonOn").fadeIn();
                                 game.ResourcesLoaded = true;
-                                sfxclick1.play();
+                                sfxbubble.play();
                             }
                         }
                     }
