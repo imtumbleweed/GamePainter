@@ -28,6 +28,8 @@
         user-select: none; /* Non-prefixed version, currently
                                   not supported by any browser */
     }
+    #WelcomeToolbar { position: absolute; top: 100px; left: 100px; width: 236px; height: 201px; background: url("welcomebox.png") no-repeat; }
+    #WelcomeToolbar .ProgressBar { position: absolute; top: 106px; left: 61px; width: 114px; height: 12px; background: url("progressbar.png") no-repeat; }
 </style>
 <script>$(document).ready(function() {
         //
@@ -101,4 +103,11 @@
     <div id = "Context1" class = "ContextItem" action = "Convert to Left Slope"><img src = "leftslope.png" alt = "Left slope"/> Left Slope</div>
     <div id = "Context2" class = "ContextItem" action = "Convert to Right Slope"><img src = "rightslope.png" alt = "Right slope"/> Right Slope</div>
     <div id = "Context3" class = "ContextItem" action = "Convert to Collectible"><img src = "collectible.png" alt = "Right slope"/> Collectible</div>
+</div>
+<div id = "WelcomeToolbar">
+    <div class = "ProgressBar">
+        <div class = "ProgressBar2">
+            <div class = "ProgressBar3"></div>
+        </div>
+    </div>
 </div>
