@@ -70,8 +70,9 @@ var SoundStation = function(filename)
 		  	// Create global sound object
 		  	var sfxname = "sfx" +  filename_url.match(/([^\/]+)(?=\.\w+$)/)[0];
 		  	window[sfxname] = new Object();
-			window[sfxname].play = () => { Sound.play(2); }
-		    console.log("Sound.load('mp3')... Ok!");
+			window[sfxname].play = () => { Sound.play(__buffer_ID); }
+		    console.log("Sound.load('mp3')...[window." + sfxname + "] Ok!");
+
 			// if (filename_url == "http://www.learnjquery.org/games/gem/sfx/delune.mp3")
 			// window.soundtrackReady = true;
 		  }, this.onError);
@@ -85,6 +86,7 @@ function LoadSfx() {
 	Sound.load(0, "sfx/coin.mp3");
 	Sound.load(1, "sfx/bubble.mp3");
 	Sound.load(2, "sfx/click1.mp3");
+	Sound.load(2, "sfx/click2.mp3");
 	// Sound.load(8, "http://www.learnjquery.org/games/gem/sfx/delune.mp3");
 }
 
