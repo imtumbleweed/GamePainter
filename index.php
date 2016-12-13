@@ -94,6 +94,8 @@
 
         var des = new Sprite("des.png");
 
+       // var bug = new Sprite("bug.png");
+
         var Enemy = new Array();
 
         for (var i = 0; i < 10; i++) Enemy[i] = new EnemyClass();
@@ -185,16 +187,32 @@
                     if (JSON.parse(msg) != undefined) {
                         var json = JSON.parse(msg);
                         game.resourceNumber = json.length;
-                        for (var i = 0; i < json.length; i++) {
+                        var span_width = $("#ProgressBar").width() / game.resourceNumber;
+                        console.log("span width = " + span_width);
+                        $("#a").text(0);
+                        $("#b").text(game.resourceNumber);
+                        $("#ProgressBarCounter").show();
+                        for (var i = 0; i < game.resourceNumber; i++) {
                             var appropriateName = json[i].split(".")[0];
                             window.LoadingFileName = json[i];
                             window[appropriateName] = new Sprite("resources/" + window.LoadingFileName);
-							console.log(i + " loaded... ("+appropriateName+")");
+							console.log(i + " loaded... (" + appropriateName + ")");
+                            var barwidth = 0;
+                            //if (i != 0) {
+                                barwidth = (i) * ($("#ProgressBar").width()) / (game.resourceNumber);
+                                console.log("barwidth = " + barwidth);
+                            //}
+                            $("#a").text(i + 1);
+                            $("#ProgressBarPercent").css( { "width" : (barwidth + 5) + "px" } );
+                            if (i + 1 == game.resourceNumber) {
+                                $("#MakeGamesButtonOn").fadeIn();
+                            }
                         }
                     }
 
                     // Graphics resources finished loading
-                    game.ResourcesLoaded = true;
+                    // Graphics resources finished loading
+                    //game.ResourcesLoaded = true;
 
                     BoxManager.load(); // Load box objects
                 }});
