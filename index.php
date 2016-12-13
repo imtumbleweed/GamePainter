@@ -279,20 +279,7 @@
             */
         }
 
-        var x = 0;
-
-
-        //var cursorhand1 = new Sprite("cursorhand1.png");
-
-        //RainArea.add(100,100,200,200,25)
-
-        //var loaded = false;
-
         Enemy[0].spawn(200,200);
-
-        BubbleMeter.width = 16;
-
-        BubbleMeter.height = 3;
 
         setInterval(function() {
 
@@ -319,15 +306,11 @@
                 // case 0: wam_menu(); break;
                 case -1:
 
-                    //test.draw(Mouse.x,Mouse.y);
-
                     grid.draw();
 
-                    background.draw(250,15);
-
-                    // Draw celestial
-                    //Celestial.process();
-                    //Celestial.draw();
+                    // Draw celestial objects
+                    Celestial.process();
+                    Celestial.draw();
 
                     // Drag cursor
                     // if (game.ResourcesLoaded)
@@ -343,7 +326,7 @@
                         RainArea[i].draw();
                     }
 
-                    // Draw objects
+                    // Draw all created objects (rectangles)
                     if (BoxManager.objectsLoaded) {
                         BoxManager.draw();
                     }
