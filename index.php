@@ -73,7 +73,7 @@
     <script src = 'Tig_jsGE/dust.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/bubble.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/enemy.js?v=1' type = 'text/javascript'></script>
-
+    <link rel = 'stylesheet' type = 'text/css' href = 'gamepainter.css' />
     <script type = "text/javascript">
 
         /** ----- Custom objects ----- **/
@@ -96,14 +96,7 @@
 
         var Enemy = new Array();
 
-        var BubbleDepletionAnimationCounter = new Animate(0, 0, 0);
-
-        var BubbleMeter = new Rectangle(0,0,0,0);
-
         for (var i = 0; i < 10; i++) Enemy[i] = new EnemyClass();
-
-        var BubbleFlashCounter = 0;
-        var BubbleFlashState = false;
 
         var H2 = 0;
         var A1 = 169;
@@ -129,18 +122,8 @@
 
         $(document).ready(function() {
 
-            // Registration menu hook ups
-            $(".selectable").each(function(i,v) {
-                $(this).on("click", function(obj) {
-                    $(".selectable").removeClass("selected");
-                    $(this).addClass("selected");
-                })
-            });
-
-            // Load loading bar graphics
-            // window.LoadingBar1 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/loading1.png");
-            // window.LoadingBar2 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/loading2.png");
-            // window.glowingbar = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/glowingbar.png");
+            // Center welcome loading bar dialog
+            $("#WelcomeToolbar").css( { "top" : "200px", "left": ($(window).width()/2 - $("#WelcomeToolbar").width()/2) + "px"});
 
             IsMobile();
             Resize();
@@ -186,32 +169,15 @@
 
             game.engineReady = true;
 
-
-
-            //RainArea.add(100,100,400,700,150);
-            //RainArea.add(700,200,200,800,150);
-
-
             setTimeout(function() {
                 //game.displayLoadingBar = true;
 
-
-
-
-
-
-
-                /*
+                /* Statistics logging
                  $.ajax( { "url" : "http://www.tigrisgames.com/property_stealth/Tig_jsGE/addTester.php",
                  type : "POST",
                  data: { "width" : mobileWidth, "height" : mobileHeight },
                  success: function(msg) { }
                  });  */
-
-                // 375 = iPhone
-//                if ($(window).width() == 480)
-  //                  $("#game").width(480);
-
 
                 // Load graphics resources
                 $.ajax({"url" : "getResourceList.php", type : "POST", success: function(msg) {
@@ -261,9 +227,6 @@
             gfx.fill();
         }
 
-        //var ripple0 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/ripple0.png");
-        //var ripple1 = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/ripple1.png");
-
         var LogoRot = 0;
         var sub_beam_rot = 0;
         var panorama_y = 400;
@@ -275,8 +238,6 @@
 
         zoomPointX = game.width/2;
         zoomPointY = game.height/2;
-
-       // var Diamond = new Sprite("http://www.tigrisgames.com/property_stealth/games/gemini/resources/diamond.png");
 
         InitializeAnimationCounters();
 
@@ -392,87 +353,10 @@
                     Player.draw();
                     Player.collide(); // Collide player with the world
 
-                    // Soap depletion bar
-                    BubbleMeter.x = Player.x - 8;
-                    BubbleMeter.y = Player.y;
-
-                    if (BubbleMeter.width >= 0) {
-                        if (BubbleFlashState)
-                            BubbleMeter.draw("white", true, false);
-                        BubbleMeter.draw("#0078fe", false, true);
-                    }
-
-                    if (BubbleMeter.width <= 8)  {
-                        BubbleFlashCounter++;
-                        if (BubbleFlashCounter > 50) {
-                            BubbleFlashCounter = 0;
-                            BubbleFlashState = !BubbleFlashState;
-                        }
-                    } else {
-                        BubbleFlashState = true;
-                    }
-
-                    /*
-                    dust.rotAnim2(
-                        Player.x,
-                        Player.y,
-                        [24],
-                        0,
-                        16,
-                        8,
-                        20,
-                        BubbleDepletionAnimationCounter
-                    );*/
-
                     // Draw enemies
                     Enemy[0].process();
                     Enemy[0].draw();
                     Enemy[0].collide();
-
-                    // Dust particles for walking...
-                    proc_dustparticle();
-                    draw_dustparticle();
-
-                    // Dust bubbles
-                    proc_bubbleparticle();
-                    draw_bubbleparticle();
-
-                    // check if bubbles touch enemies
-
-                    var itshit = false;
-                    for (var i = 0; i < BUBBLE_MAX; i++) {
-                        for (var j = 0; j < 1; j++) {
-                            if (bubbleparticle[i].state == true) {
-                                //bubbleparticle[i].bounding.draw("red", false, true);
-                                if (bubbleparticle[i].bounding.rectInside(Enemy[j].body)) {
-                                    Sound.play(1);
-                                    itshit = true;
-                                    bubbleparticle[i].state = false;
-                                    Enemy[j].hit = true;
-
-                                    Enemy[j].life -= 10;
-                                    if (Enemy[j].life <= 0) {
-                                        Enemy[j].action = 1;
-                                    }
-
-                                    // Enemy[j].hitfalloff = 30;
-                                }
-                            }
-                        }
-                    }
-
-                    if (itshit) {
-                        Enemy[0].hit = true;
-                        Enemy[0].hitfalloff = 35;
-                    }
-
-
-                    //if (Player.jumping)
-                    //{
-                        //girl.rotAnim(Player.x - 16, Player.y + 4, [0], 1, 32, 8, 10);
-                    //}
-
-
 
                     if (game.ResourcesLoaded) {
                         if (Player.dirx == RIGHT) {
@@ -531,103 +415,23 @@
                         Player.controlKeysPressed = false;
                     }
 
-
-
-                    //gfx.globalAlpha = 0.35;
-                    //FrameView.center(game.width/2, FrameView.height/2 + 100);
-                    //FrameView.draw("#fff", false, true);
-                   // gfx.globalAlpha = 1;
-
                     // Draw timeline panel
                     Timeline.process();
                     Timeline.draw();
 
-                    // animation processors must be done last, that's just the way animation counters are implemented
-                    //ProgressAnimationCounter(5000);
-                    //proc_dustparticle();
+                break;
 
+                case 1: break;
+                case 2: break;
+        		case 2: break;
+                case 3: break;
+                case 4: break;
+                case 5: break;
+                case 6: break;
+                case 7: break;
 
-
-
-                    //room.draw(Mouse.x,Mouse.y);
-
-                    //des.rotAnim(Mouse.x + 210, Mouse.y + 280,
-                        //[1,2,3,4,5,6,7,8,9], 0, 96, 10,  7);
-
-
-
-  //                  if (toolbox.currentToolID == toolbox.MOVE_WORLD) {
-//                        //smallhand1.draw(Mouse.x, Mouse.y);
-//                        if (!$("body").hasClass("hidecursor"))
-//                            $("body").addClass("hidecursor");
-                    //} else { $("body").removeClass("hidecursor"); }
-
-                    break;
-                // case 1: wam_story();
-                // break;
-                case 2:
-                   // wam_createplayer();
-                    break;
-//        		case 2: wam_pre(); break;
-                // game play
-                case 3:
-//                    Gemgrid.draw();
-//                    draw_ripples();
-//                    proc_bullets();
-//                    draw_bullets();
-//                    proc_scorenotes();
-//                    draw_scorenotes();
-//                    proc_SwirlSparks();
-//                    draw_SwirlSparks();
-//                    proc_ElectronSparks();
-//                    draw_ElectronSparks();
-                    break;
-                case 4:
-                    //wam_selectworld();
-                    break;
-                case 5:
-                    //wam_systemsettings();
-                    break;
-                case 6:
-                    //wam_completed();	// level completed, count time, score etc.
-                    break;
-                case 7:
-                    //wam_dicethrower();
-                    break;
-                case 8:
-                    //wam_avatar();
-                    break;
-                case 9:
-                    //wam_store();
-                    break;
-                /*
-                 case 5: wam_map(); break;
-                 case 6: wam_gameover(); break;
-                 case 7: wam_hiscore(); break;
-                 case 8: wam_about(); break;
-                 case 9: wam_credits(); break;
-                 case 10: wam_quit(); break; */
                 default: break;
             }
-
-            //if (game.state != 3 && game.ResourcesLoaded) // Displayed on all screens during debug/production
-                //home.draw(0, game.height-64);
-
-            //if (Press.ed && home.pressed()) { game.state = -1; }
-
-
-
-
-
-            /* Draw misc icons, etc.
-             if (game.ResourcesLoaded == true && game.state == -1) {
-             if (Sound.available)
-             window["icon_sound"].rotscale(170, 540, 0.75,0.75, 0); else
-             window["icon_nosound"].rotscale(170, 540, 0.75,0.75, 0);
-             icon_controller.rotscale(220, 540,0.75,0.75,0);
-             }*/
-
-
 
             if (!game.ResourcesLoaded) {
 
@@ -642,10 +446,6 @@
                 }
             }
 
-            // Always last step...
-
-
-
             window.touched = false;		// reset touch
             window.released = false;	// release touch
             window.clicked = false;		// reset click
@@ -653,32 +453,14 @@
             Mouse.down = false;         // reset single frame mouse click
             Mouse.reset();              // reset all mouse clicks
 
-            gfx.scale(1,1);
-
             gfx.globalAlpha = 1;
 
         }, 0);
 
-
-
     </script>
 </head>
 <body>
-<style>
-    body { margin: 0; }
-    * { outline: none; }
-    .noselect {
-        -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none;   /* Chrome/Safari/Opera */
-        -khtml-user-select: none;    /* Konqueror */
-        -moz-user-select: none;      /* Firefox */
-        -ms-user-select: none;       /* Internet Explorer/Edge */
-        user-select: none;           /* Non-prefixed version, currently
-                                  not supported by any browser */
-    }
-    #game { cursor: grab !important; }
-    .hidecursor { cursor: none; }
-</style>
+<style type = "text/css"></style>
 <div id = "game_container" class = "noselect" style = "position: relative; margin: 0 auto; padding-top: 0px; padding-bottom: 0px;">
     <canvas id = "game"></canvas>
     <?php include("toolbar.php"); ?>
