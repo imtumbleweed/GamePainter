@@ -64,18 +64,16 @@ var SoundStation = function(filename)
 		request.open('GET', filename_url, true);
 		request.responseType = 'arraybuffer';
 		var that_v2 = this.that;
-		request.onload = function() {
-		  that_v2.context.decodeAudioData(request.response, function(theBuffer) {
-		  
+		request.onload = function()  {
+		  	that_v2.context.decodeAudioData(request.response, function(theBuffer) {
 		    window.sfx[__buffer_ID] = theBuffer;
-
-	//" + filename_url + "
-
+		  	// Create global sound object
+		  	var sfxname = "sfx" +  filename_url.match(/([^\/]+)(?=\.\w+$)/)[0];
+		  	window[sfxname] = new Object();
+			window[sfxname].play = () => { Sound.play(2); }
 		    console.log("Sound.load('mp3')... Ok!");
-		    
-//		    if (filename_url == "http://www.learnjquery.org/games/gem/sfx/delune.mp3")
-		    	window.soundtrackReady = true;
-		    	    
+			// if (filename_url == "http://www.learnjquery.org/games/gem/sfx/delune.mp3")
+			// window.soundtrackReady = true;
 		  }, this.onError);
 		}
 		request.send();
@@ -84,8 +82,9 @@ var SoundStation = function(filename)
 
 function LoadSfx() {
 	console.log("LoadSfx()...");
-	Sound.load(0, "http://localhost/autumn/sfx/coin.mp3");
-	Sound.load(1, "http://localhost/autumn/sfx/bubble.mp3");
+	Sound.load(0, "sfx/coin.mp3");
+	Sound.load(1, "sfx/bubble.mp3");
+	Sound.load(2, "sfx/click1.mp3");
 	// Sound.load(8, "http://www.learnjquery.org/games/gem/sfx/delune.mp3");
 }
 
