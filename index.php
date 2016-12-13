@@ -297,7 +297,7 @@
             */
         }
 
-        Enemy[0].spawn(200,200);
+        // Enemy[0].spawn(200,200);
 
         setInterval(function() {
 
