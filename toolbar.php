@@ -1,6 +1,11 @@
 <style>
     #WelcomeToolbar { position: absolute; top: 100px; left: 100px; width: 236px; height: 201px; background: url("welcomebox.png") no-repeat; }
     #WelcomeToolbar .ProgressBar { position: absolute; top: 106px; left: 61px; width: 114px; height: 12px; background: url("progressbar.png") no-repeat; }
+    #WelcomeToolbar .ProgressBar2 { position: absolute; top: 0; left: 0; width: 0px; height: 12px; background: url("progressbar2.png") no-repeat; }
+    #GamePainterTitle { width: 236px; color: white; position: absolute; top: 40px; font-size: 11px; font-family: Arial; text-align: center; }
+    .StaticButton { width: 114px; height: 25px; background: url("staticbutton.png"); font-family: Arial; line-height: 24px; font-size: 12px; text-align: center; color: silver; }
+    #MakeGamesButton { z-index: 10; cursor: pointer; position: absolute; left: 60px; top: 140px; }
+    #MakeGamesButtonOn { z-index: 11; cursor: pointer; position: absolute; left: 60px; top: 140px; background: url("staticbutton-on.png"); display: none; color: #feff83; }
 </style>
 <script>$(document).ready(function() {
         //
@@ -76,9 +81,13 @@
     <div id = "Context3" class = "ContextItem" action = "Convert to Collectible"><img src = "collectible.png" alt = "Right slope"/> Collectible</div>
 </div>
 <div id = "WelcomeToolbar">
-    <div class = "ProgressBar">
-        <div class = "ProgressBar2">
+    <div id = "GamePainterTitle">Game Painter<div style = "height: 8px;"></div><span style = "color: gray;">v0.007</span></div>
+    <div class = "ProgressBar" id = "ProgressBar">
+        <div class = "ProgressBar2" id = "ProgressBarPercent">
             <div class = "ProgressBar3"></div>
         </div>
+        <div id = "ProgressBarCounter" style = "text-shadow: 0 0 5px #000; display: none; width: 60px; font-weight: normal; position: absolute; top: -16px; left: 35px; font-family: Arial; font-size: 10px; color: silver;"><span id = "a"></span> of <span id = "b"></span></div>
     </div>
+    <div class = "StaticButton" id = "MakeGamesButton">Make Games</div>
+    <div class = "StaticButton" id = "MakeGamesButtonOn" onclick = "$('#WelcomeToolbar').fadeOut()">Make Games</div>
 </div>
