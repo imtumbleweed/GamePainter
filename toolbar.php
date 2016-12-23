@@ -49,7 +49,14 @@
         $('.ToolIcon').on("click", function() {
             $(".ToolIcon").removeClass("Selected");
             $(this).addClass("Selected");
-        })});</script>
+        })});
+
+</script>
+
+<style>
+
+</style>
+
 <div id = "Tools">
     <div id = "ToolsHeader"></div>
     <div style = "height: 6px;"></div>
@@ -90,4 +97,8 @@
     </div>
     <div class = "StaticButton" id = "MakeGamesButton">Make Games</div>
     <div class = "StaticButton" id = "MakeGamesButtonOn" onclick = "window.sfxclick1.play(); $('#WelcomeToolbar').fadeOut()">Make Games</div>
+</div>
+<!-- ui overlay //-->
+<div id = "UI" style = "position: absolute; top: 0; left: 0;">
+
 </div>
