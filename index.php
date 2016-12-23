@@ -74,7 +74,13 @@
     <script src = 'Tig_jsGE/bubble.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/enemy.js?v=1' type = 'text/javascript'></script>
     <script src = 'Tig_jsGE/textarea.js?v=1' type = 'text/javascript'></script>
+
+    <!-- ui elements //-->
+    <script src = 'ui/button.js?v=1' type = 'text/javascript'></script>
+
     <link rel = 'stylesheet' type = 'text/css' href = 'gamepainter.css' />
+    <link rel = 'stylesheet' type = 'text/css' href = 'ui/style.css' />
+
     <script type = "text/javascript">
 
         /** ----- Custom objects ----- **/
@@ -106,7 +112,11 @@
 
         var ta = new TextArea(100, 100, "Hello from textarea... 2134734$#%#@");
 
-
+        // Create UI elements
+        $(document).ready(function() {
+            var PauseButton = new Button(200, 200, 38, 32, "pausebutton", "map_pausebutton.png", 0, function() { /* ... */ });
+            var PlayButton = new Button(280, 280, 38, 32, "playbutton", "map_pausebutton.png", 0, function() { /* ... */ });
+        });
 
         function IsMobile() { if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) { window.mobile = true; $("body *").addClass("IncreaseFontSize"); } }
         function Resize() {
@@ -153,10 +163,12 @@
             window.gfx = Context.context;
 
             gfx.globalAlpha = 1;
+            /*
             gfx.beginPath();
             gfx.rect(0, 0, game.width, game.height);
             gfx.fillStyle = 'white';
             gfx.fill();
+            */
 
             InitializeKeyboard();
             InitializeOnscreenKeyboard();
@@ -265,43 +277,7 @@
 
         InitializeAnimationCounters();
 
-        function draw_gemini_loading_logo() {
-
-            /*
-            $("#loading_bar_anim").css( { "left" : (game.width / 2) - (278 / 2) + "px" } );
-
-            // Draw loading bar
-            var BarHeight = 160;
-            var percent = Math.round(LoadingPercent * 100) / 100;
-            var H = percent * BarHeight / 100;
-            var hdiff = ( parseInt(H) - parseInt(H2) ) / 40;
-            window.LoadingBar1.draw(game.width/2 - 278/2, 40);
-            gfx.globalAlpha = 0.5;
-            if (!isNaN(hdiff)  && hdiff != Number.NEGATIVE_INFINITY && hdiff != 0) {
-//				console.log("hdiff=" + hdiff);
-                H2 = H2 + hdiff;
-            }
-            LoadingBarRect.x = game.width/2 - 100;
-            LoadingBarRect.y = 240 - H2 + 10;
-            LoadingBarRect.width = 200;
-            LoadingBarRect.height = H2;
-            LoadingBarRect.draw("#49dbff", true, true);
-            gfx.globalAlpha = 1;
-            window.LoadingBar2.draw(game.width/2 - 278/2, 40);
-            window.glowingbar.draw(100 + LoadingBarRect.x - 40, LoadingBarRect.y - 16);
-            // Animate selected player background
-            var zoomFactor2 = 100 + Math.sin(SelectedPlayerSin2) * 25;
-            SelectedPlayerSin2 += 0.01;
-            selRunning_x2 += 0.005; //SelectedPlayerSin;
-            selRunning_y2 += zoomFactor2 * 0.0075; //SelectedPlayerSin;
-            $("#loading_GlowBar").css({"top": -20 + LoadingBarRect.y + "px"});
-            $(".loading_Candy").css( { "top" : LoadingBarRect.y + "px", "height" : LoadingBarRect.height + "px",
-                          				"background-size" : zoomFactor + "% " + zoomFactor + "%",
-                "background-position-x" : selRunning_x2 + zoomFactor2 + "%",
-                "background-position-y" : selRunning_y2 + zoomFactor2 + "%"
-            } );
-            */
-        }
+        function draw_gemini_loading_logo() { }
 
         // Enemy[0].spawn(200,200);
 
@@ -314,7 +290,6 @@
             //scalechange = scalefactor - 1; // calculate camera zoom in real time
 
             ClearCanvas();
-
 
             if (game.ResourcesLoaded) {
                 //if (window.Gemgrid == null) { // Grid is resource dependent, because it needs gem icons loaded
@@ -474,8 +449,7 @@
 </head>
 <body>
 <style type = "text/css"></style>
-<div id = "game_container" class = "noselect" style = "position: relative; margin: 0 auto; padding-top: 0px; padding-bottom: 0px;">
-    <canvas id = "game"></canvas>
-    <?php include("toolbar.php"); ?>
+<canvas id = "game"></canvas>
+<?php include("toolbar.php"); ?>
 </body>
 </html>
