@@ -114,8 +114,8 @@
 
         // Create UI elements
         $(document).ready(function() {
-            var PauseButton = new Button(200, 200, 38, 32, "pausebutton", "map_pausebutton.png", 0, function() { /* ... */ });
-            var PlayButton = new Button(280, 280, 38, 32, "playbutton", "map_pausebutton.png", 0, function() { /* ... */ });
+            var PauseButton = new Button(280, 50, 38, 32, "pausebutton", "map_pausebutton.png", 0, function() { /* ... */ });
+            var PlayButton = new Button(320, 50, 38, 32, "playbutton", "map_playbutton.png", 1, function() { /* ... */ });
         });
 
         function IsMobile() { if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) { window.mobile = true; $("body *").addClass("IncreaseFontSize"); } }
